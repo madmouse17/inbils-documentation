@@ -1,0 +1,96 @@
+---
+title: Inbils documentation
+description: Guides for ISP staff, operators, technicians and customers, plus modules, architecture, the mobile API and operations for Inbils, multi-tenant ISP management software.
+---
+
+import NavCards from '~/components/docs/NavCards.astro';
+
+Inbils is multi-tenant ISP management software: customers and subscriptions, RADIUS and MikroTik, work orders for technicians, inventory, billing with Midtrans and ticketing with SLA, with two Android apps. These pages document the web app, the operator panel and the apps, and explain how the system is built and run. They come in English and Indonesian: switch the language in the header.
+
+## Start here
+
+<NavCards
+  items={[
+    {
+      title: 'Getting started',
+      description: 'Run Inbils on your machine with Laravel Sail and Docker, seed it and sign in.',
+      to: '/docs/getting-started/',
+    },
+    {
+      title: 'User guides',
+      description: 'Step by step with screenshots, for staff, operators, technicians and customers.',
+      to: '/docs/guides/',
+    },
+  ]}
+/>
+
+## Guides by role
+
+<NavCards
+  items={[
+    {
+      title: 'Web guide',
+      description: 'The back office for ISP admins, managers and staff.',
+      to: '/docs/guides/web/',
+    },
+    {
+      title: 'Operator panel guide',
+      description: 'Tenants, support access, role templates and exports at /platform.',
+      to: '/docs/guides/platform/',
+    },
+    {
+      title: 'Technician app guide',
+      description: 'Work orders, tickets, evidence and materials in the field.',
+      to: '/docs/guides/technician/',
+    },
+    {
+      title: 'Customer app guide',
+      description: 'Invoices, payments, service status and tickets for customers.',
+      to: '/docs/guides/customer/',
+    },
+  ]}
+/>
+
+## Understand the system
+
+<NavCards
+  items={[
+    {
+      title: 'Product modules',
+      description: 'What customers, network, work orders, inventory, billing, ticketing and reporting each do.',
+      to: '/docs/modules/',
+    },
+    {
+      title: 'Architecture',
+      description: 'The layers, multi-tenancy, permissions and the data model.',
+      to: '/docs/architecture/',
+    },
+  ]}
+/>
+
+## Integrate and operate
+
+<NavCards
+  items={[
+    {
+      title: 'Mobile API',
+      description: 'Authentication, conventions, errors and idempotency for api/v1.',
+      to: '/docs/api/',
+    },
+    {
+      title: 'API reference',
+      description: 'Every endpoint, generated from the OpenAPI file.',
+      to: '/docs/api/reference/',
+    },
+    {
+      title: 'Operations',
+      description: 'Deploying a release, health checks, backups, queues and the scheduler.',
+      to: '/docs/operations/',
+    },
+    {
+      title: 'Changelog',
+      description: 'The latest changes, newest first.',
+      to: '/docs/changelog/',
+    },
+  ]}
+/>

@@ -1,0 +1,96 @@
+---
+title: Dokumentasi Inbils
+description: Panduan untuk staf ISP, operator, teknisi, dan pelanggan, serta modul, arsitektur, API mobile, dan operasional Inbils, aplikasi manajemen ISP multi-tenant.
+---
+
+import NavCards from '~/components/docs/NavCards.astro';
+
+Inbils adalah aplikasi manajemen ISP multi-tenant: pelanggan dan langganan, RADIUS dan MikroTik, SPK untuk teknisi, inventaris, billing dengan Midtrans, serta tiket dengan SLA, lengkap dengan dua aplikasi Android. Halaman-halaman ini mendokumentasikan aplikasi web, panel operator, dan kedua aplikasi, serta menjelaskan cara sistem dibangun dan dijalankan. Tersedia dalam bahasa Inggris dan Indonesia: ganti bahasa di header.
+
+## Mulai dari sini
+
+<NavCards
+  items={[
+    {
+      title: 'Memulai',
+      description: 'Jalankan Inbils di komputer Anda dengan Laravel Sail dan Docker, isi data awal, lalu masuk.',
+      to: '/docs/getting-started/',
+    },
+    {
+      title: 'Panduan pengguna',
+      description: 'Langkah demi langkah dengan tangkapan layar, untuk staf, operator, teknisi, dan pelanggan.',
+      to: '/docs/guides/',
+    },
+  ]}
+/>
+
+## Panduan menurut peran
+
+<NavCards
+  items={[
+    {
+      title: 'Panduan Web',
+      description: 'Kantor belakang untuk admin, manajer, dan staf ISP.',
+      to: '/docs/guides/web/',
+    },
+    {
+      title: 'Panduan Panel Operator',
+      description: 'Tenant, akses dukungan, templat peran, dan ekspor di /platform.',
+      to: '/docs/guides/platform/',
+    },
+    {
+      title: 'Panduan Aplikasi Teknisi',
+      description: 'SPK, tiket, bukti, dan material di lapangan.',
+      to: '/docs/guides/technician/',
+    },
+    {
+      title: 'Panduan Aplikasi Pelanggan',
+      description: 'Tagihan, pembayaran, status layanan, dan tiket untuk pelanggan.',
+      to: '/docs/guides/customer/',
+    },
+  ]}
+/>
+
+## Memahami sistemnya
+
+<NavCards
+  items={[
+    {
+      title: 'Modul produk',
+      description: 'Fungsi pelanggan, jaringan, SPK, inventaris, billing, tiket, dan laporan.',
+      to: '/docs/modules/',
+    },
+    {
+      title: 'Arsitektur',
+      description: 'Lapisan kode, multi-tenancy, izin, dan model data.',
+      to: '/docs/architecture/',
+    },
+  ]}
+/>
+
+## Integrasi dan operasional
+
+<NavCards
+  items={[
+    {
+      title: 'API mobile',
+      description: 'Autentikasi, konvensi, galat, dan idempotensi untuk api/v1.',
+      to: '/docs/api/',
+    },
+    {
+      title: 'Referensi API',
+      description: 'Setiap endpoint, dibuat dari berkas OpenAPI.',
+      to: '/docs/api/reference/',
+    },
+    {
+      title: 'Operasional',
+      description: 'Merilis versi, health check, backup, antrean, dan scheduler.',
+      to: '/docs/operations/',
+    },
+    {
+      title: 'Catatan perubahan',
+      description: 'Perubahan terbaru, dari yang terbaru.',
+      to: '/docs/changelog/',
+    },
+  ]}
+/>
