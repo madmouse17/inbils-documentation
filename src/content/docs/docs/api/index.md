@@ -7,8 +7,8 @@ The mobile API is the JSON interface that the two Inbils Android apps (customer 
 
 ## Who uses it
 
-- The **customer app**: pelanggan see their home feed, invoices, subscriptions and tickets.
-- The **technician app**: teknisi work through their SPK, send evidence and request materials.
+- The **customer app**: customers see their home feed, invoices, subscriptions and tickets.
+- The **technician app**: technicians work through their work orders (SPK), send evidence and request materials.
 
 Both apps hand-write their models from the contract file, `docs/api/mobile-v1.openapi.json`. The contract is the source of truth for field names and types. The current contract version is 1.1.0. Version 1.1 replaced the integer ids of 1.0 with opaque 26-character ULID strings.
 
@@ -20,7 +20,7 @@ The contract is generated from the routes, requests and resources. After any cha
 php artisan scramble:export
 ```
 
-The generated per-endpoint reference is on [API reference](/docs/api/reference/).
+The contract file is [`docs/api/mobile-v1.openapi.json`](https://github.com/madmouse17/isp_inbils/blob/main/docs/api/mobile-v1.openapi.json) in the application repository. The generated per-endpoint reference is on [API reference](/docs/api/reference/).
 
 ## Endpoint groups
 
@@ -38,7 +38,7 @@ The generated per-endpoint reference is on [API reference](/docs/api/reference/)
 | Technician: work orders | `technician/work-orders/{wo}/start`, `en-route`, `submit` | Move an SPK through its states. |
 | Technician: evidence | `technician/work-orders/{wo}/evidence` | Upload and delete evidence for an SPK. |
 | Technician: items | `technician/work-orders/{wo}/items`, `technician/products`, `technician/warehouses` | Record materials used on an SPK. |
-| Technician: network credentials | `technician/work-orders/{wo}/network-credentials` | Submit the network credentials of an installation. |
+| Technician: network credentials | `technician/work-orders/{wo}/network-credentials` | Reveal the PPPoE login of an installation work order. The call is rate limited and every reveal is audited. |
 | Technician: material returns | `technician/material-returns` | List material returns and declare them. |
 | Technician: inventory requests | `technician/inventory-requests` | List, create and cancel material requests. |
 | Technician: tickets | `technician/tickets/{id}` | Start, resolve, comment and attach files on assigned tickets. |

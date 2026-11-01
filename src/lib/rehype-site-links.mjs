@@ -17,7 +17,8 @@ export default function rehypeSiteLinks({ base }) {
       if (node.type !== 'element' || node.tagName !== 'a') return;
       const href = node.properties?.href;
       if (typeof href === 'string' && href.startsWith('/') && !href.startsWith('//')) {
-        node.properties.href = prefix + href;
+        // The API reference exists in English only (src/lib/i18n.ts, ENGLISH_ONLY).
+        node.properties.href = (href.startsWith('/docs/api/reference/') ? root : prefix) + href;
       }
     });
   };

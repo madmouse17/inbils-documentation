@@ -4,6 +4,7 @@ import starlight from '@astrojs/starlight';
 import { unified } from '@astrojs/markdown-remark';
 import icon from 'astro-icon';
 import tailwindcss from '@tailwindcss/vite';
+import starlightOpenAPI, { openAPISidebarGroups } from 'starlight-openapi';
 import rehypeSiteLinks from './src/lib/rehype-site-links.mjs';
 import { sidebar } from './src/lib/sidebar.mjs';
 
@@ -62,7 +63,22 @@ export default defineConfig({
         { tag: 'meta', attrs: { name: 'theme-color', content: '#06122b' } },
         { tag: 'link', attrs: { rel: 'apple-touch-icon', href: `${base}/apple-touch-icon.png` } },
       ],
-      sidebar: sidebar(),
+      plugins: [
+        // The mobile API reference: one static page per operation, built from the contract the apps are written
+        // against. English only: it is generated from the English OpenAPI file.
+        starlightOpenAPI([
+          {
+            base: 'docs/api/reference',
+            schema: './src/data/mobile-v1.openapi.json',
+            sidebar: {
+              label: 'API reference',
+              collapsed: true,
+              operations: { badges: true, labels: 'summary' },
+            },
+          },
+        ]),
+      ],
+      sidebar: sidebar(openAPISidebarGroups),
     }),
   ],
   vite: { plugins: [tailwindcss()] },

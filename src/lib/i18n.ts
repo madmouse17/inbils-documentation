@@ -405,8 +405,12 @@ const dictionaries: Record<Lang, Record<Key, string>> = { en, id };
 /** The string for `key` in `lang`. */
 export const t = (lang: Lang, key: Key): string => dictionaries[lang][key];
 
+/** The API reference is generated from the English OpenAPI file and exists in English only: links to it never carry `/id`. */
+export const ENGLISH_ONLY = '/docs/api/reference/';
+
 /** Site path (starting with `/`) in `lang`, without the base: `/docs/` becomes `/id/docs/` in Indonesian. */
-export const sitePath = (lang: Lang, path: string): string => (lang === 'id' ? `/id${path}` : path);
+export const sitePath = (lang: Lang, path: string): string =>
+  lang === 'id' && !path.startsWith(ENGLISH_ONLY) ? `/id${path}` : path;
 
 /** `sitePath` with the Astro base, for links and assets. */
 export const href = (lang: Lang, path: string): string => withBase(sitePath(lang, path));

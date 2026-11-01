@@ -20,7 +20,7 @@ Kontrak dihasilkan dari route, request, dan resource. Setelah mengubah route, re
 php artisan scramble:export
 ```
 
-Referensi per endpoint yang dihasilkan ada di [API reference](/docs/api/reference/).
+Berkas kontrak adalah [`docs/api/mobile-v1.openapi.json`](https://github.com/madmouse17/isp_inbils/blob/main/docs/api/mobile-v1.openapi.json) di repositori aplikasi. Referensi per endpoint yang dihasilkan ada di [API reference](/docs/api/reference/).
 
 ## Grup endpoint
 
@@ -38,7 +38,7 @@ Referensi per endpoint yang dihasilkan ada di [API reference](/docs/api/referenc
 | Teknisi: work order | `technician/work-orders/{wo}/start`, `en-route`, `submit` | Memindahkan SPK antar status. |
 | Teknisi: bukti | `technician/work-orders/{wo}/evidence` | Unggah dan hapus bukti SPK. |
 | Teknisi: item | `technician/work-orders/{wo}/items`, `technician/products`, `technician/warehouses` | Mencatat material yang dipakai pada SPK. |
-| Teknisi: kredensial jaringan | `technician/work-orders/{wo}/network-credentials` | Mengirim kredensial jaringan sebuah instalasi. |
+| Teknisi: kredensial jaringan | `technician/work-orders/{wo}/network-credentials` | Menampilkan login PPPoE sebuah SPK instalasi. Panggilan dibatasi lajunya dan setiap penampilan dicatat di audit. |
 | Teknisi: pengembalian material | `technician/material-returns` | Daftar pengembalian material dan deklarasinya. |
 | Teknisi: permintaan inventori | `technician/inventory-requests` | Daftar, buat, dan batalkan permintaan material. |
 | Teknisi: tiket | `technician/tickets/{id}` | Mulai, selesaikan, beri komentar, dan lampirkan file pada tiket yang ditugaskan. |
