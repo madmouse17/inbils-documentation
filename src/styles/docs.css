@@ -1,8 +1,7 @@
 /*
   Starlight theme: maps the shared tokens (tokens.css) onto Starlight's variables so the docs look like the rest
   of the site. The `:root` values are the dark theme and `:root[data-theme='light']` the light one, which is the
-  default (ThemeInit sets the attribute before first paint). Text pairs were checked at 4.5:1 or better (see
-  docs/preflight.md).
+  default (ThemeInit sets the attribute before first paint). Text pairs were checked at 4.5:1 or better.
 */
 :root {
   --sl-font: var(--font-sans-stack);

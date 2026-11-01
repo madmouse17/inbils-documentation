@@ -11,8 +11,7 @@
   signal appears only in the network drawing (a node you touched, a packet in flight), where it marks live
   traffic. Everything else stays navy or neutral.
 
-  Every text pair below was checked against WCAG AA (4.5:1 for text, 3:1 for control outlines); the table is in
-  docs/preflight.md.
+  Every text pair below was checked against WCAG AA (4.5:1 for text, 3:1 for control outlines).
 */
 :root {
   color-scheme: dark;
