@@ -1,0 +1,40 @@
+---
+import { Image } from 'astro:assets';
+import shot from '../../assets/guide/web/nas-devices-show.webp';
+import { href, t, type Lang } from '../../lib/i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const points = ['net.b1', 'net.b2', 'net.b3', 'net.b4', 'net.b5'] as const;
+---
+
+<section id="network" aria-labelledby="net-title" class="mx-auto max-w-300 px-5 pt-24 lg:pt-32">
+  <div class="grid items-center gap-12 lg:grid-cols-12">
+    <div class="lg:col-span-5">
+      <h2 id="net-title" class="text-section font-semibold">
+        {t(lang, 'net.title')}
+      </h2>
+      <p class="mt-5 text-lg text-muted">{t(lang, 'net.lede')}</p>
+      <ul class="points mt-8">
+        {points.map((key) => (
+          <li>{t(lang, key)}</li>
+        ))}
+      </ul>
+      <a href={href(lang, '/docs/guides/web/network/nas-routers/')} class="link mt-8 inline-block">
+        {t(lang, 'net.link')}
+      </a>
+    </div>
+    <figure class="shot lg:col-span-7">
+      <Image
+        src={shot}
+        alt={t(lang, 'net.shotAlt')}
+        widths={[640, 960, 1280]}
+        sizes="(min-width: 1240px) 700px, (min-width: 64rem) 58vw, calc(100vw - 2.5rem)"
+        loading="lazy"
+      />
+    </figure>
+  </div>
+</section>

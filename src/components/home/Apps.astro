@@ -1,0 +1,51 @@
+---
+import { Image } from 'astro:assets';
+import phone from '../../assets/guide/customer/redesign/beranda-blue-light.webp';
+import { href, t, type Lang } from '../../lib/i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const points = ['apps.b1', 'apps.b2', 'apps.b3'] as const;
+const guides = [
+  { label: t(lang, 'apps.guideCustomer'), to: '/docs/guides/customer/' },
+  { label: t(lang, 'apps.guideTechnician'), to: '/docs/guides/technician/' },
+  { label: t(lang, 'apps.guideApi'), to: '/docs/api/' },
+];
+---
+
+<section id="apps" aria-labelledby="apps-title" class="mx-auto max-w-300 px-5 pt-24 lg:pt-32">
+  <div class="grid items-center gap-12 lg:grid-cols-12">
+    <div class="lg:col-span-7">
+      <h2 id="apps-title" class="max-w-[22ch] text-section font-semibold">
+        {t(lang, 'apps.title')}
+      </h2>
+      <p class="mt-5 max-w-[62ch] text-lg text-muted">{t(lang, 'apps.lede')}</p>
+      <ul class="points mt-8 max-w-[62ch]">
+        {points.map((key) => (
+          <li>{t(lang, key)}</li>
+        ))}
+      </ul>
+      <ul class="mt-8 flex flex-wrap gap-x-6 gap-y-1">
+        {guides.map((g) => (
+          <li>
+            <a href={href(lang, g.to)} class="link inline-flex min-h-11 items-center">
+              {g.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+    <figure class="shot phone-crop mx-auto w-full max-w-72 lg:col-span-4 lg:col-start-9">
+      <Image
+        src={phone}
+        alt={t(lang, 'apps.shotAlt')}
+        widths={[300, 600]}
+        sizes="288px"
+        loading="lazy"
+      />
+    </figure>
+  </div>
+</section>

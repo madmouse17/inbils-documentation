@@ -1,0 +1,75 @@
+---
+import '@fontsource-variable/geist/wght.css';
+import geistLatin from '@fontsource-variable/geist/files/geist-latin-wght-normal.woff2?url';
+import '../styles/global.css';
+import ThemeInit from '../components/ThemeInit.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { SITE_DESCRIPTION, SITE_URL, withBase } from '../lib/site';
+import { t, twinPath, type Lang } from '../lib/i18n';
+
+interface Props {
+  title: string;
+  description?: string;
+  /** Site path of this page, with its language prefix, starting and ending with `/`. */
+  path: string;
+  lang?: Lang;
+}
+
+const { title, description = SITE_DESCRIPTION, path, lang = 'en' } = Astro.props;
+const canonical = `${SITE_URL}${path}`;
+const twin = twinPath(path);
+const twinUrl = `${SITE_URL}${twin.path}`;
+const enUrl = lang === 'en' ? canonical : twinUrl;
+const idUrl = lang === 'id' ? canonical : twinUrl;
+const image = `${SITE_URL}/og/inbils-${lang}.png`;
+---
+
+<!doctype html>
+<html lang={lang} data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#06122b" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="en" href={enUrl} />
+    <link rel="alternate" hreflang="id" href={idUrl} />
+    <link rel="alternate" hreflang="x-default" href={enUrl} />
+    <link rel="icon" type="image/png" sizes="64x64" href={withBase('/favicon.png')} />
+    <link rel="apple-touch-icon" href={withBase('/apple-touch-icon.png')} />
+    <link rel="preload" as="font" type="font/woff2" href={geistLatin} crossorigin />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content={lang === 'id' ? 'id_ID' : 'en_US'} />
+    <meta property="og:locale:alternate" content={lang === 'id' ? 'en_US' : 'id_ID'} />
+    <meta property="og:site_name" content="Inbils" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={image} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={t(lang, 'og.alt')} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+    <ThemeInit />
+    <slot name="head" />
+  </head>
+  <body class="bg-bg text-fg antialiased">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-30 focus:rounded-ui focus:bg-accent focus:px-4 focus:py-3 focus:font-semibold focus:text-on-accent"
+    >
+      {t(lang, 'skip')}
+    </a>
+    <SiteHeader lang={lang} path={path} />
+    <main id="main">
+      <slot />
+    </main>
+    <SiteFooter lang={lang} />
+  </body>
+</html>

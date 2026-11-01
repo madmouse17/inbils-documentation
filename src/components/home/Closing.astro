@@ -1,0 +1,33 @@
+---
+import { Icon } from 'astro-icon/components';
+import { t, type Lang } from '../../lib/i18n';
+import { CONTACT_URL } from '../../lib/site';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+---
+
+<section aria-labelledby="closing-title" class="mx-auto max-w-300 px-5 pt-24 lg:pt-32">
+  <div class="closing">
+    <h2 id="closing-title" class="max-w-[24ch] text-section font-semibold">
+      {t(lang, 'closing.title')}
+    </h2>
+    <p class="mt-5 max-w-[52ch] text-lg text-muted">{t(lang, 'closing.body')}</p>
+    <a href={CONTACT_URL} rel="noopener" class="btn btn-primary mt-8">
+      <Icon name="ph:github-logo" class="size-5" aria-hidden="true" />
+      {t(lang, 'closing.cta')}
+    </a>
+  </div>
+</section>
+
+<style>
+  .closing {
+    padding: clamp(2rem, 5vw, 4rem);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+  }
+</style>

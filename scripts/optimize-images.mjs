@@ -27,6 +27,8 @@ for (const file of sources) {
   const text = readFileSync(join(guideDir, file), 'utf8');
   for (const m of text.matchAll(/!\[[^\]]*\]\((images\/[^)\s]+)/g)) refs.add(m[1]);
 }
+// Screenshots only the landing page uses: they are not in a guide, so they are listed here.
+for (const extra of ['images/technician/beranda.png']) refs.add(extra);
 
 let total = 0;
 let largest = { size: 0, file: '' };

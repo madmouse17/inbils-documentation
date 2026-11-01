@@ -1,0 +1,67 @@
+---
+import { Icon } from 'astro-icon/components';
+import { Image } from 'astro:assets';
+import mark from '../assets/logo/inbils-mark.png';
+import { navFor } from '../lib/nav';
+import { t, type Lang } from '../lib/i18n';
+import { CONTACT_URL } from '../lib/site';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+// The footer carries the two reading lists; the product anchors live in the top bar and on the page itself.
+const groups = navFor(lang).slice(1);
+---
+
+<footer class="mt-24 border-t border-line">
+  <div class="mx-auto max-w-300 px-5 py-14">
+    <div class="grid gap-10 lg:grid-cols-12">
+      <div class="lg:col-span-6">
+        <div class="flex items-center gap-3">
+          <Image src={mark} alt="" width={64} height={64} class="size-10" loading="lazy" />
+          <p class="text-xl font-semibold tracking-tight" translate="no">
+            Inbils
+          </p>
+        </div>
+        <p class="mt-4 max-w-[44ch] text-muted">{t(lang, 'footer.tagline')}</p>
+        <p class="mt-6 max-w-[44ch] font-medium">
+          {t(lang, 'footer.contactLead')}
+          <a href={CONTACT_URL} rel="noopener" class="link">
+            {t(lang, 'footer.contactLink')}
+          </a>
+        </p>
+      </div>
+
+      <nav
+        aria-label={t(lang, 'nav.footer')}
+        class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2 lg:col-span-6"
+      >
+        {groups.map((group) => (
+          <section>
+            <h2 class="text-sm font-semibold">{group.label}</h2>
+            <ul class="mt-2">
+              {group.items.map((item) => (
+                <li>
+                  <a
+                    href={item.href}
+                    rel={item.external ? 'noopener' : undefined}
+                    class="inline-flex h-11 items-center gap-1 text-muted hover:text-fg"
+                  >
+                    {item.label}
+                    {item.external && (
+                      <Icon name="ph:arrow-up-right" class="size-4" aria-hidden="true" />
+                    )}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
+      </nav>
+    </div>
+
+    <p class="mt-12 max-w-[72ch] text-sm text-muted">{t(lang, 'footer.rights')}</p>
+  </div>
+</footer>

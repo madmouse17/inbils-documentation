@@ -1,0 +1,45 @@
+---
+import { Image } from 'astro:assets';
+import shot from '../../assets/guide/web/invoices-index.webp';
+import { href, t, type Lang } from '../../lib/i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const points = ['bill.b1', 'bill.b2', 'bill.b3', 'bill.b4'] as const;
+---
+
+<section id="billing" aria-labelledby="bill-title" class="mx-auto max-w-300 px-5 pt-24 lg:pt-32">
+  <div class="grid gap-10 lg:grid-cols-12">
+    <div class="lg:col-span-5">
+      <h2 id="bill-title" class="text-section font-semibold">
+        {t(lang, 'bill.title')}
+      </h2>
+      <p class="mt-5 text-lg text-muted">{t(lang, 'bill.lede')}</p>
+    </div>
+    <div class="lg:col-span-6 lg:col-start-7">
+      <ul class="points">
+        {points.map((key) => (
+          <li>{t(lang, key)}</li>
+        ))}
+      </ul>
+      <a
+        href={href(lang, '/docs/guides/web/finance-and-reports/invoices/')}
+        class="link mt-8 inline-block"
+      >
+        {t(lang, 'bill.link')}
+      </a>
+    </div>
+  </div>
+  <figure class="shot mt-14">
+    <Image
+      src={shot}
+      alt={t(lang, 'bill.shotAlt')}
+      widths={[640, 960, 1280]}
+      sizes="(min-width: 1240px) 1200px, calc(100vw - 2.5rem)"
+      loading="lazy"
+    />
+  </figure>
+</section>

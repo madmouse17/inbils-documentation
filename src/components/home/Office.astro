@@ -1,0 +1,46 @@
+---
+import { href, t, type Lang } from '../../lib/i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+// Three domains that need a sentence each, not a picture each: a ruled list, not a row of cards.
+const rows = [
+  {
+    title: t(lang, 'office.inventoryTitle'),
+    body: t(lang, 'office.inventoryBody'),
+    to: '/docs/modules/inventory/',
+  },
+  {
+    title: t(lang, 'office.ticketsTitle'),
+    body: t(lang, 'office.ticketsBody'),
+    to: '/docs/modules/ticketing/',
+  },
+  {
+    title: t(lang, 'office.reportsTitle'),
+    body: t(lang, 'office.reportsBody'),
+    to: '/docs/modules/reporting/',
+  },
+];
+---
+
+<section id="office" aria-labelledby="office-title" class="mx-auto max-w-300 px-5 pt-24 lg:pt-32">
+  <h2 id="office-title" class="max-w-[24ch] text-section font-semibold">
+    {t(lang, 'office.title')}
+  </h2>
+  <div class="mt-10 border-t border-line">
+    {rows.map((row) => (
+      <div class="grid gap-3 border-b border-line py-8 lg:grid-cols-12 lg:gap-10">
+        <h3 class="text-2xl font-semibold tracking-tight lg:col-span-4">
+          <a href={href(lang, row.to)} class="hover:text-accent-text">
+            {row.title}
+          </a>
+        </h3>
+        <p class="max-w-[64ch] text-muted lg:col-span-8">{row.body}</p>
+      </div>
+    ))}
+  </div>
+</section>

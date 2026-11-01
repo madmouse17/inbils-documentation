@@ -1,0 +1,124 @@
+---
+import { Icon } from 'astro-icon/components';
+import { href, t, type Lang } from '../../lib/i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+// The five stations of one customer, each with the chapter of the web guide that covers it. The icons are the
+// things themselves: a person, a work order, a network, an invoice, a help desk.
+const stations = [
+  {
+    icon: 'ph:user-circle',
+    title: t(lang, 'life.customer'),
+    body: t(lang, 'life.customerBody'),
+    to: '/docs/guides/web/customers-and-services/customers/',
+  },
+  {
+    icon: 'ph:clipboard-text',
+    title: t(lang, 'life.order'),
+    body: t(lang, 'life.orderBody'),
+    to: '/docs/guides/web/operations/work-orders/',
+  },
+  {
+    icon: 'ph:hard-drives',
+    title: t(lang, 'life.network'),
+    body: t(lang, 'life.networkBody'),
+    to: '/docs/guides/web/network/nas-routers/',
+  },
+  {
+    icon: 'ph:receipt',
+    title: t(lang, 'life.billing'),
+    body: t(lang, 'life.billingBody'),
+    to: '/docs/guides/web/finance-and-reports/invoices/',
+  },
+  {
+    icon: 'ph:headset',
+    title: t(lang, 'life.support'),
+    body: t(lang, 'life.supportBody'),
+    to: '/docs/guides/web/operations/tickets/',
+  },
+];
+---
+
+<section id="lifecycle" aria-labelledby="life-title" class="mx-auto max-w-300 px-5 pt-24 lg:pt-32">
+  <h2 id="life-title" class="max-w-[22ch] text-section font-semibold">
+    {t(lang, 'life.title')}
+  </h2>
+  <p class="mt-5 max-w-[62ch] text-lg text-muted">{t(lang, 'life.lede')}</p>
+
+  <ol class="stations mt-14" aria-label={t(lang, 'life.nav')}>
+    {stations.map((s) => (
+      <li>
+        <span class="node">
+          <Icon name={s.icon} class="size-6" aria-hidden="true" />
+        </span>
+        <div class="text">
+          <h3 class="text-xl font-semibold tracking-tight">{s.title}</h3>
+          <p class="mt-2 text-muted">{s.body}</p>
+          <a href={href(lang, s.to)} class="link mt-3 inline-block">
+            {t(lang, 'life.read')}
+            <span class="sr-only">: {s.title}</span>
+          </a>
+        </div>
+      </li>
+    ))}
+  </ol>
+</section>
+
+<style>
+  /* Stations along one line, like nodes along a link: the line runs down the left on small screens. */
+  .stations {
+    position: relative;
+    display: grid;
+    gap: 2.5rem;
+  }
+  .stations::before {
+    content: '';
+    position: absolute;
+    top: 1.75rem;
+    bottom: 1.75rem;
+    left: 1.75rem;
+    width: 1px;
+    background: var(--outline);
+  }
+  .stations li {
+    position: relative;
+    display: grid;
+    grid-template-columns: 3.5rem 1fr;
+    column-gap: 1.25rem;
+  }
+  .node {
+    display: grid;
+    place-items: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    border: 1px solid var(--outline);
+    border-radius: 50%;
+    background: var(--surface);
+    color: var(--accent-text);
+  }
+  @media (min-width: 64rem) {
+    .stations {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 1.75rem;
+    }
+    .stations::before {
+      top: 1.75rem;
+      bottom: auto;
+      left: 1.75rem;
+      right: 1.75rem;
+      width: auto;
+      height: 1px;
+    }
+    .stations li {
+      display: block;
+    }
+    .text {
+      margin-top: 1.25rem;
+    }
+  }
+</style>

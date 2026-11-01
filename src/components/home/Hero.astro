@@ -1,0 +1,65 @@
+---
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import dashboard from '../../assets/guide/web/dashboard.webp';
+import NetworkBackdrop from './NetworkBackdrop.astro';
+import { href, t, type Lang } from '../../lib/i18n';
+import { CONTACT_URL } from '../../lib/site';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+---
+
+<section aria-labelledby="hero-title" class="hero relative isolate overflow-x-clip">
+  <NetworkBackdrop lang={lang} />
+  <div class="mx-auto max-w-300 px-5 pt-14 lg:pt-24">
+    <h1
+      id="hero-title"
+      class="rise max-w-[20ch] text-hero font-semibold sm:max-w-[22ch] lg:max-w-[24ch]"
+      style="--i: 0"
+    >
+      {t(lang, 'hero.title')}
+    </h1>
+
+    <div class="mt-6 flex flex-wrap items-center gap-x-10 gap-y-5 lg:mt-8">
+      <p class="rise max-w-[48ch] text-lg text-muted lg:text-xl" style="--i: 1" data-net-quiet>
+        {t(lang, 'hero.lede')}
+      </p>
+      <div class="rise flex flex-wrap gap-3" style="--i: 2" data-net-quiet>
+        <a href={CONTACT_URL} rel="noopener" class="btn btn-primary">
+          <Icon name="ph:github-logo" class="size-5" aria-hidden="true" />
+          {t(lang, 'hero.contact')}
+        </a>
+        <a href={href(lang, '/docs/guides/')} class="btn btn-secondary">
+          {t(lang, 'hero.guides')}
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="mx-auto mt-16 max-w-300 px-5 lg:mt-24">
+    <figure class="shot rise" style="--i: 3">
+      <Image
+        src={dashboard}
+        alt={t(lang, 'hero.shotAlt')}
+        widths={[640, 960, 1280]}
+        sizes="(min-width: 1240px) 1200px, calc(100vw - 2.5rem)"
+        priority
+      />
+    </figure>
+  </div>
+</section>
+
+<style>
+  .hero {
+    --net-h: 30rem;
+  }
+  @media (max-width: 40rem) {
+    .hero {
+      --net-h: 33rem;
+    }
+  }
+</style>

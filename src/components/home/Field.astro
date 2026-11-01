@@ -1,0 +1,40 @@
+---
+import { Image } from 'astro:assets';
+import phone from '../../assets/guide/technician/beranda.webp';
+import { href, t, type Lang } from '../../lib/i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const points = ['field.b1', 'field.b2', 'field.b3', 'field.b4'] as const;
+---
+
+<section id="field" aria-labelledby="field-title" class="mx-auto max-w-300 px-5 pt-24 lg:pt-32">
+  <div class="grid items-center gap-12 lg:grid-cols-12">
+    <div class="lg:order-2 lg:col-span-7 lg:col-start-6">
+      <h2 id="field-title" class="max-w-[24ch] text-section font-semibold">
+        {t(lang, 'field.title')}
+      </h2>
+      <p class="mt-5 max-w-[62ch] text-lg text-muted">{t(lang, 'field.lede')}</p>
+      <ul class="points mt-8 max-w-[62ch]">
+        {points.map((key) => (
+          <li>{t(lang, key)}</li>
+        ))}
+      </ul>
+      <a href={href(lang, '/docs/guides/technician/work-orders/')} class="link mt-8 inline-block">
+        {t(lang, 'field.link')}
+      </a>
+    </div>
+    <figure class="shot mx-auto w-full max-w-72 lg:order-1 lg:col-span-4 lg:col-start-1">
+      <Image
+        src={phone}
+        alt={t(lang, 'field.shotAlt')}
+        widths={[300, 600]}
+        sizes="288px"
+        loading="lazy"
+      />
+    </figure>
+  </div>
+</section>

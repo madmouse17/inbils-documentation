@@ -115,6 +115,51 @@
     text-decoration-thickness: 2px;
   }
 
+  /* A screenshot or a phone capture, framed. The images carry their own width and height, so nothing shifts. */
+  .shot {
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    box-shadow: var(--shadow-lift);
+  }
+  .shot img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  /* A phone capture with its status bar cut off (the top 170 of 2400 px): the captures come from debug builds. */
+  .phone-crop {
+    aspect-ratio: 1080 / 2230;
+  }
+  .phone-crop img {
+    height: 100%;
+    object-fit: cover;
+    object-position: bottom;
+  }
+
+  /* A short list whose markers are small open nodes, the shape the network drawing is made of. */
+  .points {
+    display: grid;
+    gap: 0.9rem;
+  }
+  .points li {
+    position: relative;
+    padding-left: 1.5rem;
+    color: var(--fg-muted);
+  }
+  .points li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.62em;
+    width: 0.5rem;
+    height: 0.5rem;
+    border: 1.5px solid var(--accent-text);
+    border-radius: 50%;
+  }
+
   .kbd {
     font-family: var(--font-mono);
     font-size: 0.8125em;

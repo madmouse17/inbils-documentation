@@ -1,0 +1,41 @@
+---
+import { Icon } from 'astro-icon/components';
+import Base from '../layouts/Base.astro';
+import { href, sitePath, t, type Lang } from '../lib/i18n';
+import { CONTACT_URL } from '../lib/site';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+---
+
+<Base
+  title={t(lang, 'contact.title')}
+  description={t(lang, 'contact.description')}
+  path={sitePath(lang, '/contact/')}
+  lang={lang}
+>
+  <section aria-labelledby="contact-title" class="mx-auto max-w-300 px-5 pt-16 lg:pt-24">
+    <h1 id="contact-title" class="text-hero font-semibold">
+      {t(lang, 'contact.h1')}
+    </h1>
+    <p class="mt-8 max-w-[26ch] text-3xl font-semibold tracking-tight lg:text-4xl">
+      {t(lang, 'contact.lead')}
+    </p>
+    <p class="mt-6 max-w-[58ch] text-lg text-muted">{t(lang, 'contact.body')}</p>
+    <a href={CONTACT_URL} rel="noopener" class="btn btn-primary mt-8">
+      <Icon name="ph:github-logo" class="size-5" aria-hidden="true" />
+      {t(lang, 'contact.cta')}
+    </a>
+
+    <div class="mt-20 max-w-[58ch] border-t border-line pt-8">
+      <h2 class="text-xl font-semibold tracking-tight">{t(lang, 'contact.readTitle')}</h2>
+      <p class="mt-2 text-muted">{t(lang, 'contact.readBody')}</p>
+      <a href={href(lang, '/docs/guides/')} class="link mt-3 inline-block">
+        {t(lang, 'contact.readLink')}
+      </a>
+    </div>
+  </section>
+</Base>

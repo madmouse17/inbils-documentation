@@ -1,0 +1,63 @@
+---
+import { Icon } from 'astro-icon/components';
+import { href, t, type Lang } from '../../lib/i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const items = [
+  {
+    title: t(lang, 'docs.gettingStartedTitle'),
+    body: t(lang, 'docs.gettingStartedBody'),
+    to: '/docs/getting-started/',
+  },
+  { title: t(lang, 'docs.guidesTitle'), body: t(lang, 'docs.guidesBody'), to: '/docs/guides/' },
+  {
+    title: t(lang, 'docs.architectureTitle'),
+    body: t(lang, 'docs.architectureBody'),
+    to: '/docs/architecture/',
+  },
+  { title: t(lang, 'docs.apiTitle'), body: t(lang, 'docs.apiBody'), to: '/docs/api/' },
+];
+---
+
+<section id="docs" aria-labelledby="docs-title" class="mx-auto max-w-300 px-5 pt-24 lg:pt-32">
+  <h2 id="docs-title" class="text-section font-semibold">
+    {t(lang, 'docs.title')}
+  </h2>
+  <p class="mt-5 max-w-[62ch] text-lg text-muted">{t(lang, 'docs.lede')}</p>
+  <ul class="mt-10 grid gap-4 sm:grid-cols-2">
+    {items.map((item) => (
+      <li>
+        <a href={href(lang, item.to)} class="tile">
+          <span class="flex items-center justify-between gap-4 text-xl font-semibold tracking-tight">
+            {item.title}
+            <Icon
+              name="ph:arrow-right"
+              class="size-5 shrink-0 text-accent-text"
+              aria-hidden="true"
+            />
+          </span>
+          <span class="mt-2 block text-muted">{item.body}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .tile {
+    display: block;
+    height: 100%;
+    padding: 1.5rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    transition: border-color 160ms ease;
+  }
+  .tile:hover {
+    border-color: var(--accent-text);
+  }
+</style>

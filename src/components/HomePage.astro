@@ -1,0 +1,79 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from './home/Hero.astro';
+import Lifecycle from './home/Lifecycle.astro';
+import Network from './home/Network.astro';
+import Field from './home/Field.astro';
+import Billing from './home/Billing.astro';
+import Office from './home/Office.astro';
+import Platform from './home/Platform.astro';
+import Apps from './home/Apps.astro';
+import DocsMap from './home/DocsMap.astro';
+import Closing from './home/Closing.astro';
+import { CONTACT_URL, REPO, SITE_URL } from '../lib/site';
+import { sitePath, t, type Lang } from '../lib/i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const path = sitePath(lang, '/');
+
+// Structured data for search engines: what the software is, and who publishes it. Only facts this site states.
+const organization = {
+  '@type': 'Organization',
+  '@id': `${SITE_URL}/#organization`,
+  name: 'Inbils',
+  url: `${SITE_URL}/`,
+  logo: {
+    '@type': 'ImageObject',
+    url: `${SITE_URL}/apple-touch-icon.png`,
+    width: 180,
+    height: 180,
+  },
+  sameAs: [CONTACT_URL, REPO],
+};
+const software = {
+  '@type': 'SoftwareApplication',
+  '@id': `${SITE_URL}${path}#software`,
+  name: 'Inbils',
+  applicationCategory: 'BusinessApplication',
+  applicationSubCategory: 'ISP management software',
+  operatingSystem: 'Web, Android',
+  description: t(lang, 'home.description'),
+  url: `${SITE_URL}${path}`,
+  inLanguage: ['en', 'id'],
+  image: `${SITE_URL}/og/inbils-${lang}.png`,
+  softwareHelp: {
+    '@type': 'CreativeWork',
+    name: lang === 'id' ? 'Dokumentasi Inbils' : 'Inbils documentation',
+    url: `${SITE_URL}${sitePath(lang, '/docs/')}`,
+  },
+  publisher: { '@id': organization['@id'] },
+  author: { '@type': 'Person', name: 'madmouse17', url: CONTACT_URL },
+};
+const jsonLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@graph': [organization, software],
+});
+---
+
+<Base
+  title={t(lang, 'home.title')}
+  description={t(lang, 'home.description')}
+  path={path}
+  lang={lang}
+>
+  <script slot="head" type="application/ld+json" set:html={jsonLd} />
+  <Hero lang={lang} />
+  <Lifecycle lang={lang} />
+  <Network lang={lang} />
+  <Field lang={lang} />
+  <Billing lang={lang} />
+  <Office lang={lang} />
+  <Platform lang={lang} />
+  <Apps lang={lang} />
+  <DocsMap lang={lang} />
+  <Closing lang={lang} />
+</Base>

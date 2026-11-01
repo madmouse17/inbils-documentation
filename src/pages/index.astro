@@ -1,6 +1,5 @@
 ---
-import { withBase } from '../lib/site';
-
-// Replaced by the landing page; until then the root opens the documentation.
-return Astro.redirect(withBase('/docs/'));
+import HomePage from '../components/HomePage.astro';
 ---
+
+<HomePage lang="en" />
