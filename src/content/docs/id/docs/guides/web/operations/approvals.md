@@ -1,0 +1,55 @@
+---
+title: "3.2 Persetujuan"
+description: "Persetujuan adalah satu kotak masuk untuk SPK yang menunggu review dan permintaan barang yang menunggu persetujuan."
+---
+
+Persetujuan adalah satu kotak masuk untuk SPK yang menunggu review dan permintaan barang yang menunggu persetujuan. Buka menu ini saat angka di samping **Persetujuan** di sidebar bertambah.
+
+Peran yang dapat memakai: admin dan manajer pada peran bawaan. Izin: `spk.approve` dan `spk.reject` untuk SPK, `inventory.request.approve` dan `inventory.request.reject` untuk permintaan barang. Menu tampil bila Anda memegang salah satu dari keempatnya. Tombol **Setujui** butuh izin approve dan tombol **Tolak** butuh izin reject.
+
+## Membuka dan membaca antrean
+
+1. Di sidebar, buka grup **Operasional**, lalu klik **Persetujuan**. Angka di samping menu adalah jumlah item yang menunggu Anda.
+
+   ![Halaman Persetujuan dengan dua chip ringkasan, tab antrean, filter, dan tabel antrean](~/assets/guide/web/approvals.webp)
+
+2. Ketahui apa yang tidak tampil. Antrean hanya memuat item yang boleh Anda putuskan (aturan maker-checker). SPK yang Anda buat atau yang ditugaskan kepada Anda dan permintaan barang yang Anda ajukan tidak tampil dan tidak ikut dihitung. Aturan ini berlaku juga bagi admin.
+3. Baca dua chip di atas daftar. Chip ini hanya menampilkan angka dan tidak bisa diklik.
+   - Chip **Menunggu saya** menghitung SPK berstatus **Menunggu review** dan permintaan barang berstatus **Menunggu persetujuan** yang boleh Anda putuskan. Angkanya sama dengan angka di sidebar.
+   - Chip **Sudah diproses** menghitung SPK **Selesai** atau **Dikembalikan** dan permintaan barang yang sudah **Disetujui**, **Disiapkan**, **Siap diambil**, **Diserahkan**, atau **Ditolak**. Hitungannya mencakup keputusan siapa pun, kecuali item milik Anda sendiri.
+4. Bila Anda memegang izin SPK dan izin permintaan barang, tab **Semua antrean**, **SPK**, dan **Permintaan barang** muncul di atas filter. Memilih tab membatasi daftar dan angka chip pada jenis itu. Dengan satu jenis izin saja, tab tidak muncul.
+5. Persempit daftar dengan filter:
+   - Kotak **Pencarian** ("Cari kode, judul, atau alasan...") mencari kode, judul, atau alasan. Pencarian berjalan setelah Anda berhenti mengetik. Antrean ini tidak punya tombol **Cari**.
+   - Pilihan **Jenis** berisi **Semua jenis** dan jenis yang ada di antrean Anda: **Instalasi**, **Perawatan**, **Peningkatan layanan**, **Pindah lokasi** (jenis SPK), serta **Untuk SPK**, **Untuk tiket**, **Tanpa rujukan** (asal permintaan barang).
+   - Isian **Pemohon** berisi pembuat item yang ada di antrean Anda ("Semua pemohon" bila kosong). Ketik untuk mencari, lalu pilih.
+   - Pilihan **Prioritas** berisi **Semua prioritas**, **Rendah**, **Sedang**, **Tinggi**, dan **Mendesak**.
+   - Tombol **Reset filter** muncul saat ada filter aktif. Antrean ini tidak punya filter tanggal.
+6. Baca kolom tabel: **Kode** (kode sebagai tautan ke detail bila Anda boleh membukanya, dengan lencana **SPK** atau **Permintaan barang**), **Judul dan dampak** (judul, lalu jenis dan dua barang pertama, masing-masing dengan jumlah dalam satuannya sendiri, misalnya "Kabel Drop 18 m, Konektor 2 pcs (+1)"), **Status dan prioritas** (dua lencana: **Menunggu review** untuk SPK, **Menunggu persetujuan** untuk permintaan barang; prioritas permintaan barang selalu **Sedang**), **Pemohon** (pembuat SPK atau pengaju permintaan), **Waktu dan jadwal** ("Diajukan" dengan tanggal dan umur item, lalu "Jadwal" untuk SPK atau "Dibutuhkan" untuk permintaan barang), dan **Tindakan**. Untuk SPK, tanggal "Diajukan" adalah tanggal SPK dibuat. Jumlah dari satuan yang berbeda tidak dijumlahkan, jadi tabel tidak menulis total. Di layar sempit, tiap item tampil sebagai kartu dengan baris **Dampak material** yang sama dan "{n} jenis barang". Kolom **Kode**, **Judul dan dampak**, **Status dan prioritas**, dan **Waktu dan jadwal** bisa diurutkan.
+7. Tanpa data, tabel menampilkan "Tidak ada persetujuan yang menunggu" dan "Semua antrean sudah diproses. Item baru muncul di sini setelah diajukan.". Bila filter aktif, tabel menampilkan "Tidak ada persetujuan yang cocok" dengan tombol **Reset filter**.
+
+## Meninjau, menyetujui, atau menolak
+
+1. Di kolom **Tindakan**, klik **Tinjau**. Panel **Tinjau SPK** atau **Tinjau permintaan barang**, diikuti kode item, terbuka di sisi kanan.
+2. Baca panel. Bagian atas memuat lencana **SPK** atau **Permintaan barang**, lalu status, prioritas, dan jenis. Kartu **Informasi SPK** atau **Informasi permintaan barang** memuat judul, **Pemohon**, **Status**, **Pengajuan** (umur), **Tanggal pengajuan**, dan **Jadwal pelaksanaan** (SPK) atau **Tanggal dibutuhkan** (permintaan barang). Kartu **Dampak material dan penggunaan barang** memuat **Jenis item** (jumlah barang yang berbeda) dan satu baris per barang dengan jumlahnya dalam satuan barang itu, misalnya "Kabel Drop 18 m". Jumlah dari satuan yang berbeda tidak dijumlahkan, jadi panel tidak menulis total kuantitas. Kartu di bawahnya dimuat saat panel terbuka, dengan kerangka abu-abu selama menunggu. Untuk SPK, kartu **Bukti pekerjaan** menampilkan nama **Teknisi**, hasil **Check-in** (jarak dari lokasi, dan alasan teknisi bila ia memulai jauh dari lokasi) dan sampai tiga foto bukti. Untuk permintaan barang, kartu **Barang diminta** menampilkan setiap barang dengan jumlah diminta dan "Tersedia: n" di gudang sumber. Bila gagal dimuat, kartu menulis "Rincian belum bisa dimuat" dengan tombol **Coba lagi**, dan Anda tetap bisa memutuskan. Klik **Lihat detail** untuk membuka halaman SPK ([bagian 3.3](/docs/guides/web/operations/work-orders/)) atau permintaan barang ([bagian 6.1](/docs/guides/web/inventory/item-requests/)) di tab yang sama. Tombol **Tutup** menutup panel.
+3. Untuk menyetujui, klik **Setujui**. Dialog **Setujui pengajuan {kode}?** terbuka. Pada SPK, dialog memuat daftar dampak, misalnya "Pelanggan ... dan langganan ... menjadi aktif.", "Tagihan pemasangan Rp ... dibuat dan langsung dikirim ke pelanggan." (atau "... dibuat sebagai draf. Kirim dari halaman tagihan."), "Akun PPPoE dibuat dari kode pelanggan ..." dan "Material terpakai dikurangi dari stok: n barang." Baca daftar itu, lalu klik **Setujui** di dialog. Pada permintaan barang Anda dapat mengisi **Catatan persetujuan (opsional)** lebih dulu, maksimal 1000 karakter. Kotak masuk ini menyetujui jumlah sesuai permintaan. Untuk menyetujui sebagian, buka **Lihat detail** dan setujui di sana.
+4. Untuk menolak, klik **Tolak**. Blok **Konfirmasi penolakan SPK** (atau **Konfirmasi penolakan permintaan barang**) muncul. Isi **Alasan penolakan** (wajib, maksimal 500 karakter, penghitung "n/500 karakter" tampil di blok itu). Permintaan barang butuh minimal 3 karakter. Klik **Konfirmasi tolak**, atau **Batal** untuk kembali ke tinjauan. Alasan tersimpan di riwayat audit dan diteruskan kepada pemohon.
+5. Setelah berhasil, panel menutup, item keluar dari antrean, dan toast muncul: "SPK disetujui." atau "SPK ditolak." untuk SPK, "Permintaan barang disetujui dan stok berhasil direservasi." atau "Permintaan barang telah ditolak." untuk permintaan barang.
+6. Bila server menolak, alert merah **Gagal memproses tindakan** memuat pesannya, tombol **Setujui** dan **Tolak** terkunci, dan tombol **Muat ulang antrean** muncul. Klik tombol itu. Panel menutup bila item sudah diproses orang lain, atau tetap terbuka dengan data terbaru.
+
+Hasil setiap keputusan:
+
+- SPK disetujui: status **Selesai**. Sistem memakai stok material yang tercatat di SPK, memasang aset berseri pada SPK pemasangan, dan mengaktifkan langganan pelanggan yang masih **Menunggu**.
+- SPK ditolak: status **Dikembalikan**. Stok tidak berubah, karena SPK tidak mencadangkan stok. Alasan tersimpan di SPK dan riwayat audit. SPK muncul lagi di **Penugasan** ([bagian 3.1](/docs/guides/web/operations/dispatch/)) untuk ditugaskan ulang.
+- Permintaan barang disetujui: status **Disetujui**, stok direservasi di gudang sumber, dan pemohon menerima notifikasi di lonceng serta push. Gudang lalu menyiapkan dan menyerahkan barang ([bagian 6.1](/docs/guides/web/inventory/item-requests/)).
+- Permintaan barang ditolak: status **Ditolak**, dan pemohon menerima lonceng serta push berisi alasan.
+
+## Kesalahan umum
+
+- Antrean kosong padahal ada SPK atau permintaan barang yang menunggu: item yang Anda buat, ajukan, atau yang ditugaskan kepada Anda tidak tampil bagi Anda, bahkan untuk admin. Minta pengguna lain yang berhak untuk memutuskannya.
+- Menyetujui atau menolak item sendiri lewat halaman detail tetap ditolak server, dengan pesan "Pembuat SPK tidak boleh menyetujui SPK sendiri.", "Teknisi yang ditugaskan tidak boleh menyetujui SPK sendiri.", atau "Maker-checker: pemohon tidak boleh menyetujui permintaan sendiri." Untuk menolak, kalimatnya memakai kata "menolak" ("Pembuat SPK tidak boleh menolak SPK sendiri.", "Teknisi yang ditugaskan tidak boleh menolak SPK sendiri.", "Maker-checker: pemohon tidak boleh menolak permintaan sendiri."). Halaman SPK hanya menampilkan toast "Data gagal disimpan. Periksa input." untuk penolakan ini ([bagian 3.3](/docs/guides/web/operations/work-orders/)).
+- Pesan "Alasan penolakan wajib diisi.", "Alasan penolakan minimal 3 karakter." (permintaan barang), atau "Alasan penolakan maksimal 500 karakter.": sesuaikan isian **Alasan penolakan**, lalu klik **Konfirmasi tolak**.
+- Alert **Gagal memproses tindakan** dengan pesan "SPK harus berstatus menunggu review untuk bisa disetujui." (untuk menolak: "... untuk bisa ditolak."), "Permintaan barang bukan berstatus menunggu persetujuan." atau "Hanya permintaan berstatus menunggu persetujuan yang dapat ditolak.": pengguna lain sudah memproses item itu. Klik **Muat ulang antrean**.
+- Setujui SPK gagal dengan pesan "SPK belum bisa disetujui sampai seluruh retur material berstatus direkonsiliasi atau diselesaikan.": selesaikan retur material SPK itu di Pengembalian Barang ([bagian 6.8](/docs/guides/web/inventory/material-returns/)) sampai berstatus **Diterima** atau **Selisih diselesaikan**, klik **Muat ulang antrean**, lalu setujui lagi.
+- Setujui SPK gagal dengan pesan seperti "Stok Kabel Fiber Optic di POP Bandung tidak cukup: tersedia 0 m, diminta 18 m.": stok produk di lokasi yang disebut kurang dari jumlah **Terpakai**. Tambah stok ([bagian 6.5](/docs/guides/web/inventory/stock/)), lalu setujui lagi.
+- Setujui permintaan barang gagal dengan pesan `Stok {nama barang} di {nama gudang} tidak cukup: tersedia {tersedia} {satuan}, diminta {diminta} {satuan}.`: stok gudang sumber kurang. Tambah stok ([bagian 6.5](/docs/guides/web/inventory/stock/)), atau setujui sebagian jumlah dari **Lihat detail**.
+- Setujui permintaan barang gagal dengan pesan "Lokasi gudang sumber wajib ditentukan untuk reservasi.": permintaan itu tersimpan tanpa gudang, dan kotak masuk ini tidak punya pilihan gudang. Buka permintaannya lewat **Lihat detail** ([bagian 6.1](/docs/guides/web/inventory/item-requests/)). Dialog setujui di halaman itu juga belum punya pilihan gudang, jadi permintaan seperti ini belum bisa disetujui dari web.

@@ -1,0 +1,35 @@
+---
+title: Panduan pengguna
+description: Panduan langkah demi langkah dengan tangkapan layar untuk aplikasi web Inbils, panel operator, aplikasi teknisi, dan aplikasi pelanggan, dalam bahasa Indonesia dan Inggris.
+---
+
+import NavCards from '~/components/docs/NavCards.astro';
+
+Empat panduan mencakup seluruh produk, satu untuk tiap jenis pengguna. Masing-masing mengikuti layar sesuai urutan Anda menemuinya, dan setiap halaman dimulai dengan tujuan layar serta peran yang dapat memakainya. Tangkapan layar memperlihatkan antarmuka asli yang berbahasa Indonesia.
+
+<NavCards
+  items={[
+    {
+      title: 'Panduan Web',
+      description: 'Untuk admin, manajer, dan staf: dasbor, penugasan, pelanggan, jaringan, inventaris, tagihan, laporan, dan administrasi.',
+      to: '/docs/guides/web/',
+    },
+    {
+      title: 'Panduan Panel Operator',
+      description: 'Untuk operator platform: membuat dan menangguhkan tenant, akses dukungan, templat peran, ekspor, dan audit platform.',
+      to: '/docs/guides/platform/',
+    },
+    {
+      title: 'Panduan Aplikasi Teknisi',
+      description: 'Untuk teknisi lapangan: SPK, tiket, foto bukti, material, permintaan barang, dan bekerja tanpa sinyal.',
+      to: '/docs/guides/technician/',
+    },
+    {
+      title: 'Panduan Aplikasi Pelanggan',
+      description: 'Untuk pelanggan: tagihan dan pembayaran Midtrans, status langganan dan isolir, kunjungan teknisi, dan tiket.',
+      to: '/docs/guides/customer/',
+    },
+  ]}
+/>
+
+Baru memakai Inbils? Baca dulu pengantar [Panduan Web](/docs/guides/web/introduction/who-uses-this-guide/), lalu bab untuk menu yang Anda kerjakan.

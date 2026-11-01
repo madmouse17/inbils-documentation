@@ -1,0 +1,35 @@
+---
+title: User guides
+description: Step-by-step guides with screenshots for the Inbils web app, the operator panel, the technician app and the customer app, in English and Indonesian.
+---
+
+import NavCards from '~/components/docs/NavCards.astro';
+
+Four guides cover the whole product, one per kind of user. Each follows the screens in the order you meet them, and every page starts with the purpose of the screen and the roles that can use it. Screenshots show the real interface, which is in Indonesian: menu names, buttons and messages stay in Indonesian, with an English gloss the first time they appear on a page.
+
+<NavCards
+  items={[
+    {
+      title: 'Web guide',
+      description: 'For admins, managers and staff: dashboard, dispatch, customers, network, inventory, billing, reports and administration.',
+      to: '/docs/guides/web/',
+    },
+    {
+      title: 'Operator panel guide',
+      description: 'For platform operators: create and suspend tenants, support access, role templates, exports and the platform audit.',
+      to: '/docs/guides/platform/',
+    },
+    {
+      title: 'Technician app guide',
+      description: 'For field technicians: work orders, tickets, photo evidence, materials, item requests and working without a signal.',
+      to: '/docs/guides/technician/',
+    },
+    {
+      title: 'Customer app guide',
+      description: 'For customers: invoices and Midtrans payments, subscription and isolir status, technician visits and tickets.',
+      to: '/docs/guides/customer/',
+    },
+  ]}
+/>
+
+New to Inbils? Read the [Web guide](/docs/guides/web/introduction/who-uses-this-guide/) introduction first, then the chapter of the menu you work in.

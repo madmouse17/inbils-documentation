@@ -1,0 +1,65 @@
+---
+title: "10.2 Istilah"
+description: ""
+---
+
+| Istilah | Arti |
+| --- | --- |
+| 2FA | Autentikasi dua langkah. Kode 6 digit dari aplikasi autentikator diminta setelah kata sandi ([bagian 1.4](/docs/guides/web/introduction/two-factor-authentication/)). |
+| Akses dukungan | Sesi terbatas 30 menit saat operator platform masuk sebagai seorang pengguna untuk menangani keluhan. Mulai dalam mode baca, tercatat di Log Audit perusahaan, dan ditandai banner di atas halaman. Lihat **Panduan Panel Operator Inbils**. |
+| Anak perusahaan | Perusahaan di bawah satu perusahaan induk, dengan data yang tetap terpisah. Operator platform yang membuatnya. Admin perusahaan induk mengajukannya lewat **Minta anak perusahaan** di layar **Perusahaan** ([bagian 8.1](/docs/guides/web/administration/company/)). |
+| Anggota | Pengguna yang berasal dari perusahaan lain tetapi diberi keanggotaan di perusahaan ini. Di menu **Pengguna** hanya perannya di perusahaan ini yang diatur ([bagian 8.5](/docs/guides/web/administration/users/)). |
+| Aset jaringan | Perangkat jaringan yang dilacak satu per satu, dengan nomor seri, lokasi, dan status (**Tersedia**, **Terpasang**, **Perawatan**, **Rusak**, atau **Dipensiunkan**) ([bagian 5.2](/docs/guides/web/network/network-assets/)). |
+| Blokir internet | Isolasi jaringan manual pada satu langganan, lewat tombol **Blokir internet** di langganan atau **Blokir** di **Tunggakan**. Blokir bukan status, dan pembayaran tidak mencabutnya. **Buka blokir** mencabutnya ([bagian 4.1](/docs/guides/web/customers-and-services/customers/) dan [7.2](/docs/guides/web/finance-and-reports/arrears/)). |
+| Break-glass | Penyesuaian stok langsung oleh admin tanpa persetujuan. Layar web tidak menyediakan tombolnya ([bagian 6.5](/docs/guides/web/inventory/stock/)). |
+| Buka kembali | Tombol di halaman tiket yang membawa tiket **Diselesaikan** atau **Ditutup** kembali ke penanganan, dengan alasan wajib. Butuh izin `ticket.reopen`. Target waktu tiket tidak dihitung ulang ([bagian 9.2](/docs/guides/web/workflows/ticket-to-work-order/)). |
+| Check-in | Titik lokasi yang dikirim aplikasi teknisi saat memulai pekerjaan. Halaman tiket dan SPK menulis jaraknya dari lokasi pelanggan di baris **Check-in**, dan alasan teknisi bila ia memulai lebih jauh dari **Jarak check-in maksimal (meter)** ([bagian 8.1](/docs/guides/web/administration/company/)). |
+| Dibayar sebagian | Status tagihan yang sudah menerima sebagian pembayaran dan masih bersisa ([bagian 7.1](/docs/guides/web/finance-and-reports/invoices/)). Tagihan yang sudah lewat jatuh tempo tampil **Lewat jatuh tempo**. |
+| Dicadangkan | Jumlah stok yang dicadangkan oleh permintaan barang yang sudah disetujui ([bagian 6.5](/docs/guides/web/inventory/stock/)). |
+| Dikembalikan | Status SPK yang hasilnya ditolak penyetuju di **Persetujuan**, dengan alasan ([bagian 3.2](/docs/guides/web/operations/approvals/)). Kata yang sama tidak berarti "Ditolak": tulisan **Ditolak** dipakai untuk permintaan barang dan penyesuaian stok. Pada percobaan pembayaran, **Dikembalikan** berarti uang sudah kembali ke pelanggan di luar Inbils ([bagian 7.1](/docs/guides/web/finance-and-reports/invoices/)). |
+| Diperoleh oleh | Karyawan yang dikreditkan memperoleh pelanggan. Angkanya dibaca KPI Penjualan ([bagian 4.1](/docs/guides/web/customers-and-services/customers/) dan [7.10](/docs/guides/web/finance-and-reports/sales-kpis/)). |
+| Diserahkan | Status permintaan barang yang barangnya sudah diterima pemohon lewat **Serah terima**. Stok fisik berkurang, dan kolom jumlahnya bernama **Jumlah Diserahkan** ([bagian 6.1](/docs/guides/web/inventory/item-requests/) dan [9.3](/docs/guides/web/workflows/item-request-to-stock-issue/)). |
+| Drill-down | Membuka baris data sumber di balik satu angka laporan lewat tautan **Lihat data** ([bagian 7.3](/docs/guides/web/finance-and-reports/reports/)). |
+| Ganti paket | Tombol di kartu **Paket** pada detail langganan yang memindahkan langganan ke versi terbaru sebuah paket ([bagian 4.1](/docs/guides/web/customers-and-services/customers/)). |
+| Hapus permanen | Menghapus data master yang belum pernah dipakai data lain, dan tidak bisa dibatalkan. Data yang sudah dipakai hanya bisa dinonaktifkan ([bagian 1.5](/docs/guides/web/introduction/know-the-screen/)). |
+| Head | Perusahaan induk: perusahaan tanpa induk yang punya minimal satu anak perusahaan aktif. Di **Metrik Konsolidasi** ia ditandai badge **Induk** ([bagian 1.6](/docs/guides/web/introduction/switch-company/)). |
+| Hitungan tenggat | Pilihan pada tingkat SLA: **24 jam** menghitung setiap jam, **Jam layanan** hanya menghitung jam buka perusahaan. Target dari Kategori Tiket selalu menghitung 24 jam ([bagian 4.5](/docs/guides/web/customers-and-services/sla-tiers/)). |
+| Isolir | Pembatasan akses jaringan pelanggan yang menunggak. Berjalan otomatis atau lewat tombol **Isolir** di **Tunggakan**, dan langganan berstatus **Ditangguhkan** ([bagian 5.3](/docs/guides/web/network/nas-routers/) dan [7.2](/docs/guides/web/finance-and-reports/arrears/)). |
+| Izin | Hak untuk satu tindakan, misalnya `spk.approve`. Peran adalah kumpulan izin ([bagian 8.6](/docs/guides/web/administration/roles/) dan [8.7](/docs/guides/web/administration/permissions/)). |
+| Jam layanan | Dua hal dengan nama sama. Di profil perusahaan ia teks bebas untuk pelanggan di aplikasi. Di **Pengaturan Perusahaan** ia jadwal jam buka per hari (dengan **Tutup** untuk hari libur) yang menghitung tenggat tingkat SLA berhitungan **Jam layanan**. Samakan keduanya ([bagian 8.1](/docs/guides/web/administration/company/)). |
+| Jarak check-in maksimal | Pengaturan di **Pengaturan Perusahaan**: jarak terjauh dari lokasi pelanggan yang boleh dipakai teknisi untuk memulai pekerjaan tanpa menulis alasan. Bawaan 500 meter ([bagian 8.1](/docs/guides/web/administration/company/)). |
+| Jenis Dokumen | Menu di grup **Administrasi** untuk jenis dokumen pelanggan: nama, kode, masa berlaku dan penanda wajib. Berkasnya diunggah di tab **Dokumen** pada halaman pelanggan ([bagian 8.8](/docs/guides/web/administration/documents/)). |
+| Kuitansi | PDF bukti pembayaran satu tagihan **Lunas**, dengan tombol **Unduh kuitansi** di halaman tagihan. Berbeda dari PDF tagihan, ia tidak memuat rekening pembayaran ([bagian 7.1](/docs/guides/web/finance-and-reports/invoices/)). |
+| Langganan | Layanan satu paket untuk satu pelanggan. Statusnya **Menunggu**, **Aktif**, **Ditangguhkan**, atau **Berhenti** ([bagian 4.1](/docs/guides/web/customers-and-services/customers/)). |
+| Maker-checker | Pemisahan tugas: orang yang membuat atau mengajukan tidak boleh memutuskan persetujuannya ([bagian 10.1](/docs/guides/web/appendix/roles-and-permissions-summary/)). |
+| MRC | Monthly Recurring Charge, harga langganan per bulan. Di paket namanya **Harga bulanan**, dan di langganan **Biaya bulanan** ([bagian 4.2](/docs/guides/web/customers-and-services/service-packages/)). |
+| NAS | Router yang meneruskan otentikasi pelanggan ke RADIUS ([bagian 5.3](/docs/guides/web/network/nas-routers/)). |
+| Nonaktifkan | Menyembunyikan data master dari pilihan baru tanpa mengubah riwayatnya. Pilihan satu-satunya untuk data yang sudah dipakai; **Hapus permanen** hanya untuk data yang belum pernah dipakai ([bagian 1.5](/docs/guides/web/introduction/know-the-screen/)). |
+| NPWP | Nomor pokok wajib pajak, diisi di kolom **NPWP** pelanggan ([bagian 4.1](/docs/guides/web/customers-and-services/customers/)). |
+| ODN | Register jaringan serat optik: port PON pada OLT, splitter pada ODC dan ODP, dan port drop tiap langganan. OLT, ODC, dan ODP didaftarkan sebagai aset jaringan ([bagian 5.5](/docs/guides/web/network/odn/)). |
+| Operator platform | Orang di tim Inbils yang memakai panel `/platform`: membuat dan menangguhkan perusahaan, memelihara templat peran, memperbaiki peran perusahaan atas permintaan, dan memberi akses dukungan. Bukan pengguna perusahaan. Lihat **Panduan Panel Operator Inbils**. |
+| OTC | One-Time Charge, biaya sekali bayar seperti biaya pemasangan. Di paket namanya **Harga pemasangan**, dan di langganan **Biaya pemasangan** ([bagian 4.2](/docs/guides/web/customers-and-services/service-packages/)). |
+| Panel perangkat | Gambar router, switch, OLT, ONU/ONT, ODC, ODP, atau rak seperti wajah aslinya, dengan port berwarna menurut statusnya. Lembar port di dalamnya mencatat label, sambungan antar perangkat, dan pelanggan di port ([bagian 5.6](/docs/guides/web/network/device-panel/)). |
+| Penangan lain | Baris di tabel per teknisi pada **Kepatuhan SLA** yang menggabungkan penangan tiket di luar cakupan Anda, supaya jumlah barisnya tetap sama dengan tiket selesai ([bagian 7.6](/docs/guides/web/finance-and-reports/sla-compliance/)). |
+| Penilaian pelanggan | Nilai 1 sampai 5 yang diberikan pelanggan untuk tiketnya di aplikasi pelanggan, dan tampil di halaman tiket. Isian dengan nama sama di Evaluasi ([bagian 3.5](/docs/guides/web/operations/evaluations/)) terisi dari nilai itu bila ada. |
+| Periode | Rentang tanggal yang dihitung sebuah laporan ([bagian 7.3](/docs/guides/web/finance-and-reports/reports/)). |
+| Petugas tiket | Petugas yang ditunjuk menangani tiket ([bagian 3.4](/docs/guides/web/operations/tickets/)). |
+| POP pelayan | Lokasi POP yang melayani sebuah langganan ([bagian 4.1](/docs/guides/web/customers-and-services/customers/) dan [5.5](/docs/guides/web/network/odn/)). |
+| Port drop | Port output ODP yang dipakai satu langganan ([bagian 5.5](/docs/guides/web/network/odn/)). |
+| PPN | Pajak pertambahan nilai pada item tagihan, dengan tarif perusahaan ([bagian 7.1](/docs/guides/web/finance-and-reports/invoices/)). |
+| PPPoE, Hotspot | Dua jenis layanan untuk akun jaringan pelanggan ([bagian 4.1](/docs/guides/web/customers-and-services/customers/)). |
+| Prefiks | Blok alamat IP dalam notasi CIDR yang dicatat di Alamat IP ([bagian 5.4](/docs/guides/web/network/ip-addresses/)). |
+| Pulihkan | Mengembalikan data yang dihapus ke daftar dengan statusnya semula, lewat filter **Status** **Dihapus** ([bagian 1.5](/docs/guides/web/introduction/know-the-screen/)). |
+| RADIUS | Server otentikasi akses jaringan. Inbils mengisinya dengan akun dan grup kecepatan pelanggan ([bagian 4.4](/docs/guides/web/customers-and-services/speed-profiles/) dan [5.3](/docs/guides/web/network/nas-routers/)). |
+| Respons pertama | Waktu petugas pertama kali memulai tiket atau membalas pelanggan ([bagian 3.4](/docs/guides/web/operations/tickets/)). |
+| SLA | Service Level Agreement, batas waktu layanan. Tingkat SLA dipilih di paket ([bagian 4.5](/docs/guides/web/customers-and-services/sla-tiers/)). Target respons dan penyelesaian sebuah tiket diambil dari tingkat SLA paket langganannya, atau dari Kategori Tiket bila tidak ada tingkat aktif ([bagian 3.4](/docs/guides/web/operations/tickets/)). **Hitungan tenggat** tingkat itu menentukan apakah jam di luar jam buka ikut dihitung. |
+| SPK | Surat Perintah Kerja, perintah kerja lapangan untuk teknisi ([bagian 3.3](/docs/guides/web/operations/work-orders/)). |
+| Splitter | Pembagi yang mengubah satu port hulu menjadi beberapa port output, dengan rasio 1:2 sampai 1:64 ([bagian 5.5](/docs/guides/web/network/odn/)). |
+| Templat peran | Peran awal yang disalin ke setiap perusahaan baru saat dibuat. Setelah disalin, peran itu milik perusahaan dan tidak berubah bila templat diubah ([bagian 8.6](/docs/guides/web/administration/roles/)). |
+| Tersedia | Jumlah stok yang bisa dipakai, yaitu **Jumlah** dikurangi **Dicadangkan** ([bagian 6.5](/docs/guides/web/inventory/stock/)). |
+| Tugaskan ke saya | Tombol di halaman tiket **Terbuka** yang belum punya petugas. Pemegang `ticket.assign` yang boleh menangani tiket menugaskannya ke dirinya sendiri, kecuali perusahaan melarang menugaskan diri sendiri ([bagian 9.2](/docs/guides/web/workflows/ticket-to-work-order/)). |
+| Tugaskan sekarang | Blok di form **Buat Pelanggan** (tab **Langganan & SPK**) untuk memilih teknisi dan **Tanggal kunjungan** SPK pemasangan sejak pendaftaran, bagi pemegang `spk.assign` ([bagian 9.1](/docs/guides/web/workflows/new-customer-to-payment/)). |
+| Tunggakan | Menu yang mengelompokkan tagihan belum lunas per pelanggan menurut umur sejak jatuh tempo ([bagian 7.2](/docs/guides/web/finance-and-reports/arrears/)). |
+| Undangan | E-mail dengan tombol **Atur kata sandi** untuk akun staf baru, dikirim lewat **Kirim undangan** di form **Buat Pengguna**. Admin tidak mengetik kata sandi akun staf. **Kirim ulang undangan** di halaman pengguna mengirim tautan baru bagi akun aktif yang belum pernah masuk ([bagian 8.5](/docs/guides/web/administration/users/)). |
+| Versi paket | Catatan harga, profil, tingkat SLA, dan kategori sebuah paket pada suatu waktu. Langganan tetap di versi yang dijualnya sampai dipindahkan lewat **Ganti paket** ([bagian 4.1](/docs/guides/web/customers-and-services/customers/) dan [4.2](/docs/guides/web/customers-and-services/service-packages/)). |
+| VLAN | Nomor jaringan virtual yang dicatat di Alamat IP dan ditautkan ke prefiks ([bagian 5.4](/docs/guides/web/network/ip-addresses/)). |

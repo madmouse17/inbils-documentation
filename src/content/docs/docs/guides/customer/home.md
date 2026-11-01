@@ -1,0 +1,30 @@
+---
+title: "2. Home"
+description: "Read the Home tab of the Inbils Customer app: service cards, amount due, quick actions, technician visits, announcements and promo banners."
+---
+
+Beranda (Home) is the first tab. The bottom navigation has four tabs: **Beranda** (Home), **Tagihan** (Invoices), **Bantuan** (Help), and **Akun** (Account).
+
+![Home](~/assets/guide/customer/redesign/beranda-blue-light.webp)
+
+The app colours follow your ISP's brand colour, and the ISP logo appears at the top left when the ISP has uploaded one (without a logo, a blue Inbils circle appears). The screen contains, from top to bottom:
+
+1. **Header**: the ISP logo and name on the left, a **bell icon** on the right. The red number on the bell shows unread notifications. See [chapter 7](/docs/guides/customer/notifications/).
+2. **Greeting** "Halo, nama Anda" (Hello, your name).
+3. **Service card**: one card per subscription. When you have more than one running subscription, swipe the card sideways. The dots below show the position of the card. A card contains:
+   - The service **Status**: **Aktif** (Active), **Diisolir** (Isolated), **Ditangguhkan** (Suspended), or **Menunggu** (Pending). Tap the package name to open the subscription details ([chapter 5](/docs/guides/customer/subscriptions/)).
+   - One connection line, **Online sejak 08.12** (Online since 08.12) or **Offline, terakhir online 07.55** (Offline, last online 07.55), on Active, Isolated, and Suspended services. This line appears only when the server can read the connection status of that service.
+   - **Tagihan** (Invoices): "Sisa yang harus dibayar" (Amount left to pay) with the amount, the due date, and the invoice number. When there is no open invoice, the card says "Semua tagihan lunas" (All invoices paid) and "Tagihan berikutnya {tanggal}" (Next invoice {date}). The card colour follows the situation: the ISP brand colour when all is safe, a warning colour when the due date is within 1 to 7 days ("Jatuh tempo 7 hari lagi" (Due in 7 days)) or today ("Jatuh tempo hari ini" (Due today)), and red when late ("Lewat 3 hari" (3 days overdue)) or the service is isolated. The text and icons in the card say the same thing, so colour is not the only cue. The app shows the earliest open invoice on all service cards, with its number.
+   - The large **Bayar** (Pay) button opens that invoice (the button is **Lihat tagihan** (View invoice) when the invoice cannot be paid online). Below it, QRIS, bank VA, e-wallet, and minimarket are listed as methods that can appear on the payment page. The methods actually available are decided by Midtrans and the ISP.
+   - An **Diisolir** service caused by arrears shows all invoices that still hold back reactivation under the heading **Lunasi tagihan berikut agar layanan aktif kembali** (Pay the following invoices to reactivate your service). Each row shows the number, the amount, and the due date, then **Total**. One invoice uses the **Bayar** button. Two or more invoices use **Bayar semua (Rp {total})** (Pay all (Rp {total})). A **Ditangguhkan** service suspended for another reason says "Layanan Anda sedang ditangguhkan. Hubungi {nama ISP} untuk informasi lebih lanjut." (Your service is suspended. Contact {ISP name} for more information.) with a **Hubungi ISP** (Contact your ISP) button. A **Menunggu** service says "Layanan Anda belum aktif." (Your service is not active yet.)
+4. **Quick actions**: **Bayar**, **Lapor masalah** (Report a problem), **Riwayat pembayaran** (Payment history), and **Hubungi ISP**. **Bayar** opens the earliest unpaid invoice, or the **Tagihan** tab when there is none. **Lapor masalah** opens the **Ada masalah?** (Having a problem?) screen with problem types and quick steps ([chapter 6](/docs/guides/customer/help-and-tickets/)). **Hubungi ISP** opens a contact sheet with WhatsApp, phone, email, website, and the service hours filled in by the ISP. Tap a row to open it. When the ISP has not filled in any contact, the sheet points you to the **Bantuan** tab.
+5. **Sedang berjalan** (In progress): the next technician visit, then up to three of your active tickets. The visit card shows the work order (SPK) number, the visit type (for example **Instalasi** (Installation) or **Perawatan** (Maintenance)), the current stage (**Ditugaskan** (Assigned), **Dalam perjalanan** (On the way), or **Sedang dikerjakan** (In progress)), and the scheduled date when there is one. Tap the card to open the visit details (the **Kunjungan teknisi** (Technician visit) section in [chapter 5](/docs/guides/customer/subscriptions/)). A ticket card shows its status; tap a ticket to open it, or **Lihat semua** (View all) to go to the **Bantuan** tab. When there is no visit and no ticket, it says "Tidak ada tiket aktif" (No active tickets).
+
+   ![Home with a work order (SPK) visit card in the Sedang berjalan section, stage Dalam perjalanan](~/assets/guide/customer/redesign/kunjungan-beranda-dalam-perjalanan.webp)
+
+Pull the screen down to refresh. The app also refreshes by itself when you reopen it from the background and when you switch tabs (immediately), and about 1 second after the last notification in a burst, so the visit card and the number on the bell change without a pull. While data reloads, a thin line runs above the list and the old content stays readable. When one section fails to load, that section shows "Data tidak dapat dimuat." (Data could not be loaded.) and a **Coba lagi** (Try again) button; the other sections stay visible.
+
+Home also shows information from the ISP:
+
+- **Outage or maintenance announcements** appear as a warning-toned card above the service card, during their display period. Tap the card to read the full text. You also receive a notification on the bell (see [chapter 7](/docs/guides/customer/notifications/)).
+- **Information announcements** and **promo banners** appear below the Sedang berjalan section. Banners slide automatically every 5 seconds, stop when touched, and have page dots. Tap a banner to open its link; promos are never sent as notifications.
