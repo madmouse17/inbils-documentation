@@ -42,6 +42,18 @@
   --net-rgb: 91 155 255;
   --net-signal-rgb: 56 189 248;
 
+  /* The scenes on the landing page: the isolated state of a subscriber (red, always paired with a word or a
+     dashed line, never colour alone) and the text colour as r g b for labels drawn on a canvas. */
+  --warn-rgb: 255 107 107;
+  --ink-rgb: 232 238 251;
+
+  /* The hardware in the scenes (the MikroTik case, the RADIUS rack, the OLT and the cabinets): three faces of one
+     metal and the edge between them, so equipment reads as equipment in either theme. */
+  --device-top: #35507f;
+  --device-front: #223a68;
+  --device-side: #172b52;
+  --device-edge: rgb(180 200 240 / 0.5);
+
   --radius: 0.5rem;
   --radius-lg: 0.875rem;
   --shadow-lift: 0 32px 64px -28px rgb(1 6 20 / 0.8);
@@ -66,6 +78,14 @@
 
   --net-rgb: 31 85 214;
   --net-signal-rgb: 10 134 179;
+
+  --warn-rgb: 200 30 45;
+  --ink-rgb: 8 24 58;
+
+  --device-top: #3a4c78;
+  --device-front: #26365c;
+  --device-side: #1a2744;
+  --device-edge: rgb(255 255 255 / 0.28);
 
   --shadow-lift: 0 28px 56px -30px rgb(8 24 58 / 0.4);
 }

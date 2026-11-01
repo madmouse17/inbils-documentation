@@ -41,15 +41,17 @@ const { lang } = Astro.props;
   </div>
 
   <div class="mx-auto mt-16 max-w-300 px-5 lg:mt-24">
-    <figure class="shot rise" style="--i: 3">
-      <Image
-        src={dashboard}
-        alt={t(lang, 'hero.shotAlt')}
-        widths={[640, 960, 1280]}
-        sizes="(min-width: 1240px) 1200px, calc(100vw - 2.5rem)"
-        priority
-      />
-    </figure>
+    <div class="dash">
+      <figure class="shot rise" style="--i: 3">
+        <Image
+          src={dashboard}
+          alt={t(lang, 'hero.shotAlt')}
+          widths={[640, 960, 1280]}
+          sizes="(min-width: 1240px) 1200px, calc(100vw - 2.5rem)"
+          priority
+        />
+      </figure>
+    </div>
   </div>
 </section>
 
@@ -60,6 +62,27 @@ const { lang } = Astro.props;
   @media (max-width: 40rem) {
     .hero {
       --net-h: 33rem;
+    }
+  }
+
+  /* The dashboard leans back a few degrees and comes upright as it scrolls into the screen: the page's first
+     scroll-driven moment, in CSS only. Browsers without scroll-driven animations show it upright. */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .dash {
+        transform-origin: 50% 100%;
+        animation: settle linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 90%;
+      }
+    }
+  }
+  @keyframes settle {
+    from {
+      transform: perspective(1800px) rotateX(9deg) translateY(2rem) scale(0.965);
+    }
+    to {
+      transform: none;
     }
   }
 </style>

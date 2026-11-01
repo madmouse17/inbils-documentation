@@ -3,6 +3,7 @@ import { Icon } from 'astro-icon/components';
 import { Image } from 'astro:assets';
 import mark from '../assets/logo/inbils-mark.png';
 import ThemeToggle from './ThemeToggle.astro';
+import MotionToggle from './MotionToggle.astro';
 import { contactHref, navFor } from '../lib/nav';
 import { href, t, twinPath, type Lang } from '../lib/i18n';
 import { withBase } from '../lib/site';
@@ -22,6 +23,8 @@ const switcher = (
     { code: 'id', label: 'Bahasa Indonesia', href: withBase(lang === 'id' ? path : twin.path) },
   ] as const
 ).map((l) => ({ ...l, current: l.code === lang }));
+// Only the landing page moves, so only it carries the button that pauses the motion.
+const isHome = path === '/' || path === '/id/';
 ---
 
 <header class="site-header">
@@ -75,6 +78,11 @@ const switcher = (
           </a>
         ))}
       </nav>
+      {isHome && (
+        <div class="hidden md:block">
+          <MotionToggle lang={lang} variant="icon" />
+        </div>
+      )}
       <ThemeToggle />
       <a href={contactHref(lang)} class="btn btn-primary ml-2 hidden md:inline-flex">
         {t(lang, 'nav.contact')}
@@ -102,6 +110,11 @@ const switcher = (
               </ul>
             </section>
           ))}
+          {isHome && (
+            <div class="mt-2 border-t border-line pt-2">
+              <MotionToggle lang={lang} variant="row" />
+            </div>
+          )}
           <a href={contactHref(lang)} class="btn btn-primary mt-3 w-full">
             {t(lang, 'nav.contact')}
           </a>

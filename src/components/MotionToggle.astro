@@ -1,0 +1,72 @@
+---
+// The pause button for every animation on the landing page (src/scripts/motion.ts). One fixed label with
+// aria-pressed, so a screen reader says "pressed" when the page is paused. It is hidden without script and
+// when the system already asks for reduced motion, because nothing moves by itself then.
+import { Icon } from 'astro-icon/components';
+import { t, type Lang } from '../lib/i18n';
+
+interface Props {
+  lang: Lang;
+  /** `icon` sits in the header bar; `row` is a full-width labelled button in the small-screen menu. */
+  variant: 'icon' | 'row';
+}
+
+const { lang, variant } = Astro.props;
+const label = t(lang, 'motion.pause');
+---
+
+<button
+  type="button"
+  class:list={['motion-toggle', variant]}
+  data-motion-toggle
+  aria-pressed="false"
+  aria-label={variant === 'icon' ? label : undefined}
+  title={variant === 'icon' ? label : undefined}
+>
+  <Icon name="ph:pause" class="icon-pause size-5" aria-hidden="true" />
+  <Icon name="ph:play" class="icon-play size-5" aria-hidden="true" />
+  {variant === 'row' && <span>{label}</span>}
+</button>
+
+<style>
+  .motion-toggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+    color: var(--fg-muted);
+    border-radius: var(--radius);
+    transition: color 160ms ease;
+  }
+  :global(html.js) .motion-toggle {
+    display: inline-flex;
+  }
+  :global(html.js) .motion-toggle:hover {
+    color: var(--fg);
+  }
+  .icon {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+  .row {
+    justify-content: flex-start;
+    width: 100%;
+    min-height: 2.75rem;
+    padding: 0 0.75rem;
+    font-size: 0.9375rem;
+    color: var(--fg);
+  }
+  .row:hover {
+    background: var(--surface-2);
+  }
+  /* The icon shows what a press does: pause while moving, play while paused. */
+  .motion-toggle[aria-pressed='true'] .icon-pause,
+  .motion-toggle:not([aria-pressed='true']) .icon-play {
+    display: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :global(html.js) .motion-toggle {
+      display: none;
+    }
+  }
+</style>

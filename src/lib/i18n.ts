@@ -58,8 +58,7 @@ const en = {
   'hero.guides': 'Read the user guides',
   'hero.shotAlt':
     'The Inbils web dashboard, with its Indonesian interface: a setup checklist, the notifications panel and the first operations queue.',
-  'hero.netPause': 'Pause network animation',
-  'hero.netPlay': 'Play network animation',
+  'motion.pause': 'Pause animations',
 
   // Lifecycle
   'life.title': 'What happens when a customer signs up.',
@@ -96,8 +95,21 @@ const en = {
     'IPAM for prefixes, VLANs and addresses, an ODN register for the passive fibre plant, and network assets with their installation history.',
   'net.b5': 'Each ISP enters its own RADIUS database in the app. The password is stored encrypted.',
   'net.link': 'NAS routers in the user guide',
-  'net.shotAlt':
-    'A NAS router page in Inbils: RADIUS client status, the CoA target, the isolir page address and the RouterOS commands card.',
+
+  // Scenes: the router and the fibre plant, in the network section
+  'scene.router.caption':
+    'A MikroTik router asks RADIUS, then hands each PPPoE session to its subscriber. Select a subscriber to isolate it. Illustration with example values.',
+  'scene.router.ports': 'Router ports',
+  'scene.router.subscribers': 'Subscribers',
+  'scene.router.radius': 'RADIUS',
+  'scene.router.sessions': 'sessions',
+  'scene.router.free': 'no cable',
+  'scene.router.uplink': 'uplink to RADIUS',
+  'scene.router.isolate': 'Isolate subscriber',
+  'scene.router.isolir': 'isolir',
+  'scene.fiber.caption':
+    'Light leaves the OLT, splits in the cabinet and again at each ODP, and reaches every home on its own drop cable. Illustration.',
+  'scene.fiber.home': 'Home',
 
   // Field work
   'field.title': 'Work orders for technicians, with or without signal.',
@@ -112,10 +124,20 @@ const en = {
   'field.b4':
     'Technicians request items from the warehouse and return what is left, and every change lands in an immutable stock ledger.',
   'field.link': 'Work orders in the technician guide',
-  'field.shotAlt':
-    'The Inbils Teknisi app: a work order in progress with the four steps of the visit and the customer card.',
-  'field.shotAlt2':
-    'The Inbils Teknisi app: the list of work orders and tickets assigned to the technician.',
+
+  // Scene: a visit on a street map
+  'scene.field.caption':
+    'Assigned, on the way, working, done: the four steps the office, the technician and the customer all see. A visit starts inside the radius the office sets (500 m by default). Illustration with example values.',
+  'scene.field.steps': 'Steps of the visit',
+  'scene.field.assigned': 'Assigned',
+  'scene.field.travel': 'On the way',
+  'scene.field.working': 'Working',
+  'scene.field.done': 'Done',
+  'scene.field.office': 'Office',
+  'scene.field.customer': 'Customer',
+  'scene.field.evidence': 'Photo evidence',
+  'scene.field.material': 'ONU and drop cable',
+  'scene.field.approved': 'Approved',
 
   // Billing
   'bill.title': 'ISP billing system with Midtrans.',
@@ -130,8 +152,22 @@ const en = {
   'bill.b4':
     'Receivables, arrears, receipts and cancellations with an audit trail. Payments are append-only.',
   'bill.link': 'Invoices in the user guide',
-  'bill.shotAlt':
-    'The Inbils invoice list: invoice number, customer, status, issue date, due date, total and balance, with filters above it.',
+
+  // Scene: an invoice paid through Midtrans
+  'scene.bill.caption':
+    'The customer picks a payment method, Midtrans confirms it, the invoice turns paid and a receipt joins the ledger. Select a method to pay the invoice yourself. Illustration with example values.',
+  'scene.bill.methods': 'Payment methods',
+  'scene.bill.qris': 'QRIS',
+  'scene.bill.va': 'Bank VA',
+  'scene.bill.wallet': 'E-wallet',
+  'scene.bill.store': 'Minimarket',
+  'scene.bill.invoice': 'Invoice',
+  'scene.bill.receipt': 'Receipt',
+  'scene.bill.unpaid': 'Unpaid',
+  'scene.bill.paid': 'Paid',
+  'scene.bill.via': 'via',
+  'scene.bill.ledger': 'Receipts, append only',
+  'scene.bill.status': 'Invoice paid with',
 
   // Office trio
   'office.title': 'The rest of the office, in the same system.',
@@ -145,6 +181,23 @@ const en = {
   'office.reportsBody':
     'Read-only reports with drill-down and CSV or PDF export: business metrics, SLA compliance, stock card, technician performance, sales KPIs and a consolidated view for head companies.',
 
+  // Scenes: stock moving between shelves, and a ticket against its SLA
+  'scene.inv.caption':
+    'A technician requests material, the manager approves, and boxes move from the warehouse to the technician. What is left comes back as a material return. Every move is a line in the ledger. Illustration.',
+  'scene.inv.warehouse': 'Warehouse',
+  'scene.inv.technician': 'Technician',
+  'scene.inv.out': 'Request approved',
+  'scene.inv.back': 'Material returned',
+  'scene.tick.caption':
+    'A ticket runs against the first-response and resolution targets of its SLA tier, and a check flags a breach. Illustration with example values.',
+  'scene.tick.subject': 'No connection',
+  'scene.tick.open': 'Open',
+  'scene.tick.responded': 'Responded',
+  'scene.tick.resolved': 'Resolved',
+  'scene.tick.breached': 'SLA breached',
+  'scene.tick.first': 'First response',
+  'scene.tick.resolution': 'Resolution',
+
   // Platform
   'plat.title': 'One installation, many ISPs.',
   'plat.lede':
@@ -157,8 +210,12 @@ const en = {
     'Support access lets an operator enter a tenant as one of its users, with a banner, a time limit, a read or write mode and an audit entry.',
   'plat.b4': 'Each ISP enters its own Midtrans, WhatsApp, RADIUS and mail settings.',
   'plat.link': 'The operator panel guide',
-  'plat.shotAlt':
-    'The operator panel page of one company: profile, a seven-day summary of its health, and the status with the Suspend button.',
+
+  // Scene: tenants on one installation
+  'scene.tenants.caption':
+    'One installation, many ISPs. Each ring is one company with its subsidiaries: its data, roles and integrations stay inside. Drag to turn the view, or focus it and use the arrow keys. Illustration.',
+  'scene.tenants.label': 'Turn the view of the tenants',
+  'scene.tenants.name': 'ISP',
 
   // Apps
   'apps.title': 'Two Android apps, one documented API.',
@@ -174,6 +231,8 @@ const en = {
   'apps.guideApi': 'Mobile API',
   'apps.shotAlt':
     'The Inbils Pelanggan app: the home screen with the service card, the amount to pay and the quick actions.',
+  'apps.shotAltTech':
+    'The Inbils Teknisi app: the home screen with the next visit and the number of work orders in each status.',
 
   // Docs map
   'docs.title': 'Read the documentation.',
@@ -259,8 +318,7 @@ const id: Record<Key, string> = {
   'hero.guides': 'Baca panduan pengguna',
   'hero.shotAlt':
     'Dasbor web Inbils dengan antarmuka berbahasa Indonesia: daftar langkah awal, panel notifikasi, dan antrean operasional pertama.',
-  'hero.netPause': 'Jeda animasi jaringan',
-  'hero.netPlay': 'Putar animasi jaringan',
+  'motion.pause': 'Jeda animasi',
 
   'life.title': 'Apa yang terjadi saat pelanggan baru mendaftar.',
   'life.lede':
@@ -296,8 +354,20 @@ const id: Record<Key, string> = {
   'net.b5':
     'Setiap ISP mengisi database RADIUS-nya sendiri di aplikasi. Kata sandinya disimpan terenkripsi.',
   'net.link': 'Router NAS di panduan pengguna',
-  'net.shotAlt':
-    'Halaman router NAS di Inbils: status klien RADIUS, target CoA, alamat halaman isolir, dan kartu perintah RouterOS.',
+
+  'scene.router.caption':
+    'Router MikroTik bertanya ke RADIUS, lalu menyerahkan setiap sesi PPPoE ke pelanggannya. Pilih pelanggan untuk mengisolirnya. Ilustrasi dengan nilai contoh.',
+  'scene.router.ports': 'Port router',
+  'scene.router.subscribers': 'Pelanggan',
+  'scene.router.radius': 'RADIUS',
+  'scene.router.sessions': 'sesi',
+  'scene.router.free': 'tanpa kabel',
+  'scene.router.uplink': 'uplink ke RADIUS',
+  'scene.router.isolate': 'Isolir pelanggan',
+  'scene.router.isolir': 'isolir',
+  'scene.fiber.caption':
+    'Cahaya keluar dari OLT, terbagi di kabinet dan sekali lagi di setiap ODP, lalu sampai ke setiap rumah lewat kabel drop sendiri. Ilustrasi.',
+  'scene.fiber.home': 'Rumah',
 
   'field.title': 'SPK teknisi, dengan atau tanpa sinyal.',
   'field.lede':
@@ -311,9 +381,19 @@ const id: Record<Key, string> = {
   'field.b4':
     'Teknisi meminta barang ke gudang dan mengembalikan sisanya, dan setiap perubahan tercatat di buku stok yang tidak bisa diubah.',
   'field.link': 'SPK di panduan teknisi',
-  'field.shotAlt':
-    'Aplikasi Inbils Teknisi: SPK yang sedang dikerjakan dengan empat langkah kunjungan dan kartu pelanggan.',
-  'field.shotAlt2': 'Aplikasi Inbils Teknisi: daftar SPK dan tiket yang ditugaskan kepada teknisi.',
+
+  'scene.field.caption':
+    'Ditugaskan, dalam perjalanan, dikerjakan, selesai: empat langkah yang sama dilihat kantor, teknisi, dan pelanggan. Kunjungan dimulai di dalam radius yang ditetapkan kantor (bawaan 500 m). Ilustrasi dengan nilai contoh.',
+  'scene.field.steps': 'Langkah kunjungan',
+  'scene.field.assigned': 'Ditugaskan',
+  'scene.field.travel': 'Dalam perjalanan',
+  'scene.field.working': 'Dikerjakan',
+  'scene.field.done': 'Selesai',
+  'scene.field.office': 'Kantor',
+  'scene.field.customer': 'Pelanggan',
+  'scene.field.evidence': 'Foto bukti',
+  'scene.field.material': 'ONU dan kabel drop',
+  'scene.field.approved': 'Disetujui',
 
   'bill.title': 'Billing ISP dengan Midtrans.',
   'bill.lede':
@@ -327,8 +407,21 @@ const id: Record<Key, string> = {
   'bill.b4':
     'Piutang, tunggakan, kuitansi, dan pembatalan dengan jejak audit. Pembayaran hanya bisa ditambah, tidak diubah.',
   'bill.link': 'Tagihan di panduan pengguna',
-  'bill.shotAlt':
-    'Daftar tagihan Inbils: nomor tagihan, pelanggan, status, tanggal terbit, jatuh tempo, total, dan sisa, dengan filter di atasnya.',
+
+  'scene.bill.caption':
+    'Pelanggan memilih metode pembayaran, Midtrans mengonfirmasinya, tagihan menjadi lunas, dan kuitansi masuk ke buku. Pilih satu metode untuk membayar tagihan sendiri. Ilustrasi dengan nilai contoh.',
+  'scene.bill.methods': 'Metode pembayaran',
+  'scene.bill.qris': 'QRIS',
+  'scene.bill.va': 'VA bank',
+  'scene.bill.wallet': 'E-wallet',
+  'scene.bill.store': 'Minimarket',
+  'scene.bill.invoice': 'Tagihan',
+  'scene.bill.receipt': 'Kuitansi',
+  'scene.bill.unpaid': 'Belum dibayar',
+  'scene.bill.paid': 'Lunas',
+  'scene.bill.via': 'lewat',
+  'scene.bill.ledger': 'Kuitansi, hanya bertambah',
+  'scene.bill.status': 'Tagihan dibayar lewat',
 
   'office.title': 'Sisa pekerjaan kantor, di sistem yang sama.',
   'office.inventoryTitle': 'Inventaris',
@@ -341,6 +434,22 @@ const id: Record<Key, string> = {
   'office.reportsBody':
     'Laporan baca-saja dengan drill-down dan ekspor CSV atau PDF: metrik bisnis, kepatuhan SLA, kartu stok, kinerja teknisi, KPI penjualan, dan tampilan konsolidasi untuk perusahaan induk.',
 
+  'scene.inv.caption':
+    'Teknisi meminta material, manajer menyetujui, dan kotak berpindah dari gudang ke teknisi. Sisanya kembali sebagai pengembalian barang. Setiap perpindahan menjadi satu baris di buku stok. Ilustrasi.',
+  'scene.inv.warehouse': 'Gudang',
+  'scene.inv.technician': 'Teknisi',
+  'scene.inv.out': 'Permintaan disetujui',
+  'scene.inv.back': 'Barang dikembalikan',
+  'scene.tick.caption':
+    'Tiket berjalan menurut target respons pertama dan penyelesaian dari tingkat SLA-nya, dan pemeriksaan menandai pelanggaran. Ilustrasi dengan nilai contoh.',
+  'scene.tick.subject': 'Tidak ada koneksi',
+  'scene.tick.open': 'Terbuka',
+  'scene.tick.responded': 'Direspons',
+  'scene.tick.resolved': 'Selesai',
+  'scene.tick.breached': 'SLA terlampaui',
+  'scene.tick.first': 'Respons pertama',
+  'scene.tick.resolution': 'Penyelesaian',
+
   'plat.title': 'Satu instalasi, banyak ISP.',
   'plat.lede':
     'Inbils bersifat multi-tenant. Tenant adalah perusahaan ISP dengan anak perusahaan opsional, dan data, peran, serta integrasinya milik perusahaan itu.',
@@ -352,8 +461,11 @@ const id: Record<Key, string> = {
     'Akses dukungan membuat operator masuk ke tenant sebagai salah satu penggunanya, dengan banner, batas waktu, mode baca atau ubah, dan catatan audit.',
   'plat.b4': 'Setiap ISP mengisi sendiri pengaturan Midtrans, WhatsApp, RADIUS, dan email.',
   'plat.link': 'Panduan panel operator',
-  'plat.shotAlt':
-    'Halaman panel operator untuk satu perusahaan: profil, ringkasan kondisi tujuh hari, dan status dengan tombol Tangguhkan.',
+
+  'scene.tenants.caption':
+    'Satu instalasi, banyak ISP. Setiap cincin adalah satu perusahaan beserta anak perusahaannya: data, peran, dan integrasinya tetap di dalam. Seret untuk memutar tampilan, atau fokuskan lalu pakai tombol panah. Ilustrasi.',
+  'scene.tenants.label': 'Putar tampilan tenant',
+  'scene.tenants.name': 'ISP',
 
   'apps.title': 'Dua aplikasi Android, satu API terdokumentasi.',
   'apps.lede':
@@ -368,6 +480,8 @@ const id: Record<Key, string> = {
   'apps.guideApi': 'API mobile',
   'apps.shotAlt':
     'Aplikasi Inbils Pelanggan: layar beranda dengan kartu layanan, jumlah yang harus dibayar, dan aksi cepat.',
+  'apps.shotAltTech':
+    'Aplikasi Inbils Teknisi: layar beranda dengan kunjungan berikutnya dan jumlah SPK di setiap status.',
 
   'docs.title': 'Baca dokumentasinya.',
   'docs.lede': 'Dalam bahasa Inggris dan Indonesia, dengan tangkapan layar antarmuka asli.',

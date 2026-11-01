@@ -1,32 +1,12 @@
 ---
-// The drawing behind the hero (src/scripts/network.ts). It is decoration: hidden from assistive technology, never
-// in the way of a click, and it can be paused. The button is the one control it adds.
-import { Icon } from 'astro-icon/components';
-import { t, type Lang } from '../../lib/i18n';
-
-interface Props {
-  lang: Lang;
-}
-
-const { lang } = Astro.props;
+// The drawing behind the hero (src/scripts/network.ts, mounted by src/scripts/motion.ts). It is decoration:
+// hidden from assistive technology and never in the way of a click. The pause button in the header stops it
+// together with every other animation on the page.
 ---
 
-<div class="net" data-net aria-hidden="true">
-  <canvas data-net-canvas></canvas>
+<div class="net" data-scene="hero" aria-hidden="true">
+  <canvas></canvas>
 </div>
-<button
-  type="button"
-  class="net-toggle"
-  data-net-toggle
-  aria-pressed="false"
-  aria-label={t(lang, 'hero.netPause')}
-  data-label-pause={t(lang, 'hero.netPause')}
-  data-label-play={t(lang, 'hero.netPlay')}
-  hidden
->
-  <Icon name="ph:pause-fill" class="icon-pause size-5" aria-hidden="true" />
-  <Icon name="ph:play-fill" class="icon-play size-5" aria-hidden="true" />
-</button>
 
 <style>
   /* Absolute, so it takes no space and moves nothing; the bottom fades out into the page. */
@@ -44,42 +24,4 @@ const { lang } = Astro.props;
     width: 100%;
     height: 100%;
   }
-  .net-toggle {
-    position: absolute;
-    right: max(1.25rem, calc((100% - 75rem) / 2 + 1.25rem));
-    top: calc(var(--net-h, 32rem) - 3.25rem);
-    z-index: 2;
-    display: grid;
-    place-items: center;
-    width: 2.75rem;
-    height: 2.75rem;
-    border: 1px solid var(--outline);
-    border-radius: var(--radius);
-    background: var(--bg);
-    color: var(--fg);
-  }
-  .net-toggle[hidden] {
-    display: none;
-  }
-  .net-toggle:hover {
-    border-color: var(--fg);
-  }
-  .net-toggle[aria-pressed='true'] .icon-pause,
-  .net-toggle:not([aria-pressed='true']) .icon-play {
-    display: none;
-  }
 </style>
-
-<script>
-  import { startNetwork } from '../../scripts/network';
-
-  const host = document.querySelector<HTMLElement>('[data-net]');
-  const canvas = document.querySelector<HTMLCanvasElement>('[data-net-canvas]');
-  const toggle = document.querySelector<HTMLButtonElement>('[data-net-toggle]');
-  if (host && canvas) {
-    const start = () => startNetwork(host, canvas, toggle);
-    // After the first paint: the drawing never competes with the headline for the main thread.
-    if ('requestIdleCallback' in window) window.requestIdleCallback(start, { timeout: 1500 });
-    else setTimeout(start, 200);
-  }
-</script>

@@ -10,16 +10,25 @@ interface Props {
 const { lang } = Astro.props;
 ---
 
-<section aria-labelledby="closing-title" class="mx-auto max-w-300 px-5 pt-24 lg:pt-32">
-  <div class="closing">
+<section
+  data-scene="reveal"
+  aria-labelledby="closing-title"
+  class="mx-auto max-w-300 px-5 pt-24 lg:pt-32"
+>
+  <div class="closing" data-reveal>
     <h2 id="closing-title" class="max-w-[24ch] text-section font-semibold">
       {t(lang, 'closing.title')}
     </h2>
     <p class="mt-5 max-w-[52ch] text-lg text-muted">{t(lang, 'closing.body')}</p>
-    <a href={CONTACT_URL} rel="noopener" class="btn btn-primary mt-8">
-      <Icon name="ph:github-logo" class="size-5" aria-hidden="true" />
-      {t(lang, 'closing.cta')}
-    </a>
+    <!-- The ripple is the check-in of the field scene: a node lit once, here the call to action. -->
+    <span class="cta mt-8">
+      <a href={CONTACT_URL} rel="noopener" class="btn btn-primary">
+        <Icon name="ph:github-logo" class="size-5" aria-hidden="true" />
+        {t(lang, 'closing.cta')}
+      </a>
+      <span class="wave" aria-hidden="true"></span>
+      <span class="wave second" aria-hidden="true"></span>
+    </span>
   </div>
 </section>
 
@@ -29,5 +38,35 @@ const { lang } = Astro.props;
     border: 1px solid var(--line);
     border-radius: var(--radius-lg);
     background: var(--surface);
+  }
+  .cta {
+    position: relative;
+    display: inline-block;
+  }
+  .wave {
+    position: absolute;
+    inset: 0;
+    border: 2px solid var(--accent-text);
+    border-radius: var(--radius);
+    opacity: 0;
+    pointer-events: none;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .closing:global(.is-in) .wave {
+      animation: wave 1500ms ease-out 500ms both;
+    }
+    .closing:global(.is-in) .wave.second {
+      animation-delay: 850ms;
+    }
+  }
+  @keyframes wave {
+    from {
+      opacity: 0.85;
+      scale: 1;
+    }
+    to {
+      opacity: 0;
+      scale: 1.3 2.3;
+    }
   }
 </style>

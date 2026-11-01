@@ -139,6 +139,41 @@
     object-position: bottom;
   }
 
+  /* An animated scene (home/SceneFrame.astro): the same frame as a screenshot, with a stage of set proportions
+     and a caption that says it is an illustration. The ratio is a floor: a scene made of text and boxes (not a
+     canvas) grows to fit its content at in-between widths instead of clipping it. */
+  .scene {
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    box-shadow: var(--shadow-lift);
+  }
+  .scene-stage {
+    position: relative;
+    display: grid;
+    aspect-ratio: var(--ratio-narrow);
+  }
+  @media (min-width: 40rem) {
+    .scene-stage {
+      aspect-ratio: var(--ratio);
+    }
+  }
+  .scene-stage canvas {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .scene-caption {
+    padding: 0.75rem 1rem;
+    border-top: 1px solid var(--line);
+    color: var(--fg-muted);
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
   /* A short list whose markers are small open nodes, the shape the network drawing is made of. */
   .points {
     display: grid;
@@ -171,9 +206,11 @@
   }
 }
 
-/* Motion. Two moments, each with a reason, both skipped under prefers-reduced-motion:
-   the hero text rising once on load, and the network drawing behind it (see NetworkBackdrop.astro). Sections
-   below the hero do not animate. The page reads the same without either. */
+/* Motion. The page moves in four ways, each with a reason, and every one stops under prefers-reduced-motion
+   and with the pause button in the header (kit.ts keeps data-motion on <html>): the hero text rising once on
+   load, the network drawings (the hero's and the page's), one scene per section that shows how that part of the
+   product works (src/components/home, src/scripts/scenes), and the reveals that follow the customer from
+   station to station. */
 @media (prefers-reduced-motion: no-preference) {
   @keyframes rise {
     from {
@@ -185,4 +222,15 @@
     animation: rise 720ms cubic-bezier(0.16, 1, 0.3, 1) both;
     animation-delay: calc(var(--i, 0) * 90ms);
   }
+}
+
+/* Keyframes in a scene run only while it is on screen (kit.ts toggles is-live) and not after the pause button. */
+[data-scene]:not(.is-live),
+[data-scene]:not(.is-live) *,
+[data-scene]:not(.is-live) *::before,
+[data-scene]:not(.is-live) *::after,
+html[data-motion='off'] main *,
+html[data-motion='off'] main *::before,
+html[data-motion='off'] main *::after {
+  animation-play-state: paused !important;
 }

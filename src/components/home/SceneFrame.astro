@@ -1,0 +1,29 @@
+---
+// The frame every animated scene sits in. The stage has a fixed aspect ratio, so nothing shifts while a scene
+// loads or resizes; the caption says what the drawing shows and that its values are examples (it is an
+// illustration, not live data). The scene's code is src/scripts/scenes/<name>.ts, loaded when the frame comes near
+// the viewport (src/scripts/motion.ts).
+interface Props {
+  /** `data-scene`: the name of the module in src/scripts/scenes. */
+  name: string;
+  /** Aspect ratio of the stage from 40rem up, as in CSS: `4 / 3`. */
+  ratio: string;
+  /** Aspect ratio below 40rem; the same as `ratio` when omitted. */
+  ratioNarrow?: string;
+  caption: string;
+  class?: string;
+}
+
+const { name, ratio, ratioNarrow = ratio, caption, class: className } = Astro.props;
+---
+
+<figure
+  class:list={['scene', className]}
+  data-scene={name}
+  style={`--ratio: ${ratio}; --ratio-narrow: ${ratioNarrow}`}
+>
+  <div class="scene-stage">
+    <slot />
+  </div>
+  <figcaption class="scene-caption">{caption}</figcaption>
+</figure>

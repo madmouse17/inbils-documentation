@@ -4,20 +4,19 @@
 // - Nodes drift slowly. A pointer near a node lights it, and the links that reach it pulse.
 // - A click or tap sends short "packets" from the nearest node along its links, hop by hop, and nudges the
 //   nodes around it.
-// - It draws at most 60 frames a second, stops while the tab is hidden or the hero is off screen, and a visitor
-//   can pause it. Under `prefers-reduced-motion` it is a still drawing: nothing drifts or travels, and a click
-//   only lights the node and its links.
+// - It runs on the page's one frame loop (kit.ts): it stops while the tab is hidden or the hero is off screen,
+//   and the pause button in the header stops it with every other scene. Under `prefers-reduced-motion`, or once
+//   paused, it is a still drawing: nothing drifts or travels, and a click only lights the node and its links.
 // - The canvas is `pointer-events: none`; listeners sit on `window`, and a press on a link, a button or any other
 //   control is left alone.
 //
 // Colours come from the CSS variables `--net-rgb` and `--net-signal-rgb`, so the theme switch recolours it.
 
-type RGB = [number, number, number];
+import { calm, loop, onTheme, rgbVar, rng, type RGB } from './kit';
+import { topology, type Edge, type Site } from './topology';
 
-interface Node {
-  hx: number; // home position
-  hy: number;
-  x: number; // drawn position
+interface Node extends Site {
+  x: number; // drawn position, around the home position `hx, hy`
   y: number;
   ox: number; // offset from a nudge, springing back to 0
   oy: number;
@@ -30,17 +29,12 @@ interface Node {
   px: number;
   py: number;
   r: number;
-  pop: boolean;
   glow: number; // 0 to 1, eased toward `want`
   want: number;
   hold: number; // time (ms) until which a click keeps the node lit
-  links: number[];
 }
 
-interface Link {
-  a: number;
-  b: number;
-  backbone: boolean;
+interface Link extends Edge {
   heat: number;
 }
 
@@ -60,32 +54,10 @@ interface Ripple {
 
 const AREA_PER_NODE = 9000;
 const MAX_NODES = 160;
-const FRAME_MS = 1000 / 60;
 const LIGHT_RADIUS = 150;
 const NUDGE_RADIUS = 170;
 const INTERACTIVE =
   'a,button,input,select,textarea,summary,label,video,[role="button"],[data-net-ignore]';
-
-function mulberry32(seed: number): () => number {
-  let a = seed;
-  return () => {
-    a = (a + 0x6d2b79f5) | 0;
-    let t = Math.imul(a ^ (a >>> 15), 1 | a);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
-
-function readColor(name: string, fallback: RGB): RGB {
-  const parts = getComputedStyle(document.documentElement)
-    .getPropertyValue(name)
-    .trim()
-    .split(/\s+/)
-    .map(Number);
-  return parts.length === 3 && parts.every((n) => Number.isFinite(n))
-    ? [parts[0], parts[1], parts[2]]
-    : fallback;
-}
 
 function sprite(color: RGB, size: number): HTMLCanvasElement {
   const c = document.createElement('canvas');
@@ -102,14 +74,9 @@ function sprite(color: RGB, size: number): HTMLCanvasElement {
   return c;
 }
 
-export function startNetwork(
-  host: HTMLElement,
-  canvas: HTMLCanvasElement,
-  toggle: HTMLButtonElement | null,
-): void {
+export function startNetwork(host: HTMLElement, canvas: HTMLCanvasElement): void {
   const ctx = canvas.getContext('2d');
   if (!ctx) return;
-  const still = matchMedia('(prefers-reduced-motion: reduce)');
 
   let w = 0;
   let h = 0;
@@ -124,20 +91,15 @@ export function startNetwork(
   let baseGlow = sprite(base, 64);
   let signalGlow = sprite(signal, 64);
   let pointer = { x: 0, y: 0, inside: false };
-  let paused = false;
-  let hidden = document.hidden;
-  let onScreen = true;
-  let raf = 0;
-  let last = 0;
   let clock = 0;
   let holdTimer = 0;
 
   function build(): void {
-    const rnd = mulberry32(20241101);
+    const rnd = rng(20241101);
     const count = Math.min(MAX_NODES, Math.max(14, Math.round((w * h) / AREA_PER_NODE)));
-    const popCount = Math.max(3, Math.min(9, Math.round(count / 16)));
-    const margin = 14;
-    const make = (x: number, y: number, pop: boolean): Node => ({
+    const pops = Math.max(3, Math.min(9, Math.round(count / 16)));
+    const plan = { w, h, count, pops, spread: Math.min(w, h) * 0.42, margin: 14 };
+    const made = topology(rnd, plan, (x, y, pop): Node => ({
       hx: x,
       hy: y,
       x,
@@ -158,74 +120,9 @@ export function startNetwork(
       want: 0,
       hold: 0,
       links: [],
-    });
-
-    nodes = [];
-    for (let i = 0; i < popCount; i++) {
-      // best of eight candidates: the one farthest from the points of presence placed so far
-      let best = { x: 0, y: 0, d: -1 };
-      for (let k = 0; k < 8; k++) {
-        const x = margin + rnd() * (w - 2 * margin);
-        const y = margin + rnd() * (h - 2 * margin);
-        const d = nodes.reduce((m, n) => Math.min(m, Math.hypot(n.hx - x, n.hy - y)), Infinity);
-        if (d > best.d) best = { x, y, d };
-      }
-      nodes.push(make(best.x, best.y, true));
-    }
-    const spread = Math.min(w, h) * 0.42;
-    while (nodes.length < count) {
-      const center = nodes[Math.floor(rnd() * popCount)];
-      const angle = rnd() * Math.PI * 2;
-      const dist = 26 + Math.pow(rnd(), 1.4) * spread;
-      const x = Math.min(w - margin, Math.max(margin, center.hx + Math.cos(angle) * dist));
-      const y = Math.min(h - margin, Math.max(margin, center.hy + Math.sin(angle) * dist));
-      nodes.push(make(x, y, false));
-    }
-
-    links = [];
-    const seen = new Set<number>();
-    const connect = (a: number, b: number, backbone: boolean): void => {
-      const key = Math.min(a, b) * 1000 + Math.max(a, b);
-      if (a === b || seen.has(key)) return;
-      seen.add(key);
-      links.push({ a, b, backbone, heat: 0 });
-      nodes[a].links.push(links.length - 1);
-      nodes[b].links.push(links.length - 1);
-    };
-    const dist = (a: number, b: number): number =>
-      Math.hypot(nodes[a].hx - nodes[b].hx, nodes[a].hy - nodes[b].hy);
-
-    // backbone: a minimum spanning tree over the points of presence, plus one extra ring link each
-    const inTree = [0];
-    while (inTree.length < popCount) {
-      let pick = { a: 0, b: 0, d: Infinity };
-      for (const a of inTree) {
-        for (let b = 0; b < popCount; b++) {
-          if (!inTree.includes(b) && dist(a, b) < pick.d) pick = { a, b, d: dist(a, b) };
-        }
-      }
-      connect(pick.a, pick.b, true);
-      inTree.push(pick.b);
-    }
-    for (let a = 0; a < popCount; a++) {
-      let near = -1;
-      for (let b = 0; b < popCount; b++)
-        if (b !== a && (near < 0 || dist(a, b) < dist(a, near))) near = b;
-      if (near >= 0 && rnd() < 0.5) connect(a, near, true);
-    }
-    // customers hang off their nearest point of presence; a few also link to a close neighbour
-    for (let i = popCount; i < nodes.length; i++) {
-      let near = 0;
-      for (let p = 1; p < popCount; p++) if (dist(i, p) < dist(i, near)) near = p;
-      connect(i, near, false);
-      if (rnd() < 0.28) {
-        let peer = -1;
-        for (let j = popCount; j < nodes.length; j++) {
-          if (j !== i && dist(i, j) < 95 && (peer < 0 || dist(i, j) < dist(i, peer))) peer = j;
-        }
-        if (peer >= 0) connect(i, peer, false);
-      }
-    }
+    }));
+    nodes = made.sites;
+    links = made.edges.map((edge) => ({ ...edge, heat: 0 }));
     packets = [];
     ripples = [];
   }
@@ -253,8 +150,8 @@ export function startNetwork(
   }
 
   function colors(): void {
-    base = readColor('--net-rgb', base);
-    signal = readColor('--net-signal-rgb', signal);
+    base = rgbVar('--net-rgb', base);
+    signal = rgbVar('--net-signal-rgb', signal);
     baseGlow = sprite(base, 64);
     signalGlow = sprite(signal, 64);
   }
@@ -262,7 +159,7 @@ export function startNetwork(
   function step(dt: number, now: number): void {
     clock += dt;
     for (const n of nodes) {
-      if (!still.matches) {
+      if (!calm()) {
         n.vx += (-14 * n.ox - 5 * n.vx) * dt;
         n.vy += (-14 * n.oy - 5 * n.vy) * dt;
         n.ox += n.vx * dt;
@@ -384,34 +281,9 @@ export function startNetwork(
     ctx.globalCompositeOperation = 'source-over';
   }
 
-  function frame(time: number): void {
-    raf = 0;
-    if (!running()) return;
-    raf = requestAnimationFrame(frame);
-    if (time - last < FRAME_MS - 1) return;
-    const dt = Math.min(0.05, (time - last) / 1000 || 0.016);
-    last = time;
-    step(dt, time);
-    draw();
-  }
-
-  function running(): boolean {
-    return !still.matches && !paused && !hidden && onScreen;
-  }
-
-  function sync(): void {
-    if (running() && !raf) {
-      last = performance.now();
-      raf = requestAnimationFrame(frame);
-    } else if (!running() && raf) {
-      cancelAnimationFrame(raf);
-      raf = 0;
-    }
-  }
-
-  /** One still redraw for the reduced-motion case (and while paused), after any input. */
+  /** One still redraw after input while the loop is stopped (reduced motion, or the pause button). */
   function redraw(): void {
-    if (running()) return;
+    if (!calm()) return;
     step(0, performance.now());
     draw();
   }
@@ -439,9 +311,9 @@ export function startNetwork(
     origin.hold = now + 1400;
     for (const i of origin.links) {
       const l = links[i];
-      nodes[l.a === near ? l.b : l.a].hold = now + (still.matches ? 1400 : 700);
+      nodes[l.a === near ? l.b : l.a].hold = now + (calm() ? 1400 : 700);
     }
-    if (still.matches) {
+    if (calm()) {
       window.clearTimeout(holdTimer);
       holdTimer = window.setTimeout(redraw, 1450);
       return;
@@ -489,22 +361,9 @@ export function startNetwork(
     pointer.inside = false;
     redraw();
   });
-  document.addEventListener('visibilitychange', () => {
-    hidden = document.hidden;
-    sync();
-  });
-  new IntersectionObserver(([entry]) => {
-    onScreen = entry.isIntersecting;
-    sync();
-  }).observe(host);
   new ResizeObserver(() => resize()).observe(host);
-  new MutationObserver(() => {
+  onTheme(() => {
     colors();
-    draw();
-  }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
-  still.addEventListener('change', () => {
-    toggle?.toggleAttribute('hidden', still.matches);
-    sync();
     draw();
   });
   void document.fonts?.ready.then(() => {
@@ -512,21 +371,10 @@ export function startNetwork(
     draw();
   });
 
-  if (toggle) {
-    toggle.hidden = still.matches;
-    toggle.addEventListener('click', () => {
-      paused = !paused;
-      toggle.setAttribute('aria-pressed', String(paused));
-      toggle.setAttribute(
-        'aria-label',
-        (paused ? toggle.dataset.labelPlay : toggle.dataset.labelPause) ?? '',
-      );
-      sync();
-      draw();
-    });
-  }
-
   colors();
   resize();
-  sync();
+  loop(host, (dt, now) => {
+    step(dt, now);
+    draw();
+  });
 }

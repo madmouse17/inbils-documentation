@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import PageBackdrop from './home/PageBackdrop.astro';
 import Hero from './home/Hero.astro';
 import Lifecycle from './home/Lifecycle.astro';
 import Network from './home/Network.astro';
@@ -66,6 +67,25 @@ const jsonLd = JSON.stringify({
   lang={lang}
 >
   <script slot="head" type="application/ld+json" set:html={jsonLd} />
+  <script slot="head" is:inline>
+    // Before first paint: the visitor's pause choice, and the `js` class that lets the reveals start hidden. If
+    // the motion script never runs (blocked, offline), the guard drops the class and the page shows everything.
+    (() => {
+      const root = document.documentElement;
+      let off = false;
+      try {
+        off = localStorage.getItem('inbils-motion') === 'off';
+      } catch {
+        // Storage can be blocked; the page then starts in motion.
+      }
+      root.dataset.motion = off ? 'off' : 'on';
+      root.classList.add('js');
+      setTimeout(() => {
+        if (!root.dataset.landing) root.classList.remove('js');
+      }, 5000);
+    })();
+  </script>
+  <PageBackdrop />
   <Hero lang={lang} />
   <Lifecycle lang={lang} />
   <Network lang={lang} />
@@ -77,3 +97,7 @@ const jsonLd = JSON.stringify({
   <DocsMap lang={lang} />
   <Closing lang={lang} />
 </Base>
+
+<script>
+  import '../scripts/motion';
+</script>

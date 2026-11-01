@@ -1,5 +1,7 @@
 ---
+import { Icon } from 'astro-icon/components';
 import { href, t, type Lang } from '../../lib/i18n';
+import SceneFrame from './SceneFrame.astro';
 
 interface Props {
   lang: Lang;
@@ -7,24 +9,24 @@ interface Props {
 
 const { lang } = Astro.props;
 
-// Three domains that need a sentence each, not a picture each: a ruled list, not a row of cards.
-const rows = [
-  {
-    title: t(lang, 'office.inventoryTitle'),
-    body: t(lang, 'office.inventoryBody'),
-    to: '/docs/modules/inventory/',
-  },
-  {
-    title: t(lang, 'office.ticketsTitle'),
-    body: t(lang, 'office.ticketsBody'),
-    to: '/docs/modules/ticketing/',
-  },
-  {
-    title: t(lang, 'office.reportsTitle'),
-    body: t(lang, 'office.reportsBody'),
-    to: '/docs/modules/reporting/',
-  },
-];
+// Three domains that need a sentence each. Inventory and ticketing each get a scene (stock moving between
+// shelves, a ticket against its SLA, in src/scripts/scenes), on opposite sides so the rows do not repeat;
+// reports stay a plain row: a report is a table, and the guide shows it.
+const inventory = {
+  title: t(lang, 'office.inventoryTitle'),
+  body: t(lang, 'office.inventoryBody'),
+  to: '/docs/modules/inventory/',
+};
+const tickets = {
+  title: t(lang, 'office.ticketsTitle'),
+  body: t(lang, 'office.ticketsBody'),
+  to: '/docs/modules/ticketing/',
+};
+const reports = {
+  title: t(lang, 'office.reportsTitle'),
+  body: t(lang, 'office.reportsBody'),
+  to: '/docs/modules/reporting/',
+};
 ---
 
 <section id="office" aria-labelledby="office-title" class="mx-auto max-w-300 px-5 pt-24 lg:pt-32">
@@ -32,15 +34,250 @@ const rows = [
     {t(lang, 'office.title')}
   </h2>
   <div class="mt-10 border-t border-line">
-    {rows.map((row) => (
-      <div class="grid gap-3 border-b border-line py-8 lg:grid-cols-12 lg:gap-10">
-        <h3 class="text-2xl font-semibold tracking-tight lg:col-span-4">
-          <a href={href(lang, row.to)} class="hover:text-accent-text">
-            {row.title}
+    <div class="grid items-center gap-8 border-b border-line py-10 lg:grid-cols-12 lg:gap-12">
+      <div class="lg:col-span-7">
+        <h3 class="text-2xl font-semibold tracking-tight">
+          <a href={href(lang, inventory.to)} class="hover:text-accent-text">
+            {inventory.title}
           </a>
         </h3>
-        <p class="max-w-[64ch] text-muted lg:col-span-8">{row.body}</p>
+        <p class="mt-3 max-w-[64ch] text-muted">{inventory.body}</p>
       </div>
-    ))}
+      <SceneFrame
+        name="inventory"
+        ratio="4 / 3"
+        caption={t(lang, 'scene.inv.caption')}
+        class="lg:col-span-5"
+      >
+        <canvas
+          aria-hidden="true"
+          data-warehouse={t(lang, 'scene.inv.warehouse')}
+          data-technician={t(lang, 'scene.inv.technician')}
+          data-out={t(lang, 'scene.inv.out')}
+          data-back={t(lang, 'scene.inv.back')}
+        ></canvas>
+      </SceneFrame>
+    </div>
+
+    <div class="grid items-center gap-8 border-b border-line py-10 lg:grid-cols-12 lg:gap-12">
+      <div class="lg:order-2 lg:col-span-7 lg:col-start-6">
+        <h3 class="text-2xl font-semibold tracking-tight">
+          <a href={href(lang, tickets.to)} class="hover:text-accent-text">
+            {tickets.title}
+          </a>
+        </h3>
+        <p class="mt-3 max-w-[64ch] text-muted">{tickets.body}</p>
+      </div>
+      <SceneFrame
+        name="tickets"
+        ratio="4 / 3"
+        caption={t(lang, 'scene.tick.caption')}
+        class="lg:order-1 lg:col-span-5"
+      >
+        <div class="ticket" data-ticket data-state="first">
+          <p class="top">
+            <span class="subject">{t(lang, 'scene.tick.subject')}</span>
+            <span class="status">
+              <Icon name="ph:circle-dashed" class="icon-open size-4" aria-hidden="true" />
+              <Icon name="ph:check-circle" class="icon-done size-4" aria-hidden="true" />
+              <Icon name="ph:warning" class="icon-late size-4" aria-hidden="true" />
+              <span
+                data-status
+                data-open={t(lang, 'scene.tick.open')}
+                data-responded={t(lang, 'scene.tick.responded')}
+                data-resolved={t(lang, 'scene.tick.resolved')}
+                data-breached={t(lang, 'scene.tick.breached')}
+              >
+                {t(lang, 'scene.tick.open')}
+              </span>
+            </span>
+          </p>
+          <div class="gauge">
+            <div class="ring">
+              <svg class="dial" viewBox="0 0 84 84" aria-hidden="true" focusable="false">
+                <circle class="track" cx="42" cy="42" r="35"></circle>
+                <circle class="arc" data-arc cx="42" cy="42" r="35"></circle>
+              </svg>
+              <span class="time" data-time>
+                05:00
+              </span>
+              <Icon name="ph:check-bold" class="ring-check size-8" aria-hidden="true" />
+            </div>
+            <ul class="targets">
+              <li data-target="first">
+                <span class="mark"></span>
+                {t(lang, 'scene.tick.first')}
+              </li>
+              <li data-target="resolution">
+                <span class="mark"></span>
+                {t(lang, 'scene.tick.resolution')}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </SceneFrame>
+    </div>
+
+    <div class="grid gap-3 border-b border-line py-8 lg:grid-cols-12 lg:gap-10">
+      <h3 class="text-2xl font-semibold tracking-tight lg:col-span-4">
+        <a href={href(lang, reports.to)} class="hover:text-accent-text">
+          {reports.title}
+        </a>
+      </h3>
+      <p class="max-w-[64ch] text-muted lg:col-span-8">{reports.body}</p>
+    </div>
   </div>
 </section>
+
+<style>
+  /* The ticket: a card on the stage, a ring that counts the target down, and the two targets of the SLA tier. */
+  .ticket {
+    align-self: center;
+    justify-self: center;
+    display: grid;
+    gap: 1.25rem;
+    width: min(88%, 22rem);
+    padding: 1.125rem 1.25rem 1.25rem;
+    border: 1px solid var(--outline);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    box-shadow: var(--shadow-lift);
+    --tone: var(--net-rgb);
+  }
+  .ticket[data-state='breach'] {
+    --tone: var(--warn-rgb);
+  }
+  .ticket[data-state='done'] {
+    --tone: var(--net-signal-rgb);
+  }
+  .ring-check {
+    position: absolute;
+    inset: 0;
+    display: none;
+    margin: auto;
+    color: rgb(var(--net-signal-rgb));
+  }
+  .ticket[data-state='done'] .ring-check {
+    display: block;
+  }
+  .ticket[data-state='done'] .time {
+    display: none;
+  }
+  .top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+  .subject {
+    font-weight: 600;
+  }
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3125rem;
+    padding: 0.125rem 0.5rem;
+    border: 1px solid var(--outline);
+    border-radius: 0.375rem;
+    color: var(--fg);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .icon-done,
+  .icon-late {
+    display: none;
+  }
+  .ticket[data-state='resolution'] .icon-open,
+  .ticket[data-state='done'] .icon-open,
+  .ticket[data-state='breach'] .icon-open {
+    display: none;
+  }
+  .ticket[data-state='resolution'] .icon-done,
+  .ticket[data-state='done'] .icon-done {
+    display: inline;
+  }
+  .ticket[data-state='breach'] .icon-late {
+    display: inline;
+    color: rgb(var(--warn-rgb));
+  }
+  .ticket[data-state='breach'] .status {
+    border-color: rgb(var(--warn-rgb));
+  }
+
+  .gauge {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+  }
+  .ring {
+    position: relative;
+    flex: none;
+    width: 5.5rem;
+    aspect-ratio: 1;
+  }
+  .dial {
+    display: block;
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+  }
+  .track,
+  .arc {
+    fill: none;
+    stroke-width: 6;
+  }
+  .track {
+    stroke: var(--line);
+  }
+  .arc {
+    stroke: rgb(var(--tone));
+    stroke-linecap: round;
+    stroke-dasharray: 219.9;
+    stroke-dashoffset: var(--used, 0);
+  }
+  .time {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font-family: var(--font-mono);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+  }
+  .targets {
+    display: grid;
+    gap: 0.625rem;
+    font-size: 0.9375rem;
+  }
+  .targets li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--fg-muted);
+  }
+  .mark {
+    flex: none;
+    width: 0.75rem;
+    height: 0.75rem;
+    border: 2px solid var(--outline);
+    border-radius: 50%;
+  }
+  .targets li.live {
+    color: var(--fg);
+    font-weight: 600;
+  }
+  .targets li.live .mark {
+    border-color: rgb(var(--tone));
+    background: rgb(var(--tone));
+  }
+  .targets li.met .mark {
+    border-color: rgb(var(--net-signal-rgb));
+    background: rgb(var(--net-signal-rgb));
+  }
+  .targets li.late .mark {
+    border-color: rgb(var(--warn-rgb));
+    background: rgb(var(--warn-rgb));
+  }
+</style>

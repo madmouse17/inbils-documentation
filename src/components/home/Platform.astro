@@ -1,7 +1,6 @@
 ---
-import { Image } from 'astro:assets';
-import shot from '../../assets/guide/web/platform-dashboard.webp';
 import { href, t, type Lang } from '../../lib/i18n';
+import SceneFrame from './SceneFrame.astro';
 
 interface Props {
   lang: Lang;
@@ -18,15 +17,27 @@ const points = ['plat.b1', 'plat.b2', 'plat.b3', 'plat.b4'] as const;
 >
   <div class="mx-auto max-w-300 px-5">
     <div class="grid items-center gap-12 lg:grid-cols-12">
-      <figure class="shot lg:col-span-7">
-        <Image
-          src={shot}
-          alt={t(lang, 'plat.shotAlt')}
-          widths={[640, 960, 1280]}
-          sizes="(min-width: 1240px) 700px, (min-width: 64rem) 58vw, calc(100vw - 2.5rem)"
-          loading="lazy"
-        />
-      </figure>
+      <SceneFrame
+        name="tenants"
+        ratio="4 / 3"
+        ratioNarrow="1 / 1"
+        caption={t(lang, 'scene.tenants.caption')}
+        class="lg:col-span-7"
+      >
+        <!-- The turn of the view is a slider: the arrow keys do what a drag does. -->
+        <div
+          class="turn"
+          role="slider"
+          tabindex="0"
+          aria-label={t(lang, 'scene.tenants.label')}
+          aria-orientation="horizontal"
+          aria-valuemin="0"
+          aria-valuemax="359"
+          aria-valuenow="20"
+        >
+          <canvas aria-hidden="true" data-name={t(lang, 'scene.tenants.name')}></canvas>
+        </div>
+      </SceneFrame>
       <div class="lg:col-span-5">
         <h2 id="plat-title" class="text-section font-semibold">
           {t(lang, 'plat.title')}
@@ -44,3 +55,21 @@ const points = ['plat.b1', 'plat.b2', 'plat.b3', 'plat.b4'] as const;
     </div>
   </div>
 </section>
+
+<style>
+  .turn {
+    position: absolute;
+    inset: 0;
+    cursor: grab;
+    /* A vertical swipe still scrolls the page; a horizontal drag turns the view. */
+    touch-action: pan-y;
+  }
+  .turn:active {
+    cursor: grabbing;
+  }
+  /* The ring sits inside the frame, which clips anything outside it. */
+  .turn:focus-visible {
+    outline-offset: -4px;
+    border-radius: var(--radius-lg);
+  }
+</style>

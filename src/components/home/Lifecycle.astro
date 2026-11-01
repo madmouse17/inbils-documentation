@@ -44,15 +44,20 @@ const stations = [
 ];
 ---
 
-<section id="lifecycle" aria-labelledby="life-title" class="mx-auto max-w-300 px-5 pt-24 lg:pt-32">
+<section
+  id="lifecycle"
+  data-scene="reveal"
+  aria-labelledby="life-title"
+  class="mx-auto max-w-300 px-5 pt-24 lg:pt-32"
+>
   <h2 id="life-title" class="max-w-[22ch] text-section font-semibold">
     {t(lang, 'life.title')}
   </h2>
   <p class="mt-5 max-w-[62ch] text-lg text-muted">{t(lang, 'life.lede')}</p>
 
   <ol class="stations mt-14" aria-label={t(lang, 'life.nav')}>
-    {stations.map((s) => (
-      <li>
+    {stations.map((s, i) => (
+      <li data-reveal style={`--i: ${i}`}>
         <span class="node">
           <Icon name={s.icon} class="size-6" aria-hidden="true" />
         </span>
@@ -70,7 +75,10 @@ const stations = [
 </section>
 
 <style>
-  /* Stations along one line, like nodes along a link: the line runs down the left on small screens. */
+  /* Stations along one line, like nodes along a link: the line runs down the left on small screens. The grey line
+     is the empty track; each station draws the stretch to the next one (`li::after`) as it comes into view, and a
+     small signal, the customer's record, rides along it (`li::before`). Without script, or under reduced motion,
+     the line is simply drawn. */
   .stations {
     position: relative;
     display: grid;
@@ -86,17 +94,42 @@ const stations = [
     background: var(--outline);
   }
   .stations li {
+    --d: 0s;
     position: relative;
     display: grid;
     grid-template-columns: 3.5rem 1fr;
     column-gap: 1.25rem;
+  }
+  .stations li:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 1.75rem;
+    top: 3.5rem;
+    width: 2px;
+    height: calc(100% - 1rem);
+    margin-left: -1px;
+    background: var(--accent-text);
+    transform-origin: top;
+  }
+  .stations li:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: 1.75rem;
+    top: 3.5rem;
+    z-index: 1;
+    width: 0.625rem;
+    height: 0.625rem;
+    margin: -0.3125rem 0 0 -0.3125rem;
+    border-radius: 50%;
+    background: rgb(var(--net-signal-rgb));
+    opacity: 0;
   }
   .node {
     display: grid;
     place-items: center;
     width: 3.5rem;
     height: 3.5rem;
-    border: 1px solid var(--outline);
+    border: 1px solid var(--accent-text);
     border-radius: 50%;
     background: var(--surface);
     color: var(--accent-text);
@@ -115,10 +148,88 @@ const stations = [
       height: 1px;
     }
     .stations li {
+      --d: calc(var(--i) * 0.45s);
       display: block;
+    }
+    .stations li:not(:last-child)::after {
+      left: 3.5rem;
+      top: 1.75rem;
+      width: calc(100% - 1.75rem);
+      height: 2px;
+      margin: -1px 0 0;
+      transform-origin: left;
+    }
+    .stations li:not(:last-child)::before {
+      left: 3.5rem;
+      top: 1.75rem;
     }
     .text {
       margin-top: 1.25rem;
+    }
+  }
+
+  /* The hidden first state exists only with script (the `js` class on <html>), and each station leaves it once. */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(html.js) .stations li:not(.is-in) .node {
+      border-color: var(--outline);
+      color: var(--fg-muted);
+    }
+    :global(html.js) .stations li:not(.is-in) .text {
+      opacity: 0;
+      translate: 0 14px;
+    }
+    :global(html.js) .stations li:not(.is-in)::after {
+      transform: scaleY(0);
+    }
+    :global(html.js) .stations li.is-in .node {
+      transition:
+        border-color 300ms ease var(--d),
+        color 300ms ease var(--d);
+    }
+    :global(html.js) .stations li.is-in .text {
+      transition:
+        opacity 600ms ease calc(var(--d) + 120ms),
+        translate 600ms cubic-bezier(0.2, 0.8, 0.2, 1) calc(var(--d) + 120ms);
+    }
+    :global(html.js) .stations li.is-in::after {
+      transition: transform 650ms cubic-bezier(0.4, 0, 0.2, 1) calc(var(--d) + 200ms);
+    }
+    :global(html.js) .stations li.is-in:not(:last-child)::before {
+      animation: hop-down 650ms cubic-bezier(0.4, 0, 0.2, 1) calc(var(--d) + 200ms) both;
+    }
+    @media (min-width: 64rem) {
+      :global(html.js) .stations li:not(.is-in)::after {
+        transform: scaleX(0);
+      }
+      :global(html.js) .stations li.is-in:not(:last-child)::before {
+        animation-name: hop-across;
+      }
+    }
+  }
+  @keyframes hop-down {
+    from {
+      opacity: 1;
+      top: 3.5rem;
+    }
+    88% {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+      top: calc(100% + 2.5rem);
+    }
+  }
+  @keyframes hop-across {
+    from {
+      opacity: 1;
+      left: 3.5rem;
+    }
+    88% {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+      left: calc(100% + 1.75rem);
     }
   }
 </style>

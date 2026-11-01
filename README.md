@@ -48,6 +48,18 @@ The guides are written in Indonesian, so the Indonesian pages are the source and
 
 When a guide changes in the application repository: run the import script, then update the English page of every Indonesian page that changed (`git diff` shows which), then run the checker.
 
+## Landing page motion
+
+The landing page moves in one place per section, and every moving part is a small module that loads only when its section comes near the screen.
+
+- `src/scripts/kit.ts` is the one frame loop. A scene registers a tick with `loop(el, tick)` and never calls `requestAnimationFrame` itself; the loop stops while the tab is hidden, while no scene is on screen, under `prefers-reduced-motion`, and after the visitor presses the pause button in the header (the choice is kept in `localStorage`).
+- `src/scripts/motion.ts` watches every `[data-scene="name"]` element with one IntersectionObserver and loads `src/scripts/scenes/name.ts` the first time it is near the viewport. The module's default export receives the element.
+- The markup of a scene is server-rendered (`src/components/home/*.astro`, inside `SceneFrame.astro` when it is an illustration); the script draws on a canvas or switches classes. With no script the page shows the static frame.
+- Calm (reduced motion or paused) means a still frame: scenes draw once and redraw on input only. Hover, focus and selection keep working.
+- The values in the scenes (session counts, the amount, the times) are examples, and each frame's caption says so. Labels come from `src/lib/i18n.ts` in both languages.
+
+To add a scene: put `data-scene="name"` on the element, write `src/scripts/scenes/name.ts`, and check the size of what the landing ships (`dist/_astro/*.js` gzipped; the budget is 35 KB for the whole page).
+
 ## Search and SEO
 
 - Every page has a `title` and a `description` in front matter; Starlight turns them into the `<title>`, the meta description, the canonical URL, Open Graph and Twitter tags, and the `hreflang` alternates (`en`, `id`, `x-default`).
