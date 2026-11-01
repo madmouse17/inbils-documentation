@@ -1,0 +1,689 @@
+{
+  "web": {
+    "source": "docs/user-guide/web.md",
+    "mode": "section",
+    "title": {
+      "en": "Web guide",
+      "id": "Panduan Web"
+    },
+    "audience": {
+      "en": "ISP admins, managers and staff",
+      "id": "admin, manajer, dan staf ISP"
+    },
+    "description": {
+      "en": "Step-by-step guide to the Inbils back office for ISP admins, managers and staff: dashboard, dispatch, customers, network, inventory, billing, reports and administration.",
+      "id": "Panduan langkah demi langkah untuk kantor belakang Inbils bagi admin, manajer, dan staf ISP: dasbor, penugasan, pelanggan, jaringan, inventaris, tagihan, laporan, dan administrasi."
+    },
+    "chapters": [
+      {
+        "slug": "introduction",
+        "title": {
+          "en": "1. Introduction",
+          "id": "1. Pendahuluan"
+        },
+        "sections": [
+          {
+            "slug": "who-uses-this-guide",
+            "en": "1.1 Who uses this guide",
+            "id": "1.1 Siapa memakai panduan ini"
+          },
+          {
+            "slug": "sign-in",
+            "en": "1.2 Signing in",
+            "id": "1.2 Masuk"
+          },
+          {
+            "slug": "forgot-password",
+            "en": "1.3 Forgot password",
+            "id": "1.3 Lupa kata sandi"
+          },
+          {
+            "slug": "two-factor-authentication",
+            "en": "1.4 Two-step authentication (2FA)",
+            "id": "1.4 Autentikasi dua langkah (2FA)"
+          },
+          {
+            "slug": "know-the-screen",
+            "en": "1.5 Getting to know the screen",
+            "id": "1.5 Mengenal layar"
+          },
+          {
+            "slug": "switch-company",
+            "en": "1.6 Switching company",
+            "id": "1.6 Ganti perusahaan"
+          },
+          {
+            "slug": "profile-and-password",
+            "en": "1.7 Profile and password",
+            "id": "1.7 Profil dan kata sandi"
+          }
+        ]
+      },
+      {
+        "slug": "dashboard",
+        "title": {
+          "en": "2. Dashboard",
+          "id": "2. Dasbor"
+        },
+        "sections": [
+          {
+            "slug": "queue-cards",
+            "en": "2.1 Queue cards",
+            "id": "2.1 Kartu antrean"
+          },
+          {
+            "slug": "notifications",
+            "en": "2.2 Notifications",
+            "id": "2.2 Notifikasi"
+          },
+          {
+            "slug": "administration-summary",
+            "en": "2.3 Administration summary",
+            "id": "2.3 Ringkasan administrasi"
+          }
+        ]
+      },
+      {
+        "slug": "operations",
+        "title": {
+          "en": "3. Operations",
+          "id": "3. Operasional"
+        },
+        "sections": [
+          {
+            "slug": "dispatch",
+            "en": "3.1 Dispatch (Penugasan)",
+            "id": "3.1 Penugasan"
+          },
+          {
+            "slug": "approvals",
+            "en": "3.2 Approvals (Persetujuan)",
+            "id": "3.2 Persetujuan"
+          },
+          {
+            "slug": "work-orders",
+            "en": "3.3 Work orders (SPK)",
+            "id": "3.3 SPK"
+          },
+          {
+            "slug": "tickets",
+            "en": "3.4 Tickets (Tiket)",
+            "id": "3.4 Tiket"
+          },
+          {
+            "slug": "evaluations",
+            "en": "3.5 Evaluations (Evaluasi)",
+            "id": "3.5 Evaluasi"
+          },
+          {
+            "slug": "my-work",
+            "en": "3.6 My Work (Pekerjaan Saya)",
+            "id": "3.6 Pekerjaan Saya"
+          }
+        ]
+      },
+      {
+        "slug": "customers-and-services",
+        "title": {
+          "en": "4. Customers and services",
+          "id": "4. Pelanggan & Layanan"
+        },
+        "sections": [
+          {
+            "slug": "customers",
+            "en": "4.1 Customers (Pelanggan)",
+            "id": "4.1 Pelanggan"
+          },
+          {
+            "slug": "service-packages",
+            "en": "4.2 Service packages (Paket Layanan)",
+            "id": "4.2 Paket Layanan"
+          },
+          {
+            "slug": "bandwidth-profiles",
+            "en": "4.3 Bandwidth profiles (Profil Bandwidth)",
+            "id": "4.3 Profil Bandwidth"
+          },
+          {
+            "slug": "speed-profiles",
+            "en": "4.4 Speed profiles (Profil Kecepatan)",
+            "id": "4.4 Profil Kecepatan"
+          },
+          {
+            "slug": "sla-tiers",
+            "en": "4.5 SLA tiers (Tingkat SLA)",
+            "id": "4.5 Tingkat SLA"
+          },
+          {
+            "slug": "announcements-and-promos",
+            "en": "4.6 Announcements and promos (Pengumuman & Promo)",
+            "id": "4.6 Pengumuman & Promo"
+          }
+        ]
+      },
+      {
+        "slug": "network",
+        "title": {
+          "en": "5. Network",
+          "id": "5. Jaringan"
+        },
+        "sections": [
+          {
+            "slug": "locations",
+            "en": "5.1 Locations (Lokasi)",
+            "id": "5.1 Lokasi"
+          },
+          {
+            "slug": "network-assets",
+            "en": "5.2 Network assets (Aset Jaringan)",
+            "id": "5.2 Aset Jaringan"
+          },
+          {
+            "slug": "nas-routers",
+            "en": "5.3 NAS routers (Router NAS)",
+            "id": "5.3 Router NAS"
+          },
+          {
+            "slug": "ip-addresses",
+            "en": "5.4 IP addresses (Alamat IP)",
+            "id": "5.4 Alamat IP"
+          },
+          {
+            "slug": "odn",
+            "en": "5.5 ODN",
+            "id": "5.5 ODN"
+          },
+          {
+            "slug": "device-panel",
+            "en": "5.6 Device panel (Panel perangkat)",
+            "id": "5.6 Panel perangkat"
+          }
+        ]
+      },
+      {
+        "slug": "inventory",
+        "title": {
+          "en": "6. Inventory",
+          "id": "6. Inventaris"
+        },
+        "sections": [
+          {
+            "slug": "item-requests",
+            "en": "6.1 Item requests (Permintaan Barang)",
+            "id": "6.1 Permintaan Barang"
+          },
+          {
+            "slug": "items",
+            "en": "6.2 Items (Barang)",
+            "id": "6.2 Barang"
+          },
+          {
+            "slug": "categories",
+            "en": "6.3 Categories (Kategori)",
+            "id": "6.3 Kategori"
+          },
+          {
+            "slug": "units",
+            "en": "6.4 Units (Satuan)",
+            "id": "6.4 Satuan"
+          },
+          {
+            "slug": "stock",
+            "en": "6.5 Stock (Stok)",
+            "id": "6.5 Stok"
+          },
+          {
+            "slug": "find-items",
+            "en": "6.6 Find items (Cari Barang)",
+            "id": "6.6 Cari Barang"
+          },
+          {
+            "slug": "stock-movements",
+            "en": "6.7 Stock movements (Mutasi Stok)",
+            "id": "6.7 Mutasi Stok"
+          },
+          {
+            "slug": "material-returns",
+            "en": "6.8 Material returns (Pengembalian Barang)",
+            "id": "6.8 Pengembalian Barang"
+          }
+        ]
+      },
+      {
+        "slug": "finance-and-reports",
+        "title": {
+          "en": "7. Finance and reports",
+          "id": "7. Keuangan & Laporan"
+        },
+        "sections": [
+          {
+            "slug": "invoices",
+            "en": "7.1 Invoices (Tagihan)",
+            "id": "7.1 Tagihan"
+          },
+          {
+            "slug": "arrears",
+            "en": "7.2 Arrears (Tunggakan)",
+            "id": "7.2 Tunggakan"
+          },
+          {
+            "slug": "reports",
+            "en": "7.3 Reports (Laporan)",
+            "id": "7.3 Laporan"
+          },
+          {
+            "slug": "business-metrics",
+            "en": "7.4 Business metrics (Metrik Bisnis)",
+            "id": "7.4 Metrik Bisnis"
+          },
+          {
+            "slug": "asset-utilisation",
+            "en": "7.5 Asset utilisation (Pemanfaatan Aset)",
+            "id": "7.5 Pemanfaatan Aset"
+          },
+          {
+            "slug": "sla-compliance",
+            "en": "7.6 SLA compliance (Kepatuhan SLA)",
+            "id": "7.6 Kepatuhan SLA"
+          },
+          {
+            "slug": "stock-card",
+            "en": "7.7 Stock card (Kartu Stok)",
+            "id": "7.7 Kartu Stok"
+          },
+          {
+            "slug": "data-dictionary",
+            "en": "7.8 Data dictionary (Kamus Data)",
+            "id": "7.8 Kamus Data"
+          },
+          {
+            "slug": "technician-performance",
+            "en": "7.9 Technician performance (Kinerja Teknisi)",
+            "id": "7.9 Kinerja Teknisi"
+          },
+          {
+            "slug": "sales-kpis",
+            "en": "7.10 Sales KPIs (KPI Penjualan)",
+            "id": "7.10 KPI Penjualan"
+          },
+          {
+            "slug": "consolidated-metrics",
+            "en": "7.11 Consolidated metrics (Metrik Konsolidasi)",
+            "id": "7.11 Metrik Konsolidasi"
+          },
+          {
+            "slug": "audit-log",
+            "en": "7.12 Audit log (Log Audit)",
+            "id": "7.12 Log Audit"
+          },
+          {
+            "slug": "numbering",
+            "en": "7.13 Numbering (Penomoran)",
+            "id": "7.13 Penomoran"
+          }
+        ]
+      },
+      {
+        "slug": "administration",
+        "title": {
+          "en": "8. Administration",
+          "id": "8. Administrasi"
+        },
+        "sections": [
+          {
+            "slug": "company",
+            "en": "8.1 Company (Perusahaan)",
+            "id": "8.1 Perusahaan"
+          },
+          {
+            "slug": "organisation",
+            "en": "8.2 Organisation (Organisasi)",
+            "id": "8.2 Organisasi"
+          },
+          {
+            "slug": "employees",
+            "en": "8.3 Employees (Karyawan)",
+            "id": "8.3 Karyawan"
+          },
+          {
+            "slug": "vehicles",
+            "en": "8.4 Vehicles (Kendaraan)",
+            "id": "8.4 Kendaraan"
+          },
+          {
+            "slug": "users",
+            "en": "8.5 Users (Pengguna)",
+            "id": "8.5 Pengguna"
+          },
+          {
+            "slug": "roles",
+            "en": "8.6 Roles (Peran)",
+            "id": "8.6 Peran"
+          },
+          {
+            "slug": "permissions",
+            "en": "8.7 Permissions (Hak Akses)",
+            "id": "8.7 Hak Akses"
+          },
+          {
+            "slug": "documents",
+            "en": "8.8 Documents (Dokumen)",
+            "id": "8.8 Dokumen"
+          },
+          {
+            "slug": "integrations",
+            "en": "8.9 Integrations (Integrasi)",
+            "id": "8.9 Integrasi (Pengaturan → Integrasi)"
+          }
+        ]
+      },
+      {
+        "slug": "workflows",
+        "title": {
+          "en": "9. Workflows",
+          "id": "9. Alur kerja"
+        },
+        "sections": [
+          {
+            "slug": "new-customer-to-payment",
+            "en": "9.1 New customer to payment",
+            "id": "9.1 Pelanggan baru sampai pembayaran"
+          },
+          {
+            "slug": "ticket-to-work-order",
+            "en": "9.2 Ticket to work order",
+            "id": "9.2 Tiket sampai SPK"
+          },
+          {
+            "slug": "item-request-to-stock-issue",
+            "en": "9.3 Item request to stock issue",
+            "id": "9.3 Permintaan barang sampai pengeluaran stok"
+          }
+        ]
+      },
+      {
+        "slug": "appendix",
+        "title": {
+          "en": "10. Appendix",
+          "id": "10. Lampiran"
+        },
+        "sections": [
+          {
+            "slug": "roles-and-permissions-summary",
+            "en": "10.1 Roles and permissions at a glance",
+            "id": "10.1 Peran dan izin ringkas"
+          },
+          {
+            "slug": "terms",
+            "en": "10.2 Terms",
+            "id": "10.2 Istilah"
+          }
+        ]
+      }
+    ]
+  },
+  "platform": {
+    "source": "docs/user-guide/platform.md",
+    "mode": "chapter",
+    "title": {
+      "en": "Operator panel guide",
+      "id": "Panduan Panel Operator"
+    },
+    "audience": {
+      "en": "platform operators (superadmin)",
+      "id": "operator platform (superadmin)"
+    },
+    "description": {
+      "en": "Guide to the Inbils operator panel at /platform: create and suspend tenants, support access, role templates, company data exports and the platform audit.",
+      "id": "Panduan panel operator Inbils di /platform: membuat dan menangguhkan tenant, akses dukungan, templat peran, ekspor data perusahaan, dan audit platform."
+    },
+    "chapters": [
+      {
+        "slug": "introduction",
+        "title": {
+          "en": "1. Introduction",
+          "id": "1. Pendahuluan"
+        }
+      },
+      {
+        "slug": "sign-in-and-account-security",
+        "title": {
+          "en": "2. Signing in and operator account security",
+          "id": "2. Masuk dan keamanan akun operator"
+        }
+      },
+      {
+        "slug": "dashboard-and-companies",
+        "title": {
+          "en": "3. Dashboard and company list",
+          "id": "3. Dasbor dan daftar perusahaan"
+        }
+      },
+      {
+        "slug": "create-a-company",
+        "title": {
+          "en": "4. Creating a company",
+          "id": "4. Membuat perusahaan"
+        }
+      },
+      {
+        "slug": "company-page-and-support-tools",
+        "title": {
+          "en": "5. Company page and support tools",
+          "id": "5. Halaman perusahaan dan alat dukungan"
+        }
+      },
+      {
+        "slug": "suspend-reactivate-delete",
+        "title": {
+          "en": "6. Suspending, reactivating and deleting a company",
+          "id": "6. Menangguhkan, mengaktifkan, dan menghapus perusahaan"
+        }
+      },
+      {
+        "slug": "support-access",
+        "title": {
+          "en": "7. Support access",
+          "id": "7. Akses dukungan"
+        }
+      },
+      {
+        "slug": "role-templates",
+        "title": {
+          "en": "8. Role templates and company role repair",
+          "id": "8. Templat peran dan perbaikan peran perusahaan"
+        }
+      },
+      {
+        "slug": "company-data-export",
+        "title": {
+          "en": "9. Company data export",
+          "id": "9. Ekspor data perusahaan"
+        }
+      },
+      {
+        "slug": "platform-audit",
+        "title": {
+          "en": "10. Platform audit",
+          "id": "10. Audit platform"
+        }
+      },
+      {
+        "slug": "console-tasks-and-queues",
+        "title": {
+          "en": "11. Console tasks and queues",
+          "id": "11. Tugas konsol dan antrean"
+        }
+      },
+      {
+        "slug": "operator-workflows",
+        "title": {
+          "en": "12. Operator workflows",
+          "id": "12. Alur kerja operator"
+        }
+      },
+      {
+        "slug": "appendix",
+        "title": {
+          "en": "13. Appendix",
+          "id": "13. Lampiran"
+        }
+      }
+    ]
+  },
+  "technician": {
+    "source": "docs/user-guide/teknisi.md",
+    "mode": "chapter",
+    "title": {
+      "en": "Technician app guide",
+      "id": "Panduan Aplikasi Teknisi"
+    },
+    "audience": {
+      "en": "field technicians (Android app)",
+      "id": "teknisi lapangan (aplikasi Android)"
+    },
+    "description": {
+      "en": "Guide to the Inbils Technician Android app: work orders, tickets, photo evidence, materials, item requests, notifications and working without a signal.",
+      "id": "Panduan aplikasi Android Inbils Teknisi: SPK, tiket, foto bukti, material, permintaan barang, notifikasi, dan bekerja tanpa sinyal."
+    },
+    "chapters": [
+      {
+        "slug": "introduction",
+        "title": {
+          "en": "1. Introduction",
+          "id": "1. Pendahuluan"
+        }
+      },
+      {
+        "slug": "home-and-jobs",
+        "title": {
+          "en": "2. Home and Jobs",
+          "id": "2. Beranda dan Pekerjaan"
+        }
+      },
+      {
+        "slug": "work-orders",
+        "title": {
+          "en": "3. Work orders (SPK)",
+          "id": "3. SPK"
+        }
+      },
+      {
+        "slug": "tickets",
+        "title": {
+          "en": "4. Tickets",
+          "id": "4. Tiket"
+        }
+      },
+      {
+        "slug": "materials-and-item-requests",
+        "title": {
+          "en": "5. Materials and item requests",
+          "id": "5. Material dan permintaan barang"
+        }
+      },
+      {
+        "slug": "notifications",
+        "title": {
+          "en": "6. Notifications",
+          "id": "6. Notifikasi"
+        }
+      },
+      {
+        "slug": "account",
+        "title": {
+          "en": "7. Account",
+          "id": "7. Akun"
+        }
+      },
+      {
+        "slug": "common-errors-and-faq",
+        "title": {
+          "en": "8. Common errors and FAQ",
+          "id": "8. Kesalahan umum dan FAQ"
+        }
+      }
+    ]
+  },
+  "customer": {
+    "source": "docs/user-guide/pelanggan.md",
+    "mode": "chapter",
+    "title": {
+      "en": "Customer app guide",
+      "id": "Panduan Aplikasi Pelanggan"
+    },
+    "audience": {
+      "en": "ISP customers (Android app)",
+      "id": "pelanggan ISP (aplikasi Android)"
+    },
+    "description": {
+      "en": "Guide to the Inbils Customer Android app: invoices and Midtrans payments, subscription and isolir status, technician visits, tickets and notifications.",
+      "id": "Panduan aplikasi Android Inbils Pelanggan: tagihan dan pembayaran Midtrans, status langganan dan isolir, kunjungan teknisi, tiket, dan notifikasi."
+    },
+    "chapters": [
+      {
+        "slug": "introduction",
+        "title": {
+          "en": "1. Introduction",
+          "id": "1. Pendahuluan"
+        }
+      },
+      {
+        "slug": "home",
+        "title": {
+          "en": "2. Home",
+          "id": "2. Beranda"
+        }
+      },
+      {
+        "slug": "invoices",
+        "title": {
+          "en": "3. Invoices",
+          "id": "3. Tagihan"
+        }
+      },
+      {
+        "slug": "payment-history",
+        "title": {
+          "en": "4. Payment history",
+          "id": "4. Riwayat pembayaran"
+        }
+      },
+      {
+        "slug": "subscriptions",
+        "title": {
+          "en": "5. Subscriptions",
+          "id": "5. Langganan"
+        }
+      },
+      {
+        "slug": "help-and-tickets",
+        "title": {
+          "en": "6. Help and tickets",
+          "id": "6. Bantuan dan tiket"
+        }
+      },
+      {
+        "slug": "notifications",
+        "title": {
+          "en": "7. Notifications",
+          "id": "7. Notifikasi"
+        }
+      },
+      {
+        "slug": "account",
+        "title": {
+          "en": "8. Account",
+          "id": "8. Akun"
+        }
+      },
+      {
+        "slug": "common-errors-and-faq",
+        "title": {
+          "en": "9. Common errors and FAQ",
+          "id": "9. Kesalahan umum & FAQ"
+        }
+      }
+    ]
+  }
+}

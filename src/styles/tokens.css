@@ -1,0 +1,71 @@
+/*
+  Design tokens shared by the landing page, the contact page and the docs.
+
+  The palette comes from the Inbils logo and the application's own primary colour: deep navy ink (#08183a, from
+  the wordmark's darkest letters), the application's azure (#1f55d6, brand-600 in the web app) and the logo's
+  cyan as the one signal colour. Light is the default theme (<html data-theme="light"> in the markup and in
+  ThemeInit); dark is `data-theme="dark"`, and the `:root` values below are the dark ones because Starlight's own
+  sheets use the same convention.
+
+  Azure is the only accent and it means "you can act here": the primary action, links, the focus ring. The cyan
+  signal appears only in the network drawing (a node you touched, a packet in flight), where it marks live
+  traffic. Everything else stays navy or neutral.
+
+  Every text pair below was checked against WCAG AA (4.5:1 for text, 3:1 for control outlines); the table is in
+  docs/preflight.md.
+*/
+:root {
+  color-scheme: dark;
+
+  --font-sans-stack:
+    'Geist Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue',
+    Arial, sans-serif;
+  --font-mono-stack:
+    'Geist Mono Variable', ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono',
+    monospace;
+
+  --bg: #06122b;
+  --surface: #0b1d42;
+  --surface-2: #122a58;
+  --line: #1d3a73;
+  --outline: #6f8dc4;
+  --fg: #e8eefb;
+  --fg-muted: #b4c3e0;
+  --fg-faint: #93a8cf;
+
+  --accent: #5b9bff;
+  --accent-hover: #74abff;
+  --on-accent: #06122b;
+  --accent-text: #82b4ff;
+
+  /* The network drawing on the landing page (r g b, so the canvas can set its own alpha). */
+  --net-rgb: 91 155 255;
+  --net-signal-rgb: 56 189 248;
+
+  --radius: 0.5rem;
+  --radius-lg: 0.875rem;
+  --shadow-lift: 0 32px 64px -28px rgb(1 6 20 / 0.8);
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  --bg: #f6f9ff;
+  --surface: #ffffff;
+  --surface-2: #eaf0fb;
+  --line: #d4ddf0;
+  --outline: #5b6f94;
+  --fg: #08183a;
+  --fg-muted: #3d4f72;
+  --fg-faint: #52668a;
+
+  --accent: #1f55d6;
+  --accent-hover: #1a47b8;
+  --on-accent: #ffffff;
+  --accent-text: #1a4bc4;
+
+  --net-rgb: 31 85 214;
+  --net-signal-rgb: 10 134 179;
+
+  --shadow-lift: 0 28px 56px -30px rgb(8 24 58 / 0.4);
+}

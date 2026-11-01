@@ -1,0 +1,63 @@
+---
+import { Icon } from 'astro-icon/components';
+---
+
+<button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to light theme">
+  <Icon name="ph:sun" class="icon-sun" aria-hidden="true" />
+  <Icon name="ph:moon" class="icon-moon" aria-hidden="true" />
+</button>
+
+<style>
+  .theme-toggle {
+    display: inline-grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: var(--radius);
+    color: var(--fg-muted, var(--sl-color-gray-2));
+    transition: color 160ms ease;
+  }
+  .theme-toggle:hover {
+    color: var(--fg, var(--sl-color-white));
+  }
+  .theme-toggle :global(svg) {
+    width: 1.375rem;
+    height: 1.375rem;
+  }
+  /* The icon shows the theme you would switch to: sun while dark, moon while light. */
+  :global(:root[data-theme='light'] .icon-sun),
+  :global(:root:not([data-theme='light']) .icon-moon) {
+    display: none;
+  }
+</style>
+
+<script>
+  const root = document.documentElement;
+  const labels = {
+    en: { toLight: 'Switch to light theme', toDark: 'Switch to dark theme' },
+    id: { toLight: 'Ganti ke tema terang', toDark: 'Ganti ke tema gelap' },
+  };
+
+  function sync() {
+    const light = root.dataset.theme === 'light';
+    const text = root.lang.startsWith('id') ? labels.id : labels.en;
+    document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]').forEach((button) => {
+      button.setAttribute('aria-label', light ? text.toDark : text.toLight);
+    });
+  }
+
+  document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const next = root.dataset.theme === 'light' ? 'dark' : 'light';
+      root.dataset.theme = next;
+      try {
+        localStorage.setItem('starlight-theme', next);
+      } catch {
+        // The choice still applies for this page view.
+      }
+      sync();
+    });
+  });
+
+  sync();
+</script>

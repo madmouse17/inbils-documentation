@@ -1,0 +1,225 @@
+id	en	note
+SPK	work order (SPK)	Surat Perintah Kerja. First mention on a page: "work order (SPK)", later "work order" or "SPK" in labels.
+Isolir	isolir	Loanword. First mention on a page: "isolir (internet blocked while the account is suspended)". The customer sees the isolir page.
+tenant	tenant	A top-level ISP company plus its subsidiaries.
+Perusahaan	Company	
+anak perusahaan	subsidiary	
+Induk	Parent	Field label for the parent company or parent item.
+operator platform	platform operator	The Inbils team that runs the whole installation at /platform.
+Panel Operator	Operator panel	
+admin perusahaan	company admin	
+Pelanggan	Customers	Menu name. Plain word "customer" in prose.
+Langganan	Subscriptions	Menu name. Plain word "subscription" in prose.
+Paket Layanan	Service packages	Menu name.
+Paket	Package	Field or card label.
+Profil Bandwidth	Bandwidth profiles	
+Profil Kecepatan	Speed profiles	
+Tingkat SLA	SLA tiers	
+Pengumuman & Promo	Announcements and promos	
+Tagihan	Invoices	Menu name. Plain word "invoice" in prose.
+Pembayaran	Payment	
+Riwayat pembayaran	Payment history	
+Tunggakan	Arrears	Overdue receivables.
+Lunas	Paid	
+Belum dibayar	Unpaid	
+Dibayar sebagian	Partially paid	
+Lewat jatuh tempo	Overdue	
+Jatuh tempo	Due date	
+Draf	Draft	
+Kirim tagihan	Send invoice	
+Buat tagihan	Create invoice	
+Catat pembayaran	Record payment	
+Batalkan tagihan	Cancel invoice	
+Biaya bulanan	Monthly fee	
+Biaya pemasangan	Installation fee	
+Tiket	Tickets	Menu name. Plain word "ticket" in prose.
+Respons pertama	First response	
+Tenggat	Deadline	
+Hitungan tenggat	Deadline clock	
+Komentar internal	Internal comment	Visible to staff only.
+Selesaikan tiket	Complete ticket	
+Buka kembali	Reopen	
+Teknisi	Technician	
+Penugasan	Dispatch	Menu name (assignment queue).
+Persetujuan	Approvals	Menu name.
+Evaluasi	Evaluations	
+Pekerjaan Saya	My Work	Menu name.
+Ditugaskan	Assigned	
+Dikerjakan	In progress	
+Menunggu review	Awaiting review	
+Menunggu persetujuan	Awaiting approval	
+Menunggu penugasan	Awaiting assignment	
+Belum ditugaskan	Unassigned	
+Dalam perjalanan	On the way	
+Saya berangkat	I'm on my way	
+Selesai	Completed	
+Diselesaikan	Resolved	Ticket status.
+Dikembalikan	Returned	SPK sent back for rework, or items returned to stock.
+Dibatalkan	Cancelled	
+Ditutup	Closed	
+Dihapus	Deleted	
+Ditangguhkan	Suspended	
+Berhenti	Terminated	
+Terbuka	Open	
+Menunggu	Pending	
+Disetujui	Approved	
+Diserahkan	Handed over	
+Diterima	Received	
+Disiapkan	Prepared	
+Siap diambil	Ready for pickup	
+Aktif	Active	
+Nonaktif	Inactive	
+Mendesak	Urgent	
+Tinggi	High	
+Sedang	Medium	Priority level.
+Rendah	Low	
+Instalasi	Installation	SPK type.
+Perawatan	Maintenance	SPK type.
+Peningkatan layanan	Service upgrade	SPK type.
+Pindah lokasi	Relocation	SPK type.
+Bukti	Evidence	Photos attached to a work order.
+Check-in	Check-in	
+Barang	Items	
+Permintaan Barang	Item requests	Menu name.
+Inventaris	Inventory	
+Stok	Stock	
+Gudang	Warehouse	
+Gudang Tujuan	Destination warehouse	
+Satuan	Units	
+Kategori	Category	
+Mutasi Stok	Stock movements	
+Kartu Stok	Stock card	
+Cari Barang	Find items	
+Pengembalian Barang	Material returns	
+Terpakai	Used	
+Dicadangkan	Reserved	
+Tersedia	Available	
+Terima Barang	Receive items	
+Material	Material	
+Jaringan	Network	
+Aset Jaringan	Network assets	
+Router NAS	NAS routers	
+Alamat IP	IP addresses	Menu name (IPAM).
+ODN	ODN	Optical distribution network.
+Panel perangkat	Device panel	
+IP manajemen	Management IP	
+Alamat NAS	NAS address	
+Port CoA	CoA port	
+Akun jaringan	Network account	
+Nama pengguna	Username	
+Uji koneksi	Test connection	
+Lokasi	Locations	Menu name. "Location" as a field.
+Dasbor	Dashboard	
+Laporan	Reports	
+Metrik Bisnis	Business metrics	
+Pemanfaatan Aset	Asset utilisation	
+Kepatuhan SLA	SLA compliance	
+Kamus Data	Data dictionary	
+Kinerja Teknisi	Technician performance	
+KPI Penjualan	Sales KPIs	
+Metrik Konsolidasi	Consolidated metrics	
+Log Audit	Audit log	
+Penomoran	Numbering	
+Administrasi	Administration	
+Perusahaan	Company	
+Organisasi	Organisation	
+Karyawan	Employees	
+Kendaraan	Vehicles	
+Pengguna	Users	
+Peran	Roles	
+Hak Akses	Permissions	
+Dokumen	Documents	
+Integrasi	Integrations	
+Pengaturan Perusahaan	Company settings	
+Notifikasi	Notifications	
+Notifikasi uji	Test notification	
+Akun	Account	
+Profil	Profile	
+Kata sandi	Password	
+Kata sandi operator	Operator password	
+Autentikasi dua langkah	Two-step authentication (2FA)	
+Atur ulang 2FA	Reset 2FA	
+Kode pemulihan	Recovery code	
+Perangkat	Devices	
+Akses dukungan	Support access	
+Audit platform	Platform audit	
+Ubah	Edit	
+Simpan	Save	
+Hapus	Delete	
+Hapus permanen	Delete permanently	
+Hapus pilihan	Clear selection	
+Batal	Cancel	
+Batalkan	Cancel	
+Aksi	Actions	
+Aksi lainnya	More actions	
+Tindakan	Actions	
+Nonaktifkan	Deactivate	
+Aktifkan	Activate	
+Cari	Search	
+Mulai	Start	
+Reset filter	Reset filters	
+Pulihkan	Restore	
+Lihat	View	
+Lihat detail	View details	
+Lihat data	View data	
+Ekspor	Export	
+Ekspor CSV	Export CSV	
+Ekspor PDF	Export PDF	
+Unduh	Download	
+Tutup	Close	
+Coba lagi	Try again	
+Setujui	Approve	
+Tolak	Reject	
+Selesaikan	Complete	
+Tampilkan	Show	
+Tambah item	Add item	
+Kembali	Back	
+Berikutnya	Next	
+Sebelumnya	Previous	
+Masuk	Sign in	
+Keluar	Sign out	
+Tugaskan	Assign	
+Bayar	Pay	
+Buat	Create	
+Buat SPK	Create work order	
+Ajukan review	Submit for review	
+Kirim ulang undangan	Resend invitation	
+Lupa kata sandi?	Forgot password?	
+Buka blokir	Unblock	
+Hubungi ISP	Contact your ISP	
+Akses ditolak	Access denied	
+Semua status	All statuses	
+Semua, termasuk dihapus	All, including deleted	
+Status	Status	
+Nama	Name	
+Kode	Code	
+Periode	Period	
+Email	Email	
+Alamat	Address	
+Alasan	Reason	
+Catatan	Notes	
+Jumlah	Amount	Or "Quantity" in stock screens.
+Jenis	Type	
+Tipe	Type	
+Telepon	Phone	
+Deskripsi	Description	
+Jam layanan	Service hours	
+Prioritas	Priority	
+Judul	Title	
+Tanggal kunjungan	Visit date	
+Total	Total	
+Detail	Details	
+Rincian	Details	
+Referensi	Reference	
+Sumber	Source	
+Sasaran	Target	
+Komentar	Comment	
+Keterangan	Remarks	
+Tabel	Table	
+Peta	Map	
+Hari ini	Today	
+Dari	From	
+Ke	To	
+Dibuat	Created	
+Lainnya	Other	
+Lunas	Paid	

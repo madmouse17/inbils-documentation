@@ -1,0 +1,31 @@
+---
+// The title links to the landing page in the language of the docs page.
+import { Image } from 'astro:assets';
+import mark from '../../assets/logo/inbils-mark.png';
+import { href } from '../../lib/i18n';
+
+const lang = Astro.locals.starlightRoute.lang === 'id' ? 'id' : 'en';
+---
+
+<a href={href(lang, '/')} class="site-title">
+  <Image src={mark} alt="" width={64} height={64} class="mark" loading="eager" />
+  <span translate="no">Inbils</span>
+</a>
+
+<style>
+  .site-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    color: var(--sl-color-white);
+    font-size: 1.25rem;
+    font-weight: 650;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .mark {
+    width: 2rem;
+    height: 2rem;
+  }
+</style>

@@ -1,0 +1,16 @@
+---
+// Sets the theme before first paint so there is no flash. Light is the default; the visitor's choice is kept
+// under the same key Starlight uses, so the landing page and the docs always agree.
+---
+
+<script is:inline>
+  (() => {
+    let stored = null;
+    try {
+      stored = localStorage.getItem('starlight-theme');
+    } catch {
+      // Storage can be blocked; fall back to the default.
+    }
+    document.documentElement.dataset.theme = stored === 'dark' ? 'dark' : 'light';
+  })();
+</script>

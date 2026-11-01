@@ -1,0 +1,32 @@
+---
+// Starlight's footer (edit link, last update, previous and next page) plus the line every page ends with.
+import Default from '@astrojs/starlight/components/Footer.astro';
+import { CONTACT_URL } from '../../lib/site';
+import { t } from '../../lib/i18n';
+
+const lang = Astro.locals.starlightRoute.lang === 'id' ? 'id' : 'en';
+---
+
+<Default>
+  <slot />
+</Default>
+<p class="contact-line">
+  {t(lang, 'footer.contactLead')}
+  <a href={CONTACT_URL} rel="noopener">
+    {t(lang, 'footer.contactLink')}
+  </a>
+</p>
+
+<style>
+  .contact-line {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--sl-color-hairline-light);
+    color: var(--sl-color-gray-2);
+    font-size: var(--sl-text-sm);
+  }
+  a {
+    color: var(--sl-color-text-accent);
+    font-weight: 600;
+  }
+</style>

@@ -1,0 +1,124 @@
+/*
+  Starlight theme: maps the shared tokens (tokens.css) onto Starlight's variables so the docs look like the rest
+  of the site. The `:root` values are the dark theme and `:root[data-theme='light']` the light one, which is the
+  default (ThemeInit sets the attribute before first paint). Text pairs were checked at 4.5:1 or better (see
+  docs/preflight.md).
+*/
+:root {
+  --sl-font: var(--font-sans-stack);
+  --sl-font-mono: var(--font-mono-stack);
+
+  --sl-nav-height: 4rem;
+  --sl-content-width: 46rem;
+  --sl-line-height: 1.7;
+
+  /* Dark: "white" is the strongest text, "black" the page background. */
+  --sl-color-white: #f1f5fd;
+  --sl-color-gray-1: #dbe5f7;
+  --sl-color-gray-2: #b4c3e0;
+  --sl-color-gray-3: #93a8cf;
+  --sl-color-gray-4: #4f6a9c;
+  --sl-color-gray-5: #1d3a73;
+  --sl-color-gray-6: #0b1d42;
+  --sl-color-gray-7: #081a3a;
+  --sl-color-black: #06122b;
+
+  --sl-color-accent-low: #10285a;
+  --sl-color-accent: #5b9bff;
+  --sl-color-accent-high: #a9c9ff;
+
+  /* Note is blue, tip is teal (not Starlight's purple), caution is amber, danger is red. */
+  --sl-color-blue-low: #10285a;
+  --sl-color-blue: #6ea6ff;
+  --sl-color-blue-high: #bcd5ff;
+  --sl-color-purple-low: #08303a;
+  --sl-color-purple: #3cc4d9;
+  --sl-color-purple-high: #a6e6f0;
+  --sl-color-orange-low: #3a2a0c;
+  --sl-color-orange: #e8a73c;
+  --sl-color-orange-high: #f6d28e;
+  --sl-color-red-low: #3b1a1f;
+  --sl-color-red: #f2766b;
+  --sl-color-red-high: #f8b9b2;
+
+  --sl-color-hairline-light: #1d3a73;
+  --sl-color-hairline: #122a58;
+  --sl-color-bg-inline-code: #122a58;
+}
+
+:root[data-theme='light'] {
+  --sl-color-white: #08183a;
+  --sl-color-gray-1: #17284f;
+  --sl-color-gray-2: #3d4f72;
+  --sl-color-gray-3: #52668a;
+  --sl-color-gray-4: #8294b3;
+  --sl-color-gray-5: #d4ddf0;
+  --sl-color-gray-6: #eaf0fb;
+  --sl-color-gray-7: #f1f5fd;
+  --sl-color-black: #f6f9ff;
+
+  --sl-color-accent-low: #e3ecff;
+  --sl-color-accent: #1f55d6;
+  --sl-color-accent-high: #1a4bc4;
+
+  --sl-color-blue-low: #e3ecff;
+  --sl-color-blue: #2f63d8;
+  --sl-color-blue-high: #1a3d94;
+  --sl-color-purple-low: #dff3f6;
+  --sl-color-purple: #0a8497;
+  --sl-color-purple-high: #0a4f5c;
+  --sl-color-orange-low: #fdf0d8;
+  --sl-color-orange: #c9820e;
+  --sl-color-orange-high: #7a4a05;
+  --sl-color-red-low: #fde5e3;
+  --sl-color-red: #d6453a;
+  --sl-color-red-high: #8a1f17;
+
+  --sl-color-hairline-light: #d4ddf0;
+  --sl-color-hairline: #e1e8f5;
+  --sl-color-bg-inline-code: #e4ebf8;
+}
+
+.sl-markdown-content h1,
+main h1 {
+  letter-spacing: -0.025em;
+  font-weight: 650;
+}
+
+.sl-markdown-content :is(h2, h3, h4) {
+  letter-spacing: -0.015em;
+  font-weight: 620;
+}
+
+/* Screenshots: framed like the landing page. Portrait phone shots would be 1600 px tall at the column width,
+   so every image is capped in height and keeps its ratio. */
+.sl-markdown-content img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 34rem;
+  margin-block: 1rem;
+  border: 1px solid var(--sl-color-hairline-light);
+  border-radius: var(--radius);
+}
+
+.sl-markdown-content table {
+  font-size: var(--sl-text-sm);
+}
+
+.sl-markdown-content dl dt {
+  font-weight: 600;
+  color: var(--sl-color-white);
+}
+
+/* Bold UI labels in the guides are the literal text of buttons and menus: a subtle tint sets them apart from
+   emphasis without turning the page into a wall of colour. */
+.sl-markdown-content strong {
+  color: var(--sl-color-white);
+}
+
+/* The OpenAPI reference pages are wide: let their tables scroll instead of squeezing the column. */
+.sl-markdown-content .overflow-table {
+  overflow-x: auto;
+}

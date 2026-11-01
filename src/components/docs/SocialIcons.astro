@@ -1,0 +1,42 @@
+---
+// Header links beside the GitHub icon: the contact page, and the application's source repository.
+import { Icon } from '@astrojs/starlight/components';
+import { REPO } from '../../lib/site';
+import { href, t } from '../../lib/i18n';
+
+const lang = Astro.locals.starlightRoute.lang === 'id' ? 'id' : 'en';
+const labels = {
+  en: { github: 'Inbils on GitHub' },
+  id: { github: 'Inbils di GitHub' },
+} as const;
+---
+
+<a href={href(lang, '/contact/')} class="contact">
+  {t(lang, 'nav.contact')}
+</a>
+<a href={REPO} rel="me noopener" class="github">
+  <span class="sr-only">{labels[lang].github}</span>
+  <Icon name="github" />
+</a>
+
+<style>
+  a {
+    color: var(--sl-color-gray-2);
+    font-size: var(--sl-text-sm);
+    font-weight: 500;
+    text-decoration: none;
+    padding: 0.5em;
+    margin: -0.5em;
+    white-space: nowrap;
+  }
+  a:hover {
+    color: var(--sl-color-white);
+  }
+  .contact {
+    color: var(--sl-color-text-accent);
+    font-weight: 600;
+  }
+  .github {
+    display: inline-flex;
+  }
+</style>

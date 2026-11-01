@@ -1,0 +1,19 @@
+---
+// A grid of link cards for the docs home pages. `to` is a site path such as `/docs/guides/`; the language prefix
+// and the base are added here, so the same list works in English and Indonesian.
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+import { href } from '../../lib/i18n';
+
+interface Props {
+  items: { title: string; description?: string; to: string }[];
+}
+
+const lang = Astro.locals.starlightRoute.lang === 'id' ? 'id' : 'en';
+const { items } = Astro.props;
+---
+
+<CardGrid>
+  {items.map((item) => (
+    <LinkCard title={item.title} description={item.description} href={href(lang, item.to)} />
+  ))}
+</CardGrid>
