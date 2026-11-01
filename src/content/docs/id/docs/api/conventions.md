@@ -22,14 +22,14 @@ Setiap error berupa JSON:
 |---|---|
 | 400 | `bad_request` |
 | 401 | `unauthenticated`, `account_inactive` |
-| 403 | `forbidden`, `app_not_allowed`, `password_reset_required` |
+| 403 | `forbidden`, `app_not_allowed`, `company_inactive` (perusahaan akun ditangguhkan), `password_reset_required` |
 | 404 | `not_found` (juga untuk data pelanggan atau perusahaan lain), `payment_unavailable` |
 | 405 | `method_not_allowed` |
 | 408 | `request_timeout` |
-| 409 | `conflict`, `idempotency_in_progress`, `push_token_not_registered` |
+| 409 | `conflict`, `idempotency_in_progress`, `push_token_not_registered`, `work_order_closed`, `ticket_already_rated` |
 | 413 | `payload_too_large` |
 | 415 | `unsupported_media_type` |
-| 422 | `validation_failed`, `unprocessable`, `idempotency_conflict`, `invoice_not_payable`, `challenge_expired` |
+| 422 | `validation_failed`, `unprocessable`, `idempotency_conflict`, `invoice_not_payable`, `challenge_expired`, `credentials_not_ready`, `ticket_not_resolved`, `ticket_closed` |
 | 428 | `precondition_required`, `idempotency_key_required` |
 | 429 | `too_many_requests` |
 | 500 | `server_error` |
@@ -78,6 +78,8 @@ Endpoint daftar menjawab `{data, links, meta}` (paginator Laravel). `?page=` dim
 | Unggahan, per pengguna | 30 |
 | Ketukan banner promo, per pengguna | 30 |
 | Push uji, per pengguna | 3 |
+| Penampilan kredensial jaringan, per pengguna | 5 |
+| Kuitansi tagihan, per pengguna | 6 |
 
 ## Media dan unduhan
 

@@ -17,7 +17,7 @@ By default Inbils answers on `http://localhost` (Sail) and `http://localhost:808
 - `caddy`: HTTPS on `127.0.0.1:443`, with certificates from its own local certificate authority. Port 80 stays with Sail, so there is no HTTP redirect.
 - `dns`: dnsmasq on `127.0.0.2:53`. It answers every `*.test` name with `127.0.0.1` and nothing else.
 
-Both containers join the Sail and deploy networks as external networks, so start Sail and the 8080 stack first. Then start the proxy:
+The `caddy` container joins the Sail and deploy networks as external networks, so start Sail and the 8080 stack first. Then start the proxy:
 
 ```bash
 DOCKER_CONTEXT=default docker compose -f docker/devproxy/compose.yaml up -d --build
@@ -38,9 +38,9 @@ A browser whose secure DNS is set to a fixed provider (Google, Cloudflare) skips
 
 ## Trusted proxies
 
-Both `.env` and `.env.docker` set `TRUSTED_PROXIES=172.16.0.0/12` (the Docker networks). This keeps the `https` scheme behind Caddy. Without it the page loads its assets over `http` and the browser blocks them, which shows as a page without styles. On a real server, name the real proxy instead.
+Set `TRUSTED_PROXIES=172.16.0.0/12` (the Docker networks) in both `.env` and `.env.docker`; the example files leave it empty. This keeps the `https` scheme behind Caddy. Without it the page loads its assets over `http` and the browser blocks them, which shows as a page without styles. On a real server, name the real proxy instead.
 
-`APP_URL` stays `http://localhost` and `http://localhost:8080`, so mail and queued links, the E2E suite and the health checks do not change. Both stacks run with `APP_ENV=local`, where Laravel does not check the host. A stack switched to `production` must get the `.test` name as its `APP_URL`, or the host check refuses it.
+`APP_URL` stays `http://localhost` and `http://localhost:8080`, so mail and queued links, the E2E suite and the health checks do not change. Sail runs with `APP_ENV=local`, where Laravel does not check the host. The 8080 stack does only if you set it in `.env.docker`; its example file uses `production`. A stack switched to `production` must get the `.test` name as its `APP_URL`, or the host check refuses it.
 
 ## Limits
 

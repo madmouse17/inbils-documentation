@@ -89,7 +89,7 @@ const en = {
     'MikroTik routers authenticate subscribers against FreeRADIUS. Inbils keeps the RADIUS database in step with the customer record: users, speed groups and NAS clients. It does not push configuration to routers over the RouterOS API.',
   'net.b1': 'PPPoE and Hotspot accounts per subscription, with static addresses taken from IPAM.',
   'net.b2':
-    'A running session can be disconnected with a CoA Disconnect-Request (RFC 5176), so a change of speed profile applies at once.',
+    'A running session can be disconnected with a CoA Disconnect-Request (RFC 5176), so a change of package or address applies at once.',
   'net.b3':
     'Optional automatic isolir: overdue customers move to an isolir group and see the isolir page until they pay.',
   'net.b4':
@@ -166,7 +166,7 @@ const en = {
     'Inbils Teknisi is for field technicians and Inbils Pelanggan is for customers. Both use api/v1, whose OpenAPI contract is published in these docs.',
   'apps.b1':
     'Customers see their service status, invoices and technician visits, pay with Midtrans and open tickets.',
-  'apps.b2': 'Push notifications go out through Firebase when the ISP has set it up.',
+  'apps.b2': 'Push notifications go out through Firebase when the platform operator has set it up.',
   'apps.b3':
     'A token belongs to one app install and one role. Writes carry an Idempotency-Key, so a retry after a dropped connection is safe.',
   'apps.guideCustomer': 'Customer app guide',
@@ -288,7 +288,7 @@ const id: Record<Key, string> = {
     'Router MikroTik mengautentikasi pelanggan ke FreeRADIUS. Inbils menjaga database RADIUS selaras dengan data pelanggan: user, grup kecepatan, dan klien NAS. Inbils tidak mendorong konfigurasi ke router lewat RouterOS API.',
   'net.b1': 'Akun PPPoE dan Hotspot per langganan, dengan IP statis dari IPAM.',
   'net.b2':
-    'Sesi yang sedang berjalan bisa diputus dengan CoA Disconnect-Request (RFC 5176), sehingga perubahan profil kecepatan berlaku seketika.',
+    'Sesi yang sedang berjalan bisa diputus dengan CoA Disconnect-Request (RFC 5176), sehingga perubahan paket atau alamat berlaku seketika.',
   'net.b3':
     'Isolir otomatis (opsional): pelanggan yang menunggak pindah ke grup isolir dan melihat halaman isolir sampai membayar.',
   'net.b4':
@@ -360,7 +360,7 @@ const id: Record<Key, string> = {
     'Inbils Teknisi untuk teknisi lapangan dan Inbils Pelanggan untuk pelanggan. Keduanya memakai api/v1, yang kontrak OpenAPI-nya diterbitkan di dokumentasi ini.',
   'apps.b1':
     'Pelanggan melihat status layanan, tagihan, dan kunjungan teknisi, membayar lewat Midtrans, dan membuka tiket.',
-  'apps.b2': 'Notifikasi push dikirim lewat Firebase bila ISP sudah mengaturnya.',
+  'apps.b2': 'Notifikasi push dikirim lewat Firebase bila operator platform sudah mengaturnya.',
   'apps.b3':
     'Token dimiliki satu pemasangan aplikasi dan satu peran. Penulisan data membawa Idempotency-Key, sehingga mencoba ulang setelah koneksi putus aman.',
   'apps.guideCustomer': 'Panduan aplikasi pelanggan',

@@ -15,7 +15,7 @@ Inbils stores everything in MySQL 8.4. Charset is `utf8mb4` with the `utf8mb4_un
 | Indexes | A composite index starts with `company_id`. MySQL limits index names to 64 characters, so long names are shortened by hand. |
 | Foreign keys | Mandatory. `RESTRICT` for parent masters, `CASCADE` for child line items. |
 | Money and quantity | `decimal(15,2)`. |
-| Enum-like columns | A MySQL enum plus a `CHECK` constraint, for example `work_orders.status`, `network_assets.status`, `tickets.status`, `invoices.status`. |
+| Enum-like columns | A MySQL enum, for example `work_orders.status`, `network_assets.status`, `tickets.status`, `invoices.status`. |
 | Polymorphic references | A string type plus a bigint id, with no database foreign key and validation in the application. Example: `stock_movements.reference_type` and `reference_id`. |
 | Table names | Not prefixed by module (`products`, not `inventory_products`). Pivot tables are alphabetical. |
 
@@ -26,7 +26,7 @@ Inbils stores everything in MySQL 8.4. Charset is `utf8mb4` with the `utf8mb4_un
 | Table | What it holds |
 | --- | --- |
 | `companies` | Tenants. `parent_company_id` makes a head company and its subsidiaries. `settings` is JSON. |
-| `users` | Staff, technicians and customer accounts. Two-factor secrets are encrypted and never fillable. Soft delete. |
+| `users` | Staff, technicians and customer accounts. Two-factor secrets are encrypted and never fillable. |
 | `company_user` | Membership of a user in a company. Unique `(company_id, user_id)`, with one default (home) row per user. |
 | `roles`, `permissions`, `role_templates` | Per-company roles, the global permission catalogue and the platform templates. See [Roles and permissions](/docs/architecture/permissions/). |
 | `locations` | A self-referencing tree of region, area, POP, rack and site, with a computed `path`. |
@@ -43,7 +43,7 @@ Inbils stores everything in MySQL 8.4. Charset is `utf8mb4` with the `utf8mb4_un
 
 | Table | What it holds |
 | --- | --- |
-| `network_assets` | Devices with a serial number, MAC, status (`in_stock`, `installed`, `maintenance`, `retired`), location, customer and subscription. Unique `(company_id, serial_number)`. |
+| `network_assets` | Devices with a serial number, MAC, status (`available`, `installed`, `maintenance`, `damaged`, `retired`), location, customer and subscription. Unique `(company_id, serial_number)`. |
 | `network_asset_installations` | Append-only installation history. |
 | `nas_devices`, `network_accounts` | RADIUS clients (routers) and the RADIUS accounts of subscriptions. |
 | `vlans`, `ip_prefixes`, `ip_addresses` | The IPAM register. Prefixes form a tree through `parent_id`. |
@@ -52,19 +52,19 @@ Inbils stores everything in MySQL 8.4. Charset is `utf8mb4` with the `utf8mb4_un
 
 ### Inventory
 
-`categories`, `units` and `products` are masters. `stocks` holds the quantity per product and location, unique per `(company_id, product_id, location_id)`. `stock_movements` is the immutable ledger: each row has a type (`receive`, `issue`, `transfer`, `adjust`, `return`), a quantity and a polymorphic reference. Requests live in `inventory_requests` and `inventory_request_items`, approved adjustments in `stock_adjustment_requests`, and material returns in `material_return_cases`, `material_return_lines` and `material_return_events`.
+`categories`, `units` and `products` are masters. `stocks` holds the quantity per product and location, unique per `(company_id, product_id, location_id)`. `stock_movements` is the immutable ledger: each row has a type (`receive`, `issue`, `transfer`, `adjustment`, `reserve`, `release`, `return`), a quantity and a polymorphic reference. Requests live in `inventory_requests` and `inventory_request_items`, approved adjustments in `stock_adjustment_requests`, and material returns in `material_return_cases`, `material_return_lines` and `material_return_events`.
 
 ### SPK (work orders)
 
-`work_orders` has a code, type (`install`, `maintain`, `upgrade`, `relocate`), status (`pending`, `assigned`, `in_progress`, `completed`, `cancelled`), customer, subscription, location and assignee. `work_order_items` (issue or return lines) cascade with the order. `work_order_assignments` is append-only. `work_order_evidence` holds the files.
+`work_orders` has a code, type (`installation`, `maintenance`, `upgrade_service`, `relocation`), status (`draft`, `generated`, `assigned`, `in_progress`, `waiting_review`, `completed`, `rejected`, `cancelled`), customer, subscription, location and assignee. `work_order_items` (one row per product, with reserved and used quantities) cascade with the order. `work_order_assignments` is append-only. `work_order_evidence` holds the files.
 
 ### Billing
 
-`invoices` (types `mrc`, `otc`, `adjustment`; statuses `draft`, `sent`, `paid`, `overdue`, `cancelled`), `invoice_items` (cascade) and `payments` (append-only). `payment_attempts` tracks online payment tries. A STORED generated column, `active_recurring_period`, together with a unique index on `(company_id, subscription_id, active_recurring_period)`, stops two active recurring invoices for one subscription and period. Cancelled or deleted invoices and manual or one-time invoices leave it NULL, so they never collide.
+`invoices` (types `one_time` and `recurring`; statuses `draft`, `sent`, `partial`, `paid`, `overdue`, `cancelled`), `invoice_items` (cascade) and `payments` (append-only). `payment_attempts` tracks online payment tries. A STORED generated column, `active_recurring_period`, together with a unique index on `(company_id, subscription_id, active_recurring_period)`, stops two active recurring invoices for one subscription and period. Cancelled or deleted invoices and one-time invoices leave it NULL, so they never collide.
 
 ### Ticketing
 
-`ticket_categories`, `tickets` (status `open`, `assigned`, `in_progress`, `resolved`, `closed`; unique `(company_id, code)`), `ticket_comments` (cascade, with an internal flag) and `ticket_attachments`.
+`ticket_categories`, `tickets` (status `open`, `assigned`, `on_progress`, `resolved`, `closed`; unique `(company_id, code)`), `ticket_comments` (cascade, with an internal flag) and `ticket_attachments`.
 
 ### Main relations
 
@@ -79,7 +79,7 @@ customers / service_subscriptions 1-N invoices 1-N invoice_items, payments
 customers 1-N tickets 1-N ticket_comments, ticket_attachments
 ```
 
-One documented exception to the dependency direction: `service_subscriptions.ont_asset_id` points from the core to `network_assets`. It is a denormalised back-link, and core code does not import the asset model.
+One documented exception to the dependency direction: `service_subscriptions.ont_asset_id` points from the core to `network_assets`. It is a denormalised back-link with no database foreign key, and the core `ServiceSubscription` model imports `NetworkAsset` for the relation.
 
 ## Invariants
 

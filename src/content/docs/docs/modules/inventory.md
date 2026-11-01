@@ -24,13 +24,13 @@ Stock is protected by database checks: `quantity >= 0`, `reserved_quantity >= 0`
 |---|---|
 | `receive` | Adds quantity at a location. |
 | `issue` | Removes quantity from a location. |
-| `transfer` | Two rows: an issue at the source and a receive at the target. |
+| `transfer` | Two `transfer` rows: a negative quantity at the source and a positive one at the target. |
 | `adjustment` | Sets a counted quantity, with a mandatory note. |
 | `reserve` | Raises `reserved_quantity` only (item request approved). |
 | `release` | Lowers `reserved_quantity` (item request handed over), then an `issue` follows. |
 | `return` | Adds quantity back (material return). |
 
-A reserve or issue larger than the available stock raises `InsufficientStockException`. The same message is used by the API, web validation and toasts: `Stok {item} di {location} tersisa {available} {unit}, dibutuhkan {requested} {unit}.` When `quantity <= min_stock` the product shows a low stock badge and a dashboard widget.
+A reserve or issue larger than the available stock raises `InsufficientStockException`. The same message is used by the API, web validation and toasts: `Stok {item} di {location} tidak cukup: tersedia {available} {unit}, diminta {requested} {unit}.` When `quantity <= min_stock` the product shows a low stock badge and a dashboard widget.
 
 ## Item requests
 

@@ -7,7 +7,7 @@ Inbils dibagi menjadi modul-modul domain. Setiap halaman di bawah menjelaskan sa
 
 ## Pelanggan dan langganan
 
-Memiliki pelanggan, alamat, kontak, dan dokumennya, serta siklus hidup langganan: `pending`, `active`, `suspended`, `terminated`. Modul ini juga mencakup isolir (halaman yang dilihat pelanggan yang di-suspend). Langganan sekaligus menjadi langganan penagihan. Di kode, bagian ini berada di core bersama dan bukan paket modul terpisah. Lihat [Pelanggan](/docs/modules/customers/).
+Memiliki pelanggan, alamat, kontak, dan dokumennya, serta siklus hidup langganan: `pending`, `active`, `suspended`, `terminated`. Modul ini juga mencakup isolir (halaman yang dilihat pelanggan yang di-suspend). Langganan sekaligus menjadi langganan penagihan. Di kode, logikanya berada di core bersama; `Modules/Customer` hanya berupa stub kosong. Lihat [Pelanggan](/docs/modules/customers/).
 
 ## Katalog layanan
 

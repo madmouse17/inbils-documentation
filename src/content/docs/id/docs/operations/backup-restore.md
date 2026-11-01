@@ -20,7 +20,7 @@ Target yang terdokumentasi (RPO 24 jam, RTO 4 jam, backup harian, retensi 30 har
 - Kredensial berasal dari secret yang disediakan deployment, tidak pernah dari `.env` atau repositori. Kredensial sampai ke klien MySQL lewat `defaults-extra-file` (mode 600, diutamakan) atau variabel environment, dan tidak pernah dicatat di log.
 - Argumen sumber dan tujuan eksplisit. Path kosong, lokasi terlindungi, dan output backup yang sudah ada ditolak.
 - Manifes SHA-256 ditulis untuk setiap set backup dan diverifikasi sebelum dump apa pun diterapkan. Ketidakcocokan menghentikan restore.
-- Restore tidak pernah menimpa produksi atau target yang tidak kosong, dan tidak pernah me-restore ke nama database sumber.
+- Restore tidak pernah menimpa database terlindungi yang mirip produksi tanpa kedua flag produksi. Restore Python juga menolak direktori media target yang tidak kosong dan database target yang bernama sama dengan sumber.
 
 ## Backup
 
@@ -95,6 +95,7 @@ python scripts/operations/restore.py \
   --media-archive <backup>.media.tar.gz.enc \
   --checksum-file <backup>.sha256 \
   --target-db-name restore_inbils_<date> \
+  --source-db-name inbils \
   --target-media-dir /tmp/inbils-restore-drill \
   --db-host "$BACKUP_DB_HOST" \
   --db-port "$BACKUP_DB_PORT" \
@@ -117,7 +118,7 @@ Sesudah, semuanya harus benar:
 - [ ] File bukti mencatat hasil pembersihan.
 - [ ] Direktori target kosong lagi setelah pembersihan.
 
-Restore berhenti secara sengaja bila direktori target tidak kosong, database target sama dengan sumber, file checksum hilang atau salah, path arsip sudah ada, atau sumber tampak seperti database sistem yang dilindungi. Pisahkan output drill dari storage live.
+Restore berhenti secara sengaja bila direktori target tidak kosong, database target sama dengan sumber, file checksum hilang atau salah, file arsip tidak ada, atau database target adalah database sistem yang dilindungi. Pisahkan output drill dari storage live.
 
 Jalankan self-check yang tidak merusak lebih dulu:
 

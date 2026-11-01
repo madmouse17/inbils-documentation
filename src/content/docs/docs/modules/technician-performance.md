@@ -11,9 +11,9 @@ An evaluation rates one employee for one job. It is written by hand: nothing cre
 
 | Field | Rule |
 |---|---|
-| Employee | An active user of the company who holds the permission `evaluation.evaluable` (technician and staff roles by default). |
+| Employee | An active user of the company who holds the permission `evaluation.evaluable` (technician, staff and NOC roles by default). |
 | Reference | One `WorkOrder` ([SPK](/docs/modules/work-orders/)) or one `Ticket` ([Ticketing](/docs/modules/ticketing/)) of the same company. Any other type is refused with 422. |
-| `score` | Required, from 1.0 to 5.0 (database check). |
+| `score` | Required, from 1.0 to 5.0 (checked on save). |
 | `customer_rating` | Optional, from 1.0 to 5.0, entered by staff on behalf of the customer. |
 | `comment` | Optional, up to 1000 characters. |
 | Evaluator | The user who writes it. One evaluator can evaluate a reference once. |
@@ -60,11 +60,11 @@ Choosing a technician outside this set is refused (403). The Technician page the
 |---|---|---|
 | `evaluation.view` | See all evaluations | manager, staff |
 | `evaluation.create` | Write an evaluation | manager, staff |
-| `evaluation.update` | Edit any evaluation (an evaluator may always edit their own) | manager, staff |
+| `evaluation.update` | Edit an evaluation (saving an edit needs this key, also for the evaluator's own evaluation) | manager, staff |
 | `evaluation.delete` | Delete an evaluation | admin |
 | `evaluation.view.own` | See only evaluations about oneself (another person's evaluation answers 404) | technician |
-| `evaluation.customer.submit` | Customer rating | customer |
-| `evaluation.evaluable` | Can be evaluated | technician, staff |
+| `evaluation.customer.submit` | Customer rates and confirms a finished ticket in the app | customer |
+| `evaluation.evaluable` | Can be evaluated | technician, staff, NOC |
 | `evaluation.export`, `evaluation.manage` | Export, super permission | admin |
 | `report.technician` | Open the technician report | technician, manager, admin |
 | `report.technician.team` | Team scope of the report | manager |

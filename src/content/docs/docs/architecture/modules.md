@@ -10,8 +10,8 @@ Inbils splits domain code into nine nwidart modules and keeps cross-cutting code
 | Module | Owns | Declared dependencies | Page |
 | --- | --- | --- | --- |
 | Billing | Invoice, InvoiceItem, Payment, payment attempts, Midtrans, receivables | Inventory, SPK, Service | [Billing](/docs/modules/billing/) |
-| Customer | A thin shell (provider and resources). The customer model and service live in `app/`. | none | [Customers](/docs/modules/customers/) |
-| Inventory | Product, Category, Unit, Warehouse, Stock, StockMovement, requests, adjustments | none | [Inventory](/docs/modules/inventory/) |
+| Customer | A shell with providers and a scaffold controller, switched off in `modules_statuses.json`. The customer model and service live in `app/`. | none | [Customers](/docs/modules/customers/) |
+| Inventory | Product, Category, Unit, Stock, StockMovement, requests, adjustments, material returns | none | [Inventory](/docs/modules/inventory/) |
 | Ipam | IP prefixes, VLANs, addresses | NetworkAsset | [Network](/docs/modules/network/) |
 | NetworkAsset | NetworkAsset, installations, NAS devices, RADIUS sync, ODN | Service, Ipam | [Network](/docs/modules/network/) |
 | Reporting | Read-only report queries, registry, drill-down, exports | Billing, Inventory, NetworkAsset, SPK, Ticketing | [Reporting](/docs/modules/reporting/) |
@@ -64,7 +64,7 @@ Inventory and NetworkAsset must not import SPK or Billing models. The reverse di
 
 ## Documented exception
 
-`service_subscriptions.ont_asset_id` is a foreign key from the core to `network_assets`, which inverts the normal direction. It is tolerated because the ONT link is essential to an ISP. It is a denormalised back-link, and core code does not import the asset model for it.
+`service_subscriptions.ont_asset_id` is a column on the core table that points to `network_assets` (no database foreign key), which inverts the normal direction. It is tolerated because the ONT link is essential to an ISP. It is a denormalised back-link, and the core `ServiceSubscription` model imports `NetworkAsset` for the relation.
 
 ## Quirks
 
@@ -75,10 +75,10 @@ Do not "fix" these without a reason:
 - `Ipam` and `NetworkAsset` list each other as dependencies. Older notes list Ipam with no dependencies.
 - `Modules/Service` keeps `Models/`, `Http/` and `Policies/` at the module root and maps them in its own `composer.json` PSR-4 block. Other modules use `app/`.
 - `Modules/Ipam` has no `tests/` folder.
-- The `Customer` module is an empty shell. Customer code lives in `app/`.
+- The `Customer` module is an empty shell and is set to `false` in `modules_statuses.json`, so it is not loaded. Customer code lives in `app/`.
 - `Reporting` has no migrations and no writes. One read-only model, `SalesCustomer` on the `customers` table, declares the Billing relations that the sales KPI aggregates, so the core `Customer` never depends on Billing. It refuses to save or delete.
 - Older architecture notes describe a previous layout (`Entities/` folders, a different `Http/Requests` placement). Trust `Modules/` itself.
 
 ## Tests and routes per module
 
-Each module's tests live in `Modules/<Name>/tests/{Feature,Unit}`, and the PHPUnit suite named `Modules` picks up `*Test.php` files there. Each module's `RouteServiceProvider` maps its `routes/web.php` (web group), `routes/api.php` (same `api/v1` prefix and `api.v1.` names) and `routes/webhook.php`.
+Each module's tests live in `Modules/<Name>/tests/{Feature,Unit}`, and the PHPUnit suite named `Modules` picks up `*Test.php` files there. Each module's `RouteServiceProvider` maps the route files the module has: `routes/web.php` (web group) and `routes/api.php` (same `api/v1` prefix and `api.v1.` names). Only Billing has `routes/webhook.php`, throttled for Midtrans.

@@ -12,7 +12,7 @@ Modul Billing menangani sisi uang sebuah ISP: tagihan bulanan untuk setiap langg
 - **Pembayaran**: jumlah yang diterima dengan metode (`cash`, `transfer`, `cheque`, `other`, atau `midtrans` untuk gateway). Pembayaran tidak bisa diubah: tidak ada penghapusan.
 - **Percobaan pembayaran (payment attempt)**: satu halaman pembayaran online yang dibuka untuk sebuah tagihan lewat Midtrans Snap.
 - **Rupiah penuh**: semua nominal baru dibulatkan setengah ke atas ke rupiah penuh per baris, sehingga subtotal, pajak, dan total tagihan baru berakhiran `.00`. Selisih beberapa rupiah terhadap pembulatan total akhir memang disengaja.
-- **Pajak (PPN)**: tarif bawaan adalah setting `tax.ppn_rate` (11), bisa diubah per baris.
+- **Pajak (PPN)**: tarif bawaan adalah setting perusahaan `tax_ppn_rate` (11), bisa diubah per baris.
 - **Penomoran**: tagihan bernomor `INV-{YEAR}-{NNNNN}`, dialokasikan dengan kunci sehingga pembuatan bersamaan tidak menghasilkan nomor ganda.
 
 ## Siklus hidup tagihan
@@ -112,11 +112,11 @@ Billing membaca `mrc_amount` dari langganan, jadi mengedit paket tidak mengubah 
 | `billing.payment.record` | Mencatat pembayaran manual; menerima peringatan exception pembayaran online. |
 | `billing.payment.reverse` | Membalik pembayaran dan menandai percobaan online sebagai dikembalikan. |
 | `billing.cancel` | Membatalkan tagihan. |
-| `billing.suspend` | Men-suspend langganan. |
-| `billing.reactivate` | Mengaktifkan kembali langganan. |
-| `billing.pdf.view` | Membuka PDF tagihan. |
+| `billing.suspend` | Cadangan: tidak diperiksa oleh aksi mana pun. Isolir manual memerlukan `customer.subscription.suspend`. |
+| `billing.reactivate` | Cadangan: tidak diperiksa oleh aksi mana pun. Aktivasi ulang manual memerlukan `customer.subscription.reactivate`. |
+| `billing.pdf.view` | Membuka PDF kwitansi tagihan lunas. PDF tagihan mengikuti akses ke tagihan (`billing.view`). |
 | `billing.export` | Mengekspor tagihan dan tunggakan. |
-| `billing.manage` | Izin super untuk modul ini. |
+| `billing.manage` | Cadangan: tidak diperiksa oleh aksi mana pun. |
 
 Peran pelanggan tidak punya back office web. Pelanggan memakai `portal.invoice.view` dan `portal.invoice.pay` di aplikasi Android, lihat [panduan pelanggan](/docs/guides/customer/invoices/).
 

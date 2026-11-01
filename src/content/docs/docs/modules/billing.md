@@ -12,7 +12,7 @@ The Billing module handles the money side of an ISP: the monthly invoice for eac
 - **Payment**: a received amount with a method (`cash`, `transfer`, `cheque`, `other`, or `midtrans` for the gateway). Payments are immutable: there is no delete.
 - **Payment attempt**: one online payment page opened for an invoice through Midtrans Snap.
 - **Whole rupiah**: all new amounts are rounded half up to a whole rupiah per line, so subtotal, tax and total of a new invoice end in `.00`. A difference of a few rupiah against rounding the grand total is intended.
-- **Tax (PPN)**: the default rate is the setting `tax.ppn_rate` (11), overridable per line.
+- **Tax (PPN)**: the default rate is the company setting `tax_ppn_rate` (11), overridable per line.
 - **Numbering**: invoices are numbered `INV-{YEAR}-{NNNNN}`, allocated under a lock so concurrent creation never duplicates a number.
 
 ## Invoice lifecycle
@@ -112,11 +112,11 @@ Billing reads `mrc_amount` from the subscription, so editing a package does not 
 | `billing.payment.record` | Record a manual payment; receives online payment exception alerts. |
 | `billing.payment.reverse` | Reverse a payment and mark an online attempt refunded. |
 | `billing.cancel` | Cancel an invoice. |
-| `billing.suspend` | Suspend a subscription. |
-| `billing.reactivate` | Reactivate a subscription. |
-| `billing.pdf.view` | Open the invoice PDF. |
+| `billing.suspend` | Reserved: no action checks it. Manual isolir needs `customer.subscription.suspend`. |
+| `billing.reactivate` | Reserved: no action checks it. Manual reactivation needs `customer.subscription.reactivate`. |
+| `billing.pdf.view` | Open the receipt PDF of a paid invoice. The invoice PDF follows invoice access (`billing.view`). |
 | `billing.export` | Export invoices and receivables. |
-| `billing.manage` | Super permission for the module. |
+| `billing.manage` | Reserved: no action checks it. |
 
 The customer role has no web back office. Customers use `portal.invoice.view` and `portal.invoice.pay` in the Android app, see the [customer guide](/docs/guides/customer/invoices/).
 

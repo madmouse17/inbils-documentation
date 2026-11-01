@@ -41,7 +41,7 @@ Provider pembayaran dan WhatsApp memanggil balik ke Inbils. Kedua URL membutuhka
 
 | Provider | URL |
 | --- | --- |
-| Midtrans (notification URL) | `<APP_URL>/webhooks/midtrans/{company}` |
+| Midtrans (notification URL) | `<APP_URL>/webhooks/midtrans/{company}`, dengan `{company}` berupa ULID publik perusahaan; **Pengaturan > Integrasi** menampilkan URL persisnya |
 | WhatsApp (webhook aplikasi Meta) | `<APP_URL>/webhooks/whatsapp` |
 
 Untuk callback Midtrans sungguhan saat pengembangan, `scripts/dev-payments.sh` menjalankan aplikasi dan profile `workers`. Jika `INBILS_TUNNEL` menyebut sebuah tunnel cloudflared, skrip juga menjalankan tunnel itu:

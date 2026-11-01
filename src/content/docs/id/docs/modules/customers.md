@@ -9,16 +9,16 @@ Pelanggan di Inbils adalah orang atau badan usaha yang membeli internet dari ISP
 
 | Konsep | Penjelasan |
 |---|---|
-| Pelanggan | `Individual` atau `Company`. Kode unik per perusahaan (format `CUS-{YEAR}-{NNNNN}`). Pelanggan `Company` wajib punya NPWP dan contact person. Memakai soft delete. |
+| Pelanggan | `Individual` atau `Company`. Kode unik per perusahaan (format bawaan `CUS-{NNNNN}`). Pelanggan `Company` wajib punya NPWP dan contact person. Memakai soft delete. |
 | Alamat | Satu pelanggan bisa punya beberapa alamat (rumah, kantor, cabang). Paling banyak satu menjadi titik pemasangan, yaitu tempat layanan diantarkan. Menetapkan titik pemasangan baru menghapus yang lama. Lintang dan bujur disimpan. |
-| Kontak | Orang yang dihubungi untuk urusan pelanggan. Boleh beberapa per pelanggan, satu bisa menjadi utama. Opsional untuk perorangan. |
+| Kontak | Orang yang dihubungi untuk urusan pelanggan. Boleh beberapa per pelanggan, tepat satu menjadi utama. Pendaftaran butuh minimal satu. |
 | Dokumen | Berkas yang dilampirkan pada pelanggan. Perintah harian `customers:document-expiry` memberi tahu staf yang boleh mengubah pelanggan saat dokumen hampir kedaluwarsa (30 hari sebelumnya). |
 | Langganan | Satu layanan internet milik pelanggan (format kode `SUB-{YEAR}-{NNNNN}`). Menghubungkan [paket layanan](/docs/modules/service-catalogue/), alamat pemasangan, aset ONT opsional, dan POP pelayan opsional. Langganan juga memegang kolom penagihan, jadi tidak ada langganan penagihan terpisah. |
 | Status pelanggan | Rangkuman dari langganan pelanggan, tidak pernah diubah manual (lihat di bawah). |
 | Saklar akun | `is_active` pada pelanggan, tampil sebagai **Account** di UI. Saklar manual, terpisah dari status. |
 | Acquired by | Staf yang dikreditkan karena mendapatkan pelanggan. Hanya atribusi, bukan komisi. |
 
-Kode pelanggan dan kode langganan dibuat dengan lock per tahun, jadi dua pembuatan serentak tidak pernah mendapat kode yang sama.
+Kode pelanggan dan kode langganan dibuat dengan lock, jadi dua pembuatan serentak tidak pernah mendapat kode yang sama.
 
 ## Siklus langganan
 
@@ -27,7 +27,7 @@ Kode pelanggan dan kode langganan dibuat dengan lock per tahun, jadi dua pembuat
 | Dari | Ke | Pemicu | Yang terjadi |
 |---|---|---|---|
 | (baru) | `pending` | Buat langganan | `mrc_amount` disalin dari harga paket dan boleh diubah. `billing_day` bernilai 1 sampai 28. |
-| `pending` | `active` | Aktivasi: SPK pemasangan selesai, atau manual | `activation_date` diisi, aset ONT dihubungkan, `next_invoice_date` menjadi tanggal tagihan berikutnya. |
+| `pending` | `active` | Aktivasi: SPK pemasangan selesai, atau manual | `activation_date` diisi dan `next_invoice_date` menjadi tanggal tagihan berikutnya. SPK pemasangan yang selesai juga menghubungkan aset ONT. |
 | `active` | `suspended` | Suspend (manual, atau isolir karena tagihan lewat jatuh tempo) | `suspension_source` bernilai `manual` atau `overdue`. Pembuatan tagihan berulang melewati langganan ini. |
 | `suspended` | `active` | Reaktivasi (manual, atau otomatis setelah pembayaran) | `suspension_source` dikosongkan dan tagihan berulang berjalan lagi. |
 | `active` atau `suspended` | `terminated` | Hentikan dengan alasan dan pelepasan ONT opsional | `terminated_at` dan `terminated_reason` diisi, penagihan berulang berhenti, ONT bisa kembali ke `available`. |
@@ -117,7 +117,7 @@ Aplikasi pelanggan memanggil `GET api/v1/customer/profile`, `GET api/v1/customer
 | `customer.view` | Melihat pelanggan, alamat, kontak | Admin, Manajer, NOC & Layanan Pelanggan, Teknisi, Keuangan, Staf |
 | `customer.create` | Membuat pelanggan (onboarding) | Admin, Manajer, NOC & Layanan Pelanggan |
 | `customer.update` | Mengubah pelanggan, kirim ulang link akses | Admin, Manajer, NOC & Layanan Pelanggan, Staf |
-| `customer.delete` | Menghapus pelanggan (ditolak selama ada langganan aktif) | Admin |
+| `customer.delete` | Menghapus pelanggan (ditolak selama masih ada langganan, tagihan, SPK, tiket, atau aset jaringan yang merujuknya) | Admin |
 | `customer.address.manage` | Perubahan alamat dan kontak | Admin, Manajer, NOC & Layanan Pelanggan, Staf |
 | `customer.subscription.view` | Melihat langganan | Admin, Manajer, NOC & Layanan Pelanggan, Keuangan, Staf |
 | `customer.subscription.manage` | Membuat dan mengubah langganan, ganti paket | Admin, Manajer, NOC & Layanan Pelanggan |
@@ -137,7 +137,7 @@ Peran dimiliki tiap perusahaan dan boleh diganti nama atau diubah, jadi hak sebe
 
 - Kode pelanggan unik per perusahaan, begitu juga kode langganan.
 - Paling banyak satu alamat pemasangan per pelanggan.
-- Pelanggan dengan langganan aktif tidak bisa dihapus.
+- Pelanggan yang dirujuk langganan, tagihan, SPK, tiket, atau aset jaringan tidak bisa dihapus.
 - Langganan menyimpan salinan harganya sendiri, jadi mengubah paket tidak pernah mengubah harga langganan yang ada.
 - `billing_day` bernilai 1 sampai 28.
 - Hanya `SubscriptionService` yang menulis kolom status, sumber suspend, dan blokir.

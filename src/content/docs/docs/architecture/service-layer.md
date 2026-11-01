@@ -40,7 +40,7 @@ Services are named `{Domain}Service`, for example `SubscriptionService`, `Compan
 
 ### Actions
 
-An action orchestrates a process that spans several services, so no single service has to know the others. Actions are named `{Verb}{Entity}Action`. The core ones in `app/Actions/` are `CreateCustomerOnboardingAction`, `CreateInvoiceFromSpkAction` and `SetCustomerWhatsAppConsentAction`. Platform provisioning has `ProvisionTenantAction` and `AddTenantSubsidiaryAction`. Modules have their own `Actions/` folders.
+An action orchestrates a process that spans several services, so no single service has to know the others. Actions are named `{Verb}{Entity}Action`. The core ones in `app/Actions/` are `CreateCustomerOnboardingAction`, `CreateInvoiceFromSpkAction`, `SetCustomerWhatsAppConsentAction` and `AssignCustomerAcquirerAction`. Platform provisioning has `ProvisionTenantAction` and `AddTenantSubsidiaryAction`. Modules have their own `Actions/` folders.
 
 ### Query classes
 

@@ -91,7 +91,7 @@ Pemegang `roles.manage` mengelola peran di **Administrasi > Peran**. `CompanyRol
 
 | Guard | Aturan |
 | --- | --- |
-| Pegang sendiri | Anda tidak bisa memberi izin ber-guard yang tidak Anda pegang. Penanda tidak di-guard. |
+| Pegang sendiri | Anda tidak bisa memberi izin ber-guard yang tidak Anda pegang. Hanya `app.technician`, `evaluation.evaluable`, `portal.access`, `portal.invoice.view` dan `portal.invoice.pay` yang tidak di-guard. |
 | Cakupan edit | Anda tidak bisa mengubah atau menghapus peran, atau mengubah peran pengguna, yang lebih kaya dari Anda. |
 | SoD saat simpan | Peran dengan pelanggaran SoD ditolak kecuali memegang `roles.manage`. |
 | SoD bertumpuk | Gabungan izin peran pengguna tidak boleh punya pelanggaran. |

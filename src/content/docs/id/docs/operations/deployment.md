@@ -145,7 +145,7 @@ php artisan inbils:media:privatize
 php artisan inbils:media:privatize
 ```
 
-Perintah pertama mendaftar apa yang akan dipindah dan tidak menulis apa pun. Yang kedua menyalin, memverifikasi, membalik baris, dan menghapus salinan publik. Yang ketiga harus melaporkan `Moved 0 media`. Jalankan sebagai user pemilik `storage/`. Exit code 1 berarti ada media yang masih di disk publik: baris `Failed <id>: ...` atau `Missing <id>: public:<path>` menyebut penyebabnya. Perbaiki dan jalankan ulang.
+Perintah pertama mendaftar apa yang akan dipindah dan tidak menulis apa pun. Yang kedua menyalin, memverifikasi, membalik baris, dan menghapus salinan publik. Yang ketiga harus melaporkan `Moved 0 media`. Jalankan sebagai user pemilik `storage/`. Exit code 1 berarti ada media yang masih di disk publik: baris `Media <id>: ...` atau `Missing <id>: public:<path>` menyebut penyebabnya. Perbaiki dan jalankan ulang.
 
 ## Rollback
 

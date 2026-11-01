@@ -34,7 +34,7 @@ Peran tidak lagi menjadi pengecualian: `App\Models\Role` juga memakai trait ini 
 - `idFor($user)` mengembalikan perusahaan efektif untuk pengguna tertentu. `current()` mengembalikan `Company`. `setting($key)` membaca pengaturan per perusahaan.
 - Perusahaan efektif adalah nilai session `active_company_id`, yang divalidasi ulang terhadap tabel keanggotaan `company_user` dan status perusahaan aktif pada setiap pembacaan, atau jika tidak ada, perusahaan asal (home) pengguna.
 - `users.company_id` hanya perusahaan asal, tempat pengguna masuk saat login. Kolom ini tidak pernah berarti "tenant".
-- Berpindah perusahaan membutuhkan izin `company.switch` ditambah keanggotaan di perusahaan tujuan.
+- Berpindah ke perusahaan lain membutuhkan izin `company.switch` ditambah keanggotaan di perusahaan tujuan. Kembali ke perusahaan asal pengguna hanya membutuhkan keanggotaan.
 
 Kode yang berjalan tanpa pengguna yang login (perintah Artisan, job queue, listener, webhook, seeder) membungkus pekerjaannya dengan `CompanyService::runAs($companyId, fn () => ...)`. Pemanggilan ini bisa bersarang dan memulihkan scope sebelumnya.
 

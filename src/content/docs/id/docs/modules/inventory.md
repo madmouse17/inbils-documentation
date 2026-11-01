@@ -24,13 +24,13 @@ Stok dijaga oleh pemeriksaan database: `quantity >= 0`, `reserved_quantity >= 0`
 |---|---|
 | `receive` | Menambah jumlah di sebuah lokasi. |
 | `issue` | Mengurangi jumlah dari sebuah lokasi. |
-| `transfer` | Dua baris: issue di sumber dan receive di tujuan. |
+| `transfer` | Dua baris `transfer`: jumlah negatif di sumber dan jumlah positif di tujuan. |
 | `adjustment` | Menetapkan jumlah hasil hitung, dengan catatan wajib. |
 | `reserve` | Hanya menaikkan `reserved_quantity` (permintaan barang disetujui). |
 | `release` | Menurunkan `reserved_quantity` (permintaan barang diserahkan), lalu `issue` menyusul. |
 | `return` | Menambahkan jumlah kembali (retur material). |
 
-Reserve atau issue yang melebihi stok tersedia melempar `InsufficientStockException`. Pesan yang sama dipakai API, validasi web, dan toast: `Stok {item} di {location} tersisa {available} {unit}, dibutuhkan {requested} {unit}.` Saat `quantity <= min_stock`, barang menampilkan lencana stok menipis dan widget dasbor.
+Reserve atau issue yang melebihi stok tersedia melempar `InsufficientStockException`. Pesan yang sama dipakai API, validasi web, dan toast: `Stok {item} di {location} tidak cukup: tersedia {available} {unit}, diminta {requested} {unit}.` Saat `quantity <= min_stock`, barang menampilkan lencana stok menipis dan widget dasbor.
 
 ## Permintaan barang
 

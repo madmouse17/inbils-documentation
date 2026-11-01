@@ -20,7 +20,7 @@ The documented targets (RPO 24 hours, RTO 4 hours, daily backups, 30-day retenti
 - Credentials come from deployment-provided secret material, never from `.env` or the repository. Credentials reach the MySQL client through a `defaults-extra-file` (mode 600, preferred) or environment variables, and are never logged.
 - Explicit source and destination arguments. Blank paths, protected locations and existing backup outputs are refused.
 - A SHA-256 manifest is written for every backup set and verified before any dump is applied. A mismatch stops the restore.
-- A restore never overwrites production or a non-empty target, and never restores into the source database name.
+- A restore never overwrites a protected production-like database without both production flags. The Python restore also refuses a non-empty target media directory and a target database named like the source.
 
 ## Backup
 
@@ -95,6 +95,7 @@ python scripts/operations/restore.py \
   --media-archive <backup>.media.tar.gz.enc \
   --checksum-file <backup>.sha256 \
   --target-db-name restore_inbils_<date> \
+  --source-db-name inbils \
   --target-media-dir /tmp/inbils-restore-drill \
   --db-host "$BACKUP_DB_HOST" \
   --db-port "$BACKUP_DB_PORT" \
@@ -117,7 +118,7 @@ After, all must be true:
 - [ ] The proof file records the cleanup result.
 - [ ] The target directory is empty again after cleanup.
 
-The restore stops by design when the target directory is not empty, the target database equals the source, the checksum file is missing or wrong, an archive path already exists, or the source looks like a protected system database. Keep drill output apart from live storage.
+The restore stops by design when the target directory is not empty, the target database equals the source, the checksum file is missing or wrong, an archive file does not exist, or the target database is a protected system database. Keep drill output apart from live storage.
 
 Run the non-destructive self-check first:
 

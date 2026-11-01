@@ -8,7 +8,7 @@ The Ticketing module is the service desk of an ISP. A ticket records a complaint
 ## Key concepts
 
 - **Source**: `customer`, `noc` (monitoring) or `internal`. A ticket with source `customer` must name a customer.
-- **Category**: the type of fault. Seeded categories are `no_internet` (4 h, urgent), `slow_connection` (8 h, high), `packet_loss` (8 h, high), `device_issue` (12 h, medium) and `fiber_issue` (12 h, high). Each carries a default SLA in calendar hours and a default priority. Staff with `ticket.category.manage` can add their own.
+- **Category**: the type of fault. Seeded categories are `no_internet` (4 h, urgent), `slow_connection` (8 h, high), `packet_loss` (8 h, high), `device_issue` (12 h, medium) and `fiber_issue` (12 h, high). Each carries a default SLA in calendar hours and a default priority. Staff with `ticket.category.manage` can edit them (hours, customer hint, active), but cannot add new ones.
 - **Priority**: `low`, `medium`, `high`, `urgent`.
 - **Code**: tickets are numbered `TKT-{YEAR}-{NNNNN}`, race-safe.
 - **SLA tier**: a tier sold with a service package version, with a first-response target and a resolution target. See [SLA tiers](/docs/guides/web/customers-and-services/sla-tiers/).
@@ -99,12 +99,12 @@ In-app bell and push notify handlers and dispatchers of assignment, reopen and S
 | `ticket.attachment.view` | Open attachments. |
 | `ticket.spawn_spk` | Spawn a work order from a ticket. |
 | `ticket.export` | Export the ticket list. |
-| `ticket.manage` | Super permission for the module. |
+| `ticket.manage` | Reserved: no action checks it. |
 | `ticket.category.manage` | Manage ticket categories. |
 
 ## Invariants
 
-- Tickets move only along the lifecycle above. Resolve needs an assigned or started ticket, and close needs a resolved one.
+- Tickets move only along the lifecycle above. Resolve needs a ticket in progress (`on_progress`), and close needs a resolved one.
 - Customer data is never exposed beyond id, code and name to users without `customer.view`.
 - Closing freezes the category and handler names, so later renames do not rewrite history. Reopening clears them again.
 - Tenant isolation applies to every ticket, comment and attachment.

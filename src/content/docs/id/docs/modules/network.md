@@ -25,8 +25,8 @@ Modul ini mencakup semua hal fisik dan logis tentang jaringan: perangkat yang An
 | `installed` | `available` | Lepas dengan alasan | Lokasi dan tautan dikosongkan, baris riwayat ditutup. |
 | `installed` | `maintenance` | Set pemeliharaan | Tetap di lokasinya, diberi tanda. Lanjutkan mengembalikannya ke `installed`. |
 | `installed` atau `maintenance` | `damaged` | Tandai rusak | Perlu perbaikan sebelum menjadi `available` lagi. |
-| `damaged` | `available` | Perbaikan | Tidak ada. |
-| semua | `retired` | Pensiunkan dengan alasan | Final. Baris riwayat ditutup dan tautan langganan dilepas. |
+| `damaged` | `available` | Perbaikan | Lokasi, tautan pelanggan dan langganan dikosongkan, baris riwayat ditutup. |
+| semua | `retired` | Pensiunkan dengan alasan | Final. Baris riwayat ditutup. Hanya status yang berubah: lokasi dan tautan tetap seperti semula. |
 
 Saat SPK bertipe pemasangan selesai, aset dipasang di lokasi SPK dan langganan diaktifkan (lihat [SPK](/docs/modules/work-orders/)). Halaman lacak mencari aset menurut nomor seri, MAC, IP, pelanggan, atau langganan dan menampilkan jalur lokasinya.
 
@@ -76,7 +76,7 @@ Langganan dengan alamat IPv4 static dari IPAM juga mendapat `Framed-IP-Address` 
 
 | Langganan | User RADIUS |
 |---|---|
-| `pending` atau `active`, tidak diblokir | Ada, grup kecepatan |
+| `pending` (kecuali pemasangannya dibatalkan dan tidak ada yang berjalan) atau `active`, tidak diblokir | Ada, grup kecepatan |
 | `suspended`, atau status apa pun selain terminated dengan blokir | Ada, grup isolir |
 | `terminated` atau dihapus | Dihapus |
 
@@ -124,7 +124,7 @@ Bila Anda merotasi `APP_KEY`, simpan kunci lama di `APP_PREVIOUS_KEYS`, kalau ti
 | `network_asset.install`, `.remove`, `.maintenance`, `.repair`, `.retire` | Aksi siklus hidup | Admin, Manajer |
 | `network_asset.nas.view`, `.nas.manage` | Melihat dan mengelola router NAS | Lihat: Admin, Manajer, NOC, Staf. Kelola: Admin. |
 | `network_asset.account.view`, `.manage`, `.reveal` | Melihat, mengubah, dan sinkron ulang akun, membuka secret | Admin, Manajer, Staf. NOC punya lihat dan kelola. |
-| `location.view`, `.create`, `.update`, `.move`, `.delete` | Pohon lokasi | Admin, Manajer (tanpa hapus) |
+| `location.view`, `.create`, `.update`, `.move`, `.delete` | Pohon lokasi | Admin dan Manajer (tanpa hapus). Lihat juga: NOC, Teknisi, Gudang, Staf. |
 | `ipam.view`, `ipam.manage`, `ipam.assign` | Melihat, mengelola, memberi alamat static | Lihat: Admin, Manajer, NOC, Staf, Teknisi. Kelola dan assign: Admin, Manajer. |
 | `odn.view`, `odn.manage`, `odn.assign` | Melihat, mengelola port dan splitter, memasang drop | Admin dan Manajer semuanya. NOC dan Staf lihat dan assign. Teknisi lihat. |
 | `customer.subscription.block` | Isolir manual | Admin, Manajer, NOC |

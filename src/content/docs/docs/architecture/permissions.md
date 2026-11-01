@@ -91,7 +91,7 @@ Holders of `roles.manage` administer roles in **Administrasi > Peran**. `Company
 
 | Guard | Rule |
 | --- | --- |
-| Hold it yourself | You cannot grant a guarded permission you do not hold. Markers are not guarded. |
+| Hold it yourself | You cannot grant a guarded permission you do not hold. Only `app.technician`, `evaluation.evaluable`, `portal.access`, `portal.invoice.view` and `portal.invoice.pay` are unguarded. |
 | Edit scope | You cannot edit or delete a role, or change the roles of a user, who is richer than you. |
 | SoD on save | A role with SoD violations is refused unless it holds `roles.manage`. |
 | Stacked SoD | The merged permissions of a user's roles must have no violation. |

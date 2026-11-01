@@ -17,7 +17,7 @@ Secara default Inbils menjawab di `http://localhost` (Sail) dan `http://localhos
 - `caddy`: HTTPS di `127.0.0.1:443`, dengan sertifikat dari certificate authority lokalnya sendiri. Port 80 tetap milik Sail, jadi tidak ada redirect HTTP.
 - `dns`: dnsmasq di `127.0.0.2:53`. Ia menjawab setiap nama `*.test` dengan `127.0.0.1` dan tidak lebih.
 
-Kedua container bergabung ke network Sail dan deploy sebagai external network, jadi jalankan Sail dan stack 8080 lebih dulu. Lalu jalankan proxy:
+Container `caddy` bergabung ke network Sail dan deploy sebagai external network, jadi jalankan Sail dan stack 8080 lebih dulu. Lalu jalankan proxy:
 
 ```bash
 DOCKER_CONTEXT=default docker compose -f docker/devproxy/compose.yaml up -d --build
@@ -36,11 +36,11 @@ Authority lokal dapat menandatangani sertifikat untuk nama apa pun, dan kuncinya
 
 Browser yang secure DNS-nya diset ke provider tetap (Google, Cloudflare) melewati resolver lokal. Setel ke penyedia layanan saat ini, atau matikan.
 
-## Trusted proxies
+## Proxy tepercaya
 
-`.env` dan `.env.docker` sama-sama mengisi `TRUSTED_PROXIES=172.16.0.0/12` (network Docker). Ini menjaga skema `https` di belakang Caddy. Tanpa itu halaman memuat asetnya lewat `http` dan browser memblokirnya, yang tampak sebagai halaman tanpa gaya. Di server sungguhan, sebutkan proxy yang sebenarnya.
+Isi `TRUSTED_PROXIES=172.16.0.0/12` (network Docker) di `.env` dan `.env.docker`; file contohnya membiarkannya kosong. Ini menjaga skema `https` di belakang Caddy. Tanpa itu halaman memuat asetnya lewat `http` dan browser memblokirnya, yang tampak sebagai halaman tanpa gaya. Di server sungguhan, sebutkan proxy yang sebenarnya.
 
-`APP_URL` tetap `http://localhost` dan `http://localhost:8080`, jadi tautan email dan queue, suite E2E, dan health check tidak berubah. Kedua stack berjalan dengan `APP_ENV=local`, yang tidak memeriksa host oleh Laravel. Stack yang diganti ke `production` harus memakai nama `.test` sebagai `APP_URL`, atau pemeriksaan host menolaknya.
+`APP_URL` tetap `http://localhost` dan `http://localhost:8080`, jadi tautan email dan queue, suite E2E, dan health check tidak berubah. Sail berjalan dengan `APP_ENV=local`, yang tidak memeriksa host oleh Laravel. Stack 8080 baru begitu jika Anda mengisinya di `.env.docker`; file contohnya memakai `production`. Stack yang diganti ke `production` harus memakai nama `.test` sebagai `APP_URL`, atau pemeriksaan host menolaknya.
 
 ## Batasan
 

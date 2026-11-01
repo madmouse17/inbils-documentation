@@ -11,9 +11,9 @@ Evaluasi menilai satu karyawan untuk satu pekerjaan. Evaluasi ditulis dengan tan
 
 | Isian | Aturan |
 |---|---|
-| Employee (karyawan) | Pengguna aktif perusahaan yang memegang izin `evaluation.evaluable` (peran technician dan staff secara bawaan). |
+| Employee (karyawan) | Pengguna aktif perusahaan yang memegang izin `evaluation.evaluable` (peran technician, staff, dan NOC secara bawaan). |
 | Reference (rujukan) | Satu `WorkOrder` ([SPK](/docs/modules/work-orders/)) atau satu `Ticket` ([Ticketing](/docs/modules/ticketing/)) di perusahaan yang sama. Tipe lain ditolak dengan 422. |
-| `score` | Wajib, dari 1.0 sampai 5.0 (pemeriksaan database). |
+| `score` | Wajib, dari 1.0 sampai 5.0 (diperiksa saat disimpan). |
 | `customer_rating` | Opsional, dari 1.0 sampai 5.0, diisi staf atas nama pelanggan. |
 | `comment` | Opsional, sampai 1000 karakter. |
 | Evaluator | Pengguna yang menulisnya. Satu evaluator hanya bisa menilai satu rujukan sekali. |
@@ -60,11 +60,11 @@ Memilih teknisi di luar kumpulan ini ditolak (403). Halaman Teknisi karena itu b
 |---|---|---|
 | `evaluation.view` | Melihat semua evaluasi | manager, staff |
 | `evaluation.create` | Menulis evaluasi | manager, staff |
-| `evaluation.update` | Mengubah evaluasi apa pun (evaluator selalu boleh mengubah miliknya) | manager, staff |
+| `evaluation.update` | Mengubah evaluasi (menyimpan perubahan butuh izin ini, juga untuk evaluasi milik evaluator sendiri) | manager, staff |
 | `evaluation.delete` | Menghapus evaluasi | admin |
 | `evaluation.view.own` | Hanya melihat evaluasi tentang dirinya (evaluasi orang lain dijawab 404) | technician |
-| `evaluation.customer.submit` | Rating pelanggan | customer |
-| `evaluation.evaluable` | Boleh dievaluasi | technician, staff |
+| `evaluation.customer.submit` | Pelanggan menilai dan mengonfirmasi tiket selesai di aplikasi | customer |
+| `evaluation.evaluable` | Boleh dievaluasi | technician, staff, NOC |
 | `evaluation.export`, `evaluation.manage` | Ekspor, izin super | admin |
 | `report.technician` | Membuka laporan teknisi | technician, manager, admin |
 | `report.technician.team` | Cakupan tim pada laporan | manager |

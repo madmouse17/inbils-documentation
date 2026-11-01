@@ -41,7 +41,7 @@ Payment and WhatsApp providers call back into Inbils. Both URLs need a public ad
 
 | Provider | URL |
 | --- | --- |
-| Midtrans (notification URL) | `<APP_URL>/webhooks/midtrans/{company}` |
+| Midtrans (notification URL) | `<APP_URL>/webhooks/midtrans/{company}`, where `{company}` is the company's public ULID; **Pengaturan > Integrasi** shows the exact URL |
 | WhatsApp (webhook of the Meta app) | `<APP_URL>/webhooks/whatsapp` |
 
 For real Midtrans callbacks in development, `scripts/dev-payments.sh` starts the app and the `workers` profile. When `INBILS_TUNNEL` names a cloudflared tunnel, it also runs that tunnel:

@@ -3,7 +3,7 @@ title: "Reporting"
 description: "What the read-only Inbils reporting module computes, how figures are defined and drilled into, how CSV and PDF export work, and who may see which report."
 ---
 
-The Reporting module turns the history held by every other module into reports for managers, NOC and finance. It is strictly read-only: it has query classes and no models, writes nothing, and stores no computed performance values. Every figure is computed live from the source records, so the same report for another period simply gives another result.
+The Reporting module turns the history held by every other module into reports for managers, NOC and finance. It is strictly read-only: it has query classes and one read-only model, writes nothing, and stores no computed performance values. Every figure is computed live from the source records, so the same report for another period simply gives another result.
 
 ## Reports
 
@@ -36,9 +36,9 @@ Aggregate figures of the Business, SLA, Asset and Technician reports link to the
 
 All exports go through `App\Support\ExportQuery`. The permission is `report.export` together with the permission of the report itself.
 
-- **CSV**: one title row and then the raw data.
+- **CSV**: UTF-8 with a byte order mark, one row of column headers and then the raw data.
 - **PDF**: A4 landscape with a header (company logo and name, report title, "Periode", "Filter", "Dicetak {date} oleh {name}") and "Halaman {n} dari {total}" in every footer. Values are written as on screen, for example "Rp 1.250.000" or "18 Okt 2026".
-- The row limit follows `config('exports.max_rows')`. A PDF that was cut says "PDF dibatasi {n} baris. Untuk data lengkap, unduh CSV atau persempit periode."
+- The row limit follows `config('exports.max_rows')` (default 5000, set by `EXPORTS_MAX_ROWS`). A PDF also stops at 1500 cells, so a wide table gets fewer rows. A PDF that was cut says "PDF dibatasi {n} baris. Untuk data lengkap, unduh CSV atau persempit periode."
 - Receivables have their own export in [Billing](/docs/modules/billing/), and the ticket list in [Ticketing](/docs/modules/ticketing/).
 
 ## Consolidated report

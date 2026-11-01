@@ -74,7 +74,7 @@ Both are managed under **Pengumuman & Promo** (last item of **Pelanggan & Layana
 | Selesai | Published and the end time has passed. | No |
 | Nonaktif | Published, then deactivated. Cannot be activated again. | No |
 
-- **Targeting**: all customers, or specific locations and package categories. A customer matches when they have an active or suspended subscription in that location or category.
+- **Targeting**: all customers, or specific locations and package categories. A customer matches when they have an active or suspended subscription whose serving POP is under a chosen location and whose package is in a chosen category (a list left empty is ignored).
 - **Publishing is final**: a published item cannot be deleted, only deactivated.
 - **Notifications**: an announcement of type outage or maintenance sends one app notification to each targeted customer with an active sign-in account. Information announcements and banners never notify. There is no WhatsApp message for announcements.
 - **Banners**: JPG, PNG or WebP, at most 2 MB, ratio 2:1 (1200 x 600 recommended, 5% tolerance). The app receives at most 5 live banners, ordered by **Urutan** and then newest. Banner images are private to customers of the same company who match the target, and are deleted 180 days after the banner ended. Taps are counted once per customer per banner per day.
@@ -94,8 +94,8 @@ When the operator creates a company in `/platform`, it chooses `starter` or `emp
 |---|---|---|
 | `service.view` | See the catalogue | Admin, Manajer, NOC & Layanan Pelanggan, Staf |
 | `service.create` | Create packages and profiles | Admin, Manajer |
-| `service.update` | Edit, deactivate and restore | Admin, Manajer |
-| `service.delete` | Permanent delete | Admin |
+| `service.update` | Edit and deactivate | Admin, Manajer |
+| `service.delete` | Permanent delete and restore | Admin |
 | `service.export` | Export packages and profiles | Admin |
 | `service.manage` | Super permission | Admin, Manajer |
 | `announcement.manage` | Create, publish, deactivate announcements and banners | Admin, Manajer, NOC & Layanan Pelanggan |

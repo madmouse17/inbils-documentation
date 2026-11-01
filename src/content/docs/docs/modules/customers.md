@@ -9,16 +9,16 @@ A customer in Inbils is the person or business that buys internet from your ISP.
 
 | Concept | What it is |
 |---|---|
-| Customer | An `Individual` or a `Company`. The code is unique per company (format `CUS-{YEAR}-{NNNNN}`). A `Company` customer must have a tax id (NPWP) and a contact person. Soft deleted. |
+| Customer | An `Individual` or a `Company`. The code is unique per company (default format `CUS-{NNNNN}`). A `Company` customer must have a tax id (NPWP) and a contact person. Soft deleted. |
 | Address | A customer can have several addresses (home, office, branch). At most one is the installation point, where the service is delivered. Setting a new installation point clears the old one. Latitude and longitude are stored. |
-| Contact | A person to call about the customer. Several per customer, one can be primary. Optional for individuals. |
+| Contact | A person to call about the customer. Several per customer, exactly one is primary. Registration needs at least one. |
 | Documents | Files attached to a customer. A daily command, `customers:document-expiry`, notifies staff who may update the customer when a document is about to expire (30 days ahead). |
 | Subscription | One internet service of a customer (code format `SUB-{YEAR}-{NNNNN}`). It links a [service package](/docs/modules/service-catalogue/), an installation address, an optional ONT asset and an optional serving POP. It also holds the billing fields, so there is no separate billing subscription. |
 | Customer status | A rollup of the customer's subscriptions, never edited by hand (see below). |
 | Account switch | `is_active` on the customer, shown as **Account** in the UI. A manual switch, separate from the status. |
 | Acquired by | The staff member credited with winning the customer. Attribution only, not commission. |
 
-Customer codes and subscription codes are generated under a lock per year, so two concurrent creations never get the same code.
+Customer codes and subscription codes are generated under a lock, so two concurrent creations never get the same code.
 
 ## Subscription lifecycle
 
@@ -27,7 +27,7 @@ Customer codes and subscription codes are generated under a lock per year, so tw
 | From | To | Trigger | What happens |
 |---|---|---|---|
 | (new) | `pending` | Create subscription | `mrc_amount` is copied from the package price and can be overridden. `billing_day` is 1 to 28. |
-| `pending` | `active` | Activate: the installation work order is completed, or manually | `activation_date` is set, the ONT asset is linked, `next_invoice_date` becomes the next billing day. |
+| `pending` | `active` | Activate: the installation work order is completed, or manually | `activation_date` is set and `next_invoice_date` becomes the next billing day. Completing the installation work order also links the ONT asset. |
 | `active` | `suspended` | Suspend (manual, or isolir for overdue invoices) | `suspension_source` is `manual` or `overdue`. Recurring invoice generation skips the subscription. |
 | `suspended` | `active` | Reactivate (manual, or automatically after payment) | `suspension_source` is cleared and recurring invoices resume. |
 | `active` or `suspended` | `terminated` | Terminate with a reason and optional ONT release | `terminated_at` and `terminated_reason` are set, recurring billing stops, the ONT can return to `available`. |
@@ -117,7 +117,7 @@ The customer app calls `GET api/v1/customer/profile`, `GET api/v1/customer/subsc
 | `customer.view` | See customers, addresses, contacts | Admin, Manajer, NOC & Layanan Pelanggan, Teknisi, Keuangan, Staf |
 | `customer.create` | Create customers (onboarding) | Admin, Manajer, NOC & Layanan Pelanggan |
 | `customer.update` | Edit customers, resend access link | Admin, Manajer, NOC & Layanan Pelanggan, Staf |
-| `customer.delete` | Delete a customer (refused while a subscription is active) | Admin |
+| `customer.delete` | Delete a customer (refused while any subscription, invoice, work order, ticket or network asset still points at it) | Admin |
 | `customer.address.manage` | Address and contact changes | Admin, Manajer, NOC & Layanan Pelanggan, Staf |
 | `customer.subscription.view` | See subscriptions | Admin, Manajer, NOC & Layanan Pelanggan, Keuangan, Staf |
 | `customer.subscription.manage` | Create and edit subscriptions, change plan | Admin, Manajer, NOC & Layanan Pelanggan |
@@ -137,7 +137,7 @@ Roles belong to each company and can be renamed or changed, so the real rights a
 
 - A customer code is unique per company, and so is a subscription code.
 - At most one installation address per customer.
-- A customer with an active subscription cannot be deleted.
+- A customer that a subscription, invoice, work order, ticket or network asset points at cannot be deleted.
 - A subscription keeps its own copy of the price, so changing a package never reprices existing subscriptions.
 - `billing_day` is between 1 and 28.
 - Only `SubscriptionService` writes status, suspension source and block columns.

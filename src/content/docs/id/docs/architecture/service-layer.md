@@ -40,7 +40,7 @@ Service dinamai `{Domain}Service`, misalnya `SubscriptionService`, `CompanyServi
 
 ### Action
 
-Action mengorkestrasi proses yang melibatkan beberapa service, sehingga tidak ada satu service pun yang perlu mengenal yang lain. Action dinamai `{Verb}{Entity}Action`. Yang ada di core `app/Actions/` adalah `CreateCustomerOnboardingAction`, `CreateInvoiceFromSpkAction`, dan `SetCustomerWhatsAppConsentAction`. Provisioning platform punya `ProvisionTenantAction` dan `AddTenantSubsidiaryAction`. Modul punya folder `Actions/` sendiri.
+Action mengorkestrasi proses yang melibatkan beberapa service, sehingga tidak ada satu service pun yang perlu mengenal yang lain. Action dinamai `{Verb}{Entity}Action`. Yang ada di core `app/Actions/` adalah `CreateCustomerOnboardingAction`, `CreateInvoiceFromSpkAction`, `SetCustomerWhatsAppConsentAction`, dan `AssignCustomerAcquirerAction`. Provisioning platform punya `ProvisionTenantAction` dan `AddTenantSubsidiaryAction`. Modul punya folder `Actions/` sendiri.
 
 ### Query class
 

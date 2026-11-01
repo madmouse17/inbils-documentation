@@ -15,7 +15,7 @@ Inbils menyimpan semuanya di MySQL 8.4. Charset-nya `utf8mb4` dengan collation `
 | Index | Composite index diawali `company_id`. MySQL membatasi nama index 64 karakter, jadi nama yang panjang dipendekkan manual. |
 | Foreign key | Wajib. `RESTRICT` untuk master induk, `CASCADE` untuk baris anak. |
 | Uang dan kuantitas | `decimal(15,2)`. |
-| Kolom mirip enum | Enum MySQL ditambah constraint `CHECK`, misalnya `work_orders.status`, `network_assets.status`, `tickets.status`, `invoices.status`. |
+| Kolom mirip enum | Enum MySQL, misalnya `work_orders.status`, `network_assets.status`, `tickets.status`, `invoices.status`. |
 | Referensi polimorfik | Tipe string ditambah id bigint, tanpa foreign key database dan validasi di aplikasi. Contoh: `stock_movements.reference_type` dan `reference_id`. |
 | Nama tabel | Tanpa prefiks modul (`products`, bukan `inventory_products`). Tabel pivot berurutan alfabet. |
 
@@ -26,7 +26,7 @@ Inbils menyimpan semuanya di MySQL 8.4. Charset-nya `utf8mb4` dengan collation `
 | Tabel | Isi |
 | --- | --- |
 | `companies` | Tenant. `parent_company_id` membentuk perusahaan induk dan anak perusahaannya. `settings` berupa JSON. |
-| `users` | Staf, teknisi, dan akun pelanggan. Secret two-factor dienkripsi dan tidak pernah fillable. Soft delete. |
+| `users` | Staf, teknisi, dan akun pelanggan. Secret two-factor dienkripsi dan tidak pernah fillable. |
 | `company_user` | Keanggotaan pengguna di perusahaan. Unik `(company_id, user_id)`, dengan satu baris default (asal) per pengguna. |
 | `roles`, `permissions`, `role_templates` | Peran per perusahaan, katalog izin global, dan templat platform. Lihat [Peran dan izin](/docs/architecture/permissions/). |
 | `locations` | Pohon yang merujuk dirinya sendiri: region, area, POP, rack, dan site, dengan `path` terhitung. |
@@ -43,7 +43,7 @@ Inbils menyimpan semuanya di MySQL 8.4. Charset-nya `utf8mb4` dengan collation `
 
 | Tabel | Isi |
 | --- | --- |
-| `network_assets` | Perangkat dengan nomor seri, MAC, status (`in_stock`, `installed`, `maintenance`, `retired`), lokasi, pelanggan, dan langganan. Unik `(company_id, serial_number)`. |
+| `network_assets` | Perangkat dengan nomor seri, MAC, status (`available`, `installed`, `maintenance`, `damaged`, `retired`), lokasi, pelanggan, dan langganan. Unik `(company_id, serial_number)`. |
 | `network_asset_installations` | Riwayat pemasangan yang append-only. |
 | `nas_devices`, `network_accounts` | Klien RADIUS (router) dan akun RADIUS milik langganan. |
 | `vlans`, `ip_prefixes`, `ip_addresses` | Register IPAM. Prefiks membentuk pohon lewat `parent_id`. |
@@ -52,19 +52,19 @@ Inbils menyimpan semuanya di MySQL 8.4. Charset-nya `utf8mb4` dengan collation `
 
 ### Inventaris
 
-`categories`, `units`, dan `products` adalah master. `stocks` menyimpan kuantitas per produk dan lokasi, unik per `(company_id, product_id, location_id)`. `stock_movements` adalah ledger yang tidak bisa diubah: setiap baris punya tipe (`receive`, `issue`, `transfer`, `adjust`, `return`), kuantitas, dan referensi polimorfik. Permintaan ada di `inventory_requests` dan `inventory_request_items`, penyesuaian yang disetujui di `stock_adjustment_requests`, dan pengembalian material di `material_return_cases`, `material_return_lines`, dan `material_return_events`.
+`categories`, `units`, dan `products` adalah master. `stocks` menyimpan kuantitas per produk dan lokasi, unik per `(company_id, product_id, location_id)`. `stock_movements` adalah ledger yang tidak bisa diubah: setiap baris punya tipe (`receive`, `issue`, `transfer`, `adjustment`, `reserve`, `release`, `return`), kuantitas, dan referensi polimorfik. Permintaan ada di `inventory_requests` dan `inventory_request_items`, penyesuaian yang disetujui di `stock_adjustment_requests`, dan pengembalian material di `material_return_cases`, `material_return_lines`, dan `material_return_events`.
 
 ### SPK (perintah kerja)
 
-`work_orders` punya kode, tipe (`install`, `maintain`, `upgrade`, `relocate`), status (`pending`, `assigned`, `in_progress`, `completed`, `cancelled`), pelanggan, langganan, lokasi, dan penerima tugas. `work_order_items` (baris keluar atau kembali) ikut terhapus bersama SPK. `work_order_assignments` bersifat append-only. `work_order_evidence` menyimpan berkas bukti.
+`work_orders` punya kode, tipe (`installation`, `maintenance`, `upgrade_service`, `relocation`), status (`draft`, `generated`, `assigned`, `in_progress`, `waiting_review`, `completed`, `rejected`, `cancelled`), pelanggan, langganan, lokasi, dan penerima tugas. `work_order_items` (satu baris per produk, dengan kuantitas dicadangkan dan terpakai) ikut terhapus bersama SPK. `work_order_assignments` bersifat append-only. `work_order_evidence` menyimpan berkas bukti.
 
 ### Billing
 
-`invoices` (tipe `mrc`, `otc`, `adjustment`; status `draft`, `sent`, `paid`, `overdue`, `cancelled`), `invoice_items` (cascade), dan `payments` (append-only). `payment_attempts` mencatat percobaan pembayaran online. Kolom STORED generated `active_recurring_period`, bersama unique index pada `(company_id, subscription_id, active_recurring_period)`, mencegah dua invoice berulang aktif untuk satu langganan dan periode. Invoice yang dibatalkan atau dihapus serta invoice manual atau sekali bayar membiarkannya NULL, sehingga tidak pernah bentrok.
+`invoices` (tipe `one_time` dan `recurring`; status `draft`, `sent`, `partial`, `paid`, `overdue`, `cancelled`), `invoice_items` (cascade), dan `payments` (append-only). `payment_attempts` mencatat percobaan pembayaran online. Kolom STORED generated `active_recurring_period`, bersama unique index pada `(company_id, subscription_id, active_recurring_period)`, mencegah dua invoice berulang aktif untuk satu langganan dan periode. Invoice yang dibatalkan atau dihapus serta invoice sekali bayar membiarkannya NULL, sehingga tidak pernah bentrok.
 
 ### Ticketing
 
-`ticket_categories`, `tickets` (status `open`, `assigned`, `in_progress`, `resolved`, `closed`; unik `(company_id, code)`), `ticket_comments` (cascade, dengan penanda internal), dan `ticket_attachments`.
+`ticket_categories`, `tickets` (status `open`, `assigned`, `on_progress`, `resolved`, `closed`; unik `(company_id, code)`), `ticket_comments` (cascade, dengan penanda internal), dan `ticket_attachments`.
 
 ### Relasi utama
 
@@ -79,7 +79,7 @@ customers / service_subscriptions 1-N invoices 1-N invoice_items, payments
 customers 1-N tickets 1-N ticket_comments, ticket_attachments
 ```
 
-Satu pengecualian terdokumentasi pada arah dependensi: `service_subscriptions.ont_asset_id` menunjuk dari core ke `network_assets`. Ini tautan balik yang didenormalisasi, dan kode core tidak meng-import model aset.
+Satu pengecualian terdokumentasi pada arah dependensi: `service_subscriptions.ont_asset_id` menunjuk dari core ke `network_assets`. Ini tautan balik yang didenormalisasi tanpa foreign key database, dan model core `ServiceSubscription` meng-import `NetworkAsset` untuk relasinya.
 
 ## Invarian
 

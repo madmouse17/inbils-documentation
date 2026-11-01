@@ -22,14 +22,14 @@ Every error is JSON:
 |---|---|
 | 400 | `bad_request` |
 | 401 | `unauthenticated`, `account_inactive` |
-| 403 | `forbidden`, `app_not_allowed`, `password_reset_required` |
+| 403 | `forbidden`, `app_not_allowed`, `company_inactive` (the company of the account is suspended), `password_reset_required` |
 | 404 | `not_found` (also another customer's or company's record), `payment_unavailable` |
 | 405 | `method_not_allowed` |
 | 408 | `request_timeout` |
-| 409 | `conflict`, `idempotency_in_progress`, `push_token_not_registered` |
+| 409 | `conflict`, `idempotency_in_progress`, `push_token_not_registered`, `work_order_closed`, `ticket_already_rated` |
 | 413 | `payload_too_large` |
 | 415 | `unsupported_media_type` |
-| 422 | `validation_failed`, `unprocessable`, `idempotency_conflict`, `invoice_not_payable`, `challenge_expired` |
+| 422 | `validation_failed`, `unprocessable`, `idempotency_conflict`, `invoice_not_payable`, `challenge_expired`, `credentials_not_ready`, `ticket_not_resolved`, `ticket_closed` |
 | 428 | `precondition_required`, `idempotency_key_required` |
 | 429 | `too_many_requests` |
 | 500 | `server_error` |
@@ -78,6 +78,8 @@ List endpoints answer `{data, links, meta}` (Laravel paginator). `?page=` starts
 | Uploads, per user | 30 |
 | Promo banner taps, per user | 30 |
 | Push tests, per user | 3 |
+| Network credential reveals, per user | 5 |
+| Invoice receipts, per user | 6 |
 
 ## Media and downloads
 

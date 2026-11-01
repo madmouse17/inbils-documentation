@@ -74,7 +74,7 @@ Keduanya dikelola di **Pengumuman & Promo** (item terakhir di **Pelanggan & Laya
 | Selesai | Diterbitkan dan waktu selesai sudah lewat. | Tidak |
 | Nonaktif | Diterbitkan lalu dinonaktifkan. Tidak bisa diaktifkan lagi. | Tidak |
 
-- **Sasaran**: semua pelanggan, atau lokasi dan kategori paket tertentu. Pelanggan cocok bila punya langganan aktif atau suspended di lokasi atau kategori itu.
+- **Sasaran**: semua pelanggan, atau lokasi dan kategori paket tertentu. Pelanggan cocok bila punya langganan aktif atau suspended yang POP pelayannya berada di bawah lokasi terpilih dan paketnya masuk kategori terpilih (daftar yang kosong diabaikan).
 - **Penerbitan bersifat final**: item yang sudah terbit tidak bisa dihapus, hanya dinonaktifkan.
 - **Notifikasi**: pengumuman bertipe gangguan atau pemeliharaan mengirim satu notifikasi aplikasi ke setiap pelanggan sasaran yang punya akun masuk aktif. Pengumuman informasi dan banner tidak pernah memberi notifikasi. Tidak ada pesan WhatsApp untuk pengumuman.
 - **Banner**: JPG, PNG, atau WebP, paling besar 2 MB, rasio 2:1 (disarankan 1200 x 600, toleransi 5%). Aplikasi menerima paling banyak 5 banner yang sedang tayang, diurutkan menurut **Urutan** lalu yang terbaru. Gambar banner bersifat privat bagi pelanggan perusahaan yang sama yang cocok dengan sasaran, dan dihapus 180 hari setelah banner selesai. Ketukan dihitung satu kali per pelanggan per banner per hari.
@@ -94,8 +94,8 @@ Saat operator membuat perusahaan di `/platform`, operator memilih `starter` atau
 |---|---|---|
 | `service.view` | Melihat katalog | Admin, Manajer, NOC & Layanan Pelanggan, Staf |
 | `service.create` | Membuat paket dan profil | Admin, Manajer |
-| `service.update` | Mengubah, menonaktifkan, dan memulihkan | Admin, Manajer |
-| `service.delete` | Hapus permanen | Admin |
+| `service.update` | Mengubah dan menonaktifkan | Admin, Manajer |
+| `service.delete` | Hapus permanen dan pulihkan | Admin |
 | `service.export` | Mengekspor paket dan profil | Admin |
 | `service.manage` | Izin super | Admin, Manajer |
 | `announcement.manage` | Membuat, menerbitkan, menonaktifkan pengumuman dan banner | Admin, Manajer, NOC & Layanan Pelanggan |

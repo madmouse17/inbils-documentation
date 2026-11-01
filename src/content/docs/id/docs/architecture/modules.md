@@ -10,8 +10,8 @@ Inbils membagi kode domain ke sembilan modul nwidart dan menaruh kode lintas bid
 | Modul | Memiliki | Dependensi yang dideklarasikan | Halaman |
 | --- | --- | --- | --- |
 | Billing | Invoice, InvoiceItem, Payment, percobaan pembayaran, Midtrans, piutang | Inventory, SPK, Service | [Billing](/docs/modules/billing/) |
-| Customer | Cangkang tipis (provider dan resource). Model dan service pelanggan ada di `app/`. | tidak ada | [Pelanggan](/docs/modules/customers/) |
-| Inventory | Product, Category, Unit, Warehouse, Stock, StockMovement, permintaan, penyesuaian | tidak ada | [Inventaris](/docs/modules/inventory/) |
+| Customer | Cangkang dengan provider dan controller scaffold, dimatikan di `modules_statuses.json`. Model dan service pelanggan ada di `app/`. | tidak ada | [Pelanggan](/docs/modules/customers/) |
+| Inventory | Product, Category, Unit, Stock, StockMovement, permintaan, penyesuaian, pengembalian material | tidak ada | [Inventaris](/docs/modules/inventory/) |
 | Ipam | Prefiks IP, VLAN, alamat | NetworkAsset | [Jaringan](/docs/modules/network/) |
 | NetworkAsset | NetworkAsset, instalasi, perangkat NAS, sinkronisasi RADIUS, ODN | Service, Ipam | [Jaringan](/docs/modules/network/) |
 | Reporting | Query laporan read-only, registry, drill-down, ekspor | Billing, Inventory, NetworkAsset, SPK, Ticketing | [Pelaporan](/docs/modules/reporting/) |
@@ -64,7 +64,7 @@ Inventory dan NetworkAsset tidak boleh meng-import model SPK atau Billing. Arah 
 
 ## Pengecualian terdokumentasi
 
-`service_subscriptions.ont_asset_id` adalah foreign key dari core ke `network_assets`, yang membalik arah normal. Ini ditoleransi karena tautan ONT penting bagi ISP. Ini tautan balik yang didenormalisasi, dan kode core tidak meng-import model aset untuk keperluan itu.
+`service_subscriptions.ont_asset_id` adalah kolom pada tabel core yang menunjuk ke `network_assets` (tanpa foreign key database), yang membalik arah normal. Ini ditoleransi karena tautan ONT penting bagi ISP. Ini tautan balik yang didenormalisasi, dan model core `ServiceSubscription` meng-import `NetworkAsset` untuk relasinya.
 
 ## Keanehan
 
@@ -75,10 +75,10 @@ Jangan "memperbaiki" hal-hal ini tanpa alasan:
 - `Ipam` dan `NetworkAsset` saling mencantumkan sebagai dependensi. Catatan lama mencantumkan Ipam tanpa dependensi.
 - `Modules/Service` menaruh `Models/`, `Http/`, dan `Policies/` di root modul dan memetakannya di blok PSR-4 `composer.json`-nya sendiri. Modul lain memakai `app/`.
 - `Modules/Ipam` tidak punya folder `tests/`.
-- Modul `Customer` adalah cangkang kosong. Kode pelanggan ada di `app/`.
+- Modul `Customer` adalah cangkang kosong dan bernilai `false` di `modules_statuses.json`, sehingga tidak dimuat. Kode pelanggan ada di `app/`.
 - `Reporting` tidak punya migration dan tidak menulis data. Satu model read-only, `SalesCustomer` pada tabel `customers`, mendeklarasikan relasi Billing yang diagregasi KPI penjualan, sehingga `Customer` core tidak pernah bergantung pada Billing. Model itu menolak save atau delete.
 - Catatan arsitektur lama menggambarkan tata letak sebelumnya (folder `Entities/`, penempatan `Http/Requests` yang berbeda). Percayai `Modules/` itu sendiri.
 
 ## Tes dan route per modul
 
-Tes tiap modul berada di `Modules/<Name>/tests/{Feature,Unit}`, dan suite PHPUnit bernama `Modules` mengambil file `*Test.php` di sana. `RouteServiceProvider` tiap modul memetakan `routes/web.php` (grup web), `routes/api.php` (prefiks `api/v1` dan nama `api.v1.` yang sama), dan `routes/webhook.php`.
+Tes tiap modul berada di `Modules/<Name>/tests/{Feature,Unit}`, dan suite PHPUnit bernama `Modules` mengambil file `*Test.php` di sana. `RouteServiceProvider` tiap modul memetakan file route yang dimiliki modul itu: `routes/web.php` (grup web) dan `routes/api.php` (prefiks `api/v1` dan nama `api.v1.` yang sama). Hanya Billing yang punya `routes/webhook.php`, di-throttle untuk Midtrans.

@@ -145,7 +145,7 @@ php artisan inbils:media:privatize
 php artisan inbils:media:privatize
 ```
 
-The first command lists what would move and writes nothing. The second copies, verifies, flips the row and removes the public copy. The third must report `Moved 0 media`. Run it as the user that owns `storage/`. Exit code 1 means at least one media is still on the public disk: a `Failed <id>: ...` or `Missing <id>: public:<path>` line names the cause. Fix it and rerun.
+The first command lists what would move and writes nothing. The second copies, verifies, flips the row and removes the public copy. The third must report `Moved 0 media`. Run it as the user that owns `storage/`. Exit code 1 means at least one media is still on the public disk: a `Media <id>: ...` or `Missing <id>: public:<path>` line names the cause. Fix it and rerun.
 
 ## Rolling back
 

@@ -7,7 +7,7 @@ Inbils is split into domain modules. Each page below describes one module as the
 
 ## Customers and subscriptions
 
-Owns customers, their addresses, contacts and documents, and the subscription lifecycle: `pending`, `active`, `suspended`, `terminated`. It also covers isolir (the page a suspended customer sees). The subscription is also the billing subscription. In the code this lives in the shared core rather than a separate module package. See [Customers](/docs/modules/customers/).
+Owns customers, their addresses, contacts and documents, and the subscription lifecycle: `pending`, `active`, `suspended`, `terminated`. It also covers isolir (the page a suspended customer sees). The subscription is also the billing subscription. In the code the logic lives in the shared core; `Modules/Customer` exists only as an empty stub. See [Customers](/docs/modules/customers/).
 
 ## Service catalogue
 

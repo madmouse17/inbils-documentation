@@ -3,7 +3,7 @@ title: "Pelaporan"
 description: "Apa yang dihitung modul pelaporan Inbils yang read-only, bagaimana angka didefinisikan dan ditelusuri, cara kerja ekspor CSV dan PDF, serta siapa boleh melihat laporan apa."
 ---
 
-Modul Reporting mengubah riwayat yang disimpan modul lain menjadi laporan untuk manajer, NOC, dan keuangan. Modul ini benar-benar read-only: hanya berisi kelas query tanpa model, tidak menulis apa pun, dan tidak menyimpan nilai kinerja hasil hitungan. Setiap angka dihitung langsung dari catatan sumbernya, sehingga laporan yang sama untuk periode lain cukup memberi hasil lain.
+Modul Reporting mengubah riwayat yang disimpan modul lain menjadi laporan untuk manajer, NOC, dan keuangan. Modul ini benar-benar read-only: hanya berisi kelas query dan satu model read-only, tidak menulis apa pun, dan tidak menyimpan nilai kinerja hasil hitungan. Setiap angka dihitung langsung dari catatan sumbernya, sehingga laporan yang sama untuk periode lain cukup memberi hasil lain.
 
 ## Laporan
 
@@ -36,9 +36,9 @@ Angka agregat pada laporan Business, SLA, Asset, dan Technician tertaut ke baris
 
 Semua ekspor lewat `App\Support\ExportQuery`. Izinnya adalah `report.export` bersama izin laporan itu sendiri.
 
-- **CSV**: satu baris judul lalu data mentah.
+- **CSV**: UTF-8 dengan byte order mark, satu baris judul kolom lalu data mentah.
 - **PDF**: A4 lanskap dengan kop (logo dan nama perusahaan, judul laporan, "Periode", "Filter", "Dicetak {tanggal} oleh {nama}") dan "Halaman {n} dari {total}" di setiap kaki halaman. Nilai ditulis seperti di layar, misalnya "Rp 1.250.000" atau "18 Okt 2026".
-- Batas baris mengikuti `config('exports.max_rows')`. PDF yang terpotong menulis "PDF dibatasi {n} baris. Untuk data lengkap, unduh CSV atau persempit periode."
+- Batas baris mengikuti `config('exports.max_rows')` (bawaan 5000, diatur oleh `EXPORTS_MAX_ROWS`). PDF juga berhenti di 1500 sel, sehingga tabel lebar mendapat lebih sedikit baris. PDF yang terpotong menulis "PDF dibatasi {n} baris. Untuk data lengkap, unduh CSV atau persempit periode."
 - Tunggakan punya ekspor sendiri di [Penagihan](/docs/modules/billing/), dan daftar tiket di [Tiket](/docs/modules/ticketing/).
 
 ## Laporan konsolidasi

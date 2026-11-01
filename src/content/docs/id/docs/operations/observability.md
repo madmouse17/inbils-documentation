@@ -82,7 +82,7 @@ Konteks hanya memuat id dan nama class.
 |---|---|---|
 | `db.slow_query` | warning | Sebuah query memakan lebih dari 500 ms. SQL dengan placeholder, tanpa binding. |
 | `activity_log.pruned` | info | Satu baris per grup retensi dari prune harian. `deleted` 0 selama berhari-hari pada instalasi yang ramai berarti prune berhenti. |
-| `geocode.failed` | warning | Pencarian alamat (Nominatim) gagal; hasil kosong di-cache satu jam. |
+| `geocode.failed` | warning | Pencarian alamat (Nominatim) gagal; kegagalan tidak di-cache, jadi pencarian berikutnya bertanya lagi. |
 | `radius.unavailable` | warning | Database RADIUS sebuah perusahaan tidak menjawab; halaman jaringan menampilkan status tidak diketahui. |
 | `tickets.sla_check_failed` | warning | `CheckTicketSlaBreachesJob` kehabisan percobaan. |
 | `announcement.notify_failed` | warning | `SendAnnouncementNotifications` kehabisan percobaan. |

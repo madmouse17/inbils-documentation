@@ -80,7 +80,7 @@ The overlap number is the lifetime in minutes of the `withoutOverlapping` lock, 
 | `sanctum:prune-expired --hours=24` | daily | none | Drops mobile tokens expired more than 24 hours ago. |
 | `queue:prune-failed --hours=720` | daily | none | Deletes `failed_jobs` rows older than 30 days. |
 
-Times marked UTC are stated as UTC in the code comments. The other times are given as written in `routes/console.php`.
+All times are UTC: `config/app.php` sets the application timezone to `UTC` and `routes/console.php` sets no other timezone for any entry.
 
 ## Supervision
 

@@ -25,8 +25,8 @@ This module covers everything physical and logical about the network: the equipm
 | `installed` | `available` | Remove with a reason | Location and links cleared, history row closed. |
 | `installed` | `maintenance` | Set maintenance | Stays at its location, flagged. Resume returns it to `installed`. |
 | `installed` or `maintenance` | `damaged` | Mark damaged | Needs repair before it becomes `available` again. |
-| `damaged` | `available` | Repair | None. |
-| any | `retired` | Retire with a reason | Terminal. History row closed and the subscription link released. |
+| `damaged` | `available` | Repair | Location, customer and subscription links cleared, history row closed. |
+| any | `retired` | Retire with a reason | Terminal. History row closed. Only the status changes: location and links stay as they were. |
 
 When a work order of type installation is completed, the asset is installed at the work order location and the subscription is activated (see [Work orders](/docs/modules/work-orders/)). The trace page finds an asset by serial, MAC, IP, customer or subscription and shows its location path.
 
@@ -76,7 +76,7 @@ The **desired state** is computed when the job runs:
 
 | Subscription | RADIUS user |
 |---|---|
-| `pending` or `active`, not blocked | Exists, speed group |
+| `pending` (unless its installation was cancelled and none is under way) or `active`, not blocked | Exists, speed group |
 | `suspended`, or any non-terminated status with a block | Exists, isolir group |
 | `terminated` or deleted | Removed |
 
@@ -124,7 +124,7 @@ If you rotate `APP_KEY`, keep the old key in `APP_PREVIOUS_KEYS`, or every store
 | `network_asset.install`, `.remove`, `.maintenance`, `.repair`, `.retire` | Lifecycle actions | Admin, Manajer |
 | `network_asset.nas.view`, `.nas.manage` | See and manage NAS routers | View: Admin, Manajer, NOC, Staf. Manage: Admin. |
 | `network_asset.account.view`, `.manage`, `.reveal` | See, edit and resync accounts, reveal the secret | Admin, Manajer, Staf. NOC has view and manage. |
-| `location.view`, `.create`, `.update`, `.move`, `.delete` | Location tree | Admin, Manajer (no delete) |
+| `location.view`, `.create`, `.update`, `.move`, `.delete` | Location tree | Admin and Manajer (no delete). View also: NOC, Teknisi, Gudang, Staf. |
 | `ipam.view`, `ipam.manage`, `ipam.assign` | See, manage, give static addresses | View: Admin, Manajer, NOC, Staf, Teknisi. Manage and assign: Admin, Manajer. |
 | `odn.view`, `odn.manage`, `odn.assign` | See, manage ports and splitters, assign drops | Admin and Manajer all. NOC and Staf view and assign. Teknisi view. |
 | `customer.subscription.block` | Manual isolir | Admin, Manajer, NOC |

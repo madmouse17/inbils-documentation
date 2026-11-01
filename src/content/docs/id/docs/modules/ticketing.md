@@ -8,7 +8,7 @@ Modul Ticketing adalah service desk sebuah ISP. Tiket mencatat keluhan atau gang
 ## Konsep utama
 
 - **Sumber**: `customer`, `noc` (monitoring), atau `internal`. Tiket dengan sumber `customer` wajib menyebut pelanggan.
-- **Kategori**: jenis gangguan. Kategori awal adalah `no_internet` (4 jam, urgent), `slow_connection` (8 jam, high), `packet_loss` (8 jam, high), `device_issue` (12 jam, medium), dan `fiber_issue` (12 jam, high). Masing-masing membawa SLA bawaan dalam jam kalender dan prioritas bawaan. Staf dengan `ticket.category.manage` bisa menambah kategori sendiri.
+- **Kategori**: jenis gangguan. Kategori awal adalah `no_internet` (4 jam, urgent), `slow_connection` (8 jam, high), `packet_loss` (8 jam, high), `device_issue` (12 jam, medium), dan `fiber_issue` (12 jam, high). Masing-masing membawa SLA bawaan dalam jam kalender dan prioritas bawaan. Staf dengan `ticket.category.manage` bisa mengubahnya (jam, petunjuk pelanggan, aktif), tetapi tidak bisa menambah kategori baru.
 - **Prioritas**: `low`, `medium`, `high`, `urgent`.
 - **Kode**: tiket bernomor `TKT-{YEAR}-{NNNNN}`, aman dari balapan.
 - **Tingkat SLA**: tingkat yang dijual bersama versi paket layanan, dengan target respons pertama dan target penyelesaian. Lihat [Tingkat SLA](/docs/guides/web/customers-and-services/sla-tiers/).
@@ -99,12 +99,12 @@ Lonceng dan push di aplikasi memberi tahu petugas dan dispatcher tentang penugas
 | `ticket.attachment.view` | Membuka lampiran. |
 | `ticket.spawn_spk` | Membuat SPK dari tiket. |
 | `ticket.export` | Mengekspor daftar tiket. |
-| `ticket.manage` | Izin super untuk modul ini. |
+| `ticket.manage` | Cadangan: tidak diperiksa oleh aksi mana pun. |
 | `ticket.category.manage` | Mengelola kategori tiket. |
 
 ## Invarian
 
-- Tiket hanya berpindah mengikuti siklus hidup di atas. Resolve butuh tiket yang sudah ditugaskan atau dimulai, dan close butuh tiket yang sudah selesai.
+- Tiket hanya berpindah mengikuti siklus hidup di atas. Resolve butuh tiket yang sedang dikerjakan (`on_progress`), dan close butuh tiket yang sudah selesai.
 - Data pelanggan tidak pernah dibuka lebih dari id, kode, dan nama bagi pengguna tanpa `customer.view`.
 - Penutupan membekukan nama kategori dan petugas, sehingga penggantian nama kemudian tidak menulis ulang riwayat. Pembukaan kembali mengosongkannya lagi.
 - Isolasi tenant berlaku untuk setiap tiket, komentar, dan lampiran.

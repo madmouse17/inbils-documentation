@@ -9,30 +9,30 @@ A work order, called an SPK (Surat Perintah Kerja) in Inbils, is one job for a f
 
 | Type | Key | What approval does besides stock |
 |---|---|---|
-| Installation | `installation` | Installs the network asset, activates the subscription, makes sure the PPPoE account exists, creates the installation invoice if there are lines. |
+| Installation | `installation` | Installs the serialised network assets chosen on the SPK lines, activates the subscription if it is pending, makes sure the PPPoE account exists, creates the installation invoice if there are lines. |
 | Maintenance | `maintenance` | Consumes spare parts. Does not activate a subscription or bill an installation fee. |
-| Service upgrade | `upgrade_service` | Swaps the asset and changes the package of the subscription. |
-| Relocation | `relocation` | Moves the asset and updates the installation address of the subscription. |
+| Service upgrade | `upgrade_service` | Consumes the materials used, like any other type. It does not change the package or swap the asset by itself: staff do that by hand. |
+| Relocation | `relocation` | Consumes the materials used, like any other type. It does not move the asset or change the installation address by itself: staff do that by hand. |
 
 Installation, upgrade and relocation SPK need a customer and a subscription. A maintenance SPK may be internal (for example a POP asset) and have neither. Every SPK has a unique code per company in the form `SPK-{YEAR}-{NNNNN}`, created race-safe.
 
-An SPK is created in three ways, stored in `source`: `manual` (staff), `subscription` (a new pending subscription spawns an installation SPK), and `ticket` (a ticket that needs field work spawns a maintenance SPK, permission `ticket.spawn_spk`, see [Ticketing](/docs/modules/ticketing/)). A `monitoring` source exists as a value but staff create those jobs by hand.
+An SPK is created in three ways, stored in `source`: `manual` (staff), `subscription` (adding a new customer with a subscription spawns an installation SPK), and `ticket` (a ticket that needs field work spawns a maintenance SPK, permission `ticket.spawn_spk`, see [Ticketing](/docs/modules/ticketing/)). A `monitoring` source exists as a value but staff create those jobs by hand.
 
 ## Lifecycle
 
 | From | To | Action | Effect |
 |---|---|---|---|
-| `draft` | `generated` | generate | Code and fields are filled from the source (ticket or subscription). |
+| `draft` | `generated` | generate | Marks the plan as ready for dispatch. The code is already set when the SPK is created. SPK spawned from a ticket or a new customer start in `generated`. |
 | `draft`, `generated`, `rejected` | `assigned` | assign | Sets the technician, adds an assignment history row, no stock is reserved. For an installation SPK the PPPoE account is created once, if the company has an active RADIUS integration. |
 | `assigned` | `assigned` | en route | Sets `en_route_at` once and notifies the customer. |
 | `assigned` | `in_progress` | start | Sets `started_at`, records the check-in (see below). |
 | `assigned`, `in_progress` | `assigned` | reassign | New technician, old assignment closed, visit times cleared. Needs `spk.reassign`. Picking the same technician on `in_progress` keeps progress. |
-| `in_progress` | `waiting_review` | submit | Needs at least one evidence file. |
+| `in_progress` | `waiting_review` | submit | Needs at least one evidence file, and every material return of item requests linked to the SPK must be declared. |
 | `waiting_review` | `completed` | approve | Runs `CompleteSpkAction`: stock, asset, subscription, PPPoE account, installation invoice. |
 | `waiting_review` | `rejected` | reject | Stores the reason, the job goes back to be reworked. |
 | any except `completed`, `cancelled` | `cancelled` | cancel | Needs a reason. No stock moves. |
 
-The technician starts and submits only the jobs assigned to them. Office staff assign, approve, reject and cancel. An approval of an SPK that is not in `waiting_review` is refused with 422, and so is a completion without an assigned technician. An SPK can be deleted (soft delete) only in `draft` or `cancelled`.
+The technician starts and submits only the jobs assigned to them. Office staff assign, approve, reject and cancel. An approval of an SPK that is not in `waiting_review` is refused with 422. The person who created the SPK and its assigned technician cannot approve or reject it, and approval waits until every material return of the SPK is reconciled or resolved. An SPK can be deleted (soft delete) only in `draft` or `cancelled`.
 
 ### Visit timeline
 
@@ -40,13 +40,13 @@ The web SPK page, the technician app and the customer app show the same four vis
 
 ## Dispatch and approval
 
-Office staff work from two queues in the web UI: **Penugasan** (dispatch) and **Persetujuan** (the approval inbox). Dispatch suggests technicians ranked by area, skills (`tags`), current workload and availability, and the dispatcher makes the final choice. An assigned SPK shows an "Dalam perjalanan" badge once the technician is on the way. The approval inbox shows evidence, the technician, the check-in result and the material used next to the decision.
+Office staff work from two queues in the web UI: **Penugasan** (dispatch) and **Persetujuan** (the approval inbox). Dispatch lists technicians with the work they hold now and suggests the one with the least, and the dispatcher makes the final choice. An assigned SPK shows an "Dalam perjalanan" badge once the technician is on the way. The approval inbox shows evidence, the technician, the check-in result and the material used next to the decision.
 
 The approve dialog lists exactly what approval will do, in order, and only what really happens: the customer and subscription becoming active, the installation invoice (sent at once or kept as a draft, depending on the company setting `auto_send_installation_invoice`), the PPPoE account that will be created, and the quantities leaving stock. After an installation SPK is completed, a "Langkah berikut" card lists the invoice and PPPoE steps the current user may see or do.
 
 ## Evidence and the check-in distance rule
 
-Evidence is a photo or document attached to the SPK. At least one is required before submit. The technician app uploads evidence and may delete it while the job is open.
+Evidence is a photo or document attached to the SPK. At least one is required before submit. The technician app uploads evidence while the job is in progress and may delete the technician's own files then.
 
 When a technician starts a job, the app sends a `check_in` with the phone position. The server measures the distance to the customer installation address (the subscription installation address; for an SPK without a subscription, the SPK location). The POP coordinates are never used instead of the customer address.
 
@@ -56,7 +56,7 @@ When a technician starts a job, the app sends a `check_in` with the phone positi
 
 ## Materials
 
-Material lines (`work_order_items`) hold consumables only: one line per product, with the quantity used. Equipment that stays at the customer is a network asset, not an item.
+Material lines (`work_order_items`) hold consumables: one line per product, with the quantity used. Equipment that stays at the customer is a network asset; it appears only as a serialised asset line that the office manages and the technician app cannot add.
 
 - Lines can be added, changed and deleted until the SPK enters review: in `draft`, `generated`, `assigned`, `in_progress` and `rejected`. In `waiting_review`, `completed` and `cancelled` the server answers 422.
 - The SPK itself does not reserve stock. Stock leaves the warehouse at approval through `StockService::issue`.
@@ -68,9 +68,9 @@ Material lines (`work_order_items`) hold consumables only: one line per product,
 `SpkService::approve` calls `CompleteSpkAction`, which orchestrates four other domains in one operation:
 
 1. Stock: issues the used quantities that no item request already covered.
-2. Network asset: installs, swaps or moves the asset according to the type.
-3. Subscription: activates it (installation), swaps the package (upgrade) or changes the address (relocation). See [Customers](/docs/modules/customers/).
-4. Billing: creates the installation invoice from the SPK lines (installation, upgrade fee, relocation fee), sent or kept as a draft by the company setting. See [Billing](/docs/modules/billing/).
+2. Network asset: for an installation, installs the serialised assets chosen on the SPK lines.
+3. Subscription: activates it when it is pending. Package and address changes are not done by the SPK. See [Customers](/docs/modules/customers/).
+4. Billing: for an installation only, creates an invoice with the installation fee and, if the company bills materials, the materials used, sent or kept as a draft by the company setting. See [Billing](/docs/modules/billing/).
 
 For an installation, approval also checks that the PPPoE account exists. A network configuration failure does not cancel the assignment or the approval. Cancelling an installation SPK of a `pending` subscription disables the PPPoE account in RADIUS and rotates its secret when no other installation is running.
 

@@ -34,7 +34,7 @@ Roles are no longer an exception: `App\Models\Role` uses the trait too (see [Rol
 - `idFor($user)` returns the effective company for a given user. `current()` returns the `Company`. `setting($key)` reads a per-company setting.
 - The effective company is the `active_company_id` session value, re-validated against the `company_user` membership table and an active company on every read, or else the user's home company.
 - `users.company_id` is only the home company, where the user lands at login. It is never "the tenant".
-- Switching company needs the `company.switch` permission plus a membership of the target company.
+- Switching to another company needs the `company.switch` permission plus a membership of the target company. Switching back to the user's home company needs only the membership.
 
 Code that runs without a signed-in user (Artisan commands, queue jobs, listeners, webhooks, seeders) wraps its work in `CompanyService::runAs($companyId, fn () => ...)`. Calls nest and restore the previous scope.
 

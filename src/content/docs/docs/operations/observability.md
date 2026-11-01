@@ -82,7 +82,7 @@ Context holds ids and class names only.
 |---|---|---|
 | `db.slow_query` | warning | A query took more than 500 ms. SQL with placeholders, no bindings. |
 | `activity_log.pruned` | info | One line per retention group of the daily prune. `deleted` of 0 for days on a busy install means the prune stopped. |
-| `geocode.failed` | warning | The address lookup (Nominatim) failed; the empty result is cached for an hour. |
+| `geocode.failed` | warning | The address lookup (Nominatim) failed; the failure is not cached, so the next search asks again. |
 | `radius.unavailable` | warning | A company's RADIUS database did not answer; network pages show the state as unknown. |
 | `tickets.sla_check_failed` | warning | `CheckTicketSlaBreachesJob` ran out of tries. |
 | `announcement.notify_failed` | warning | `SendAnnouncementNotifications` ran out of tries. |
