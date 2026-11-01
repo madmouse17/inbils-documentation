@@ -1,5 +1,5 @@
 ---
-title: "Mobile API"
+title: "API mobile"
 description: "Apa itu API mobile api/v1, siapa yang memakainya, bagaimana kontrak diberi versi dan dibuat ulang, serta grup endpoint untuk aplikasi pelanggan dan teknisi."
 ---
 

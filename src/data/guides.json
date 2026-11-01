@@ -11,8 +11,8 @@
       "id": "admin, manajer, dan staf ISP"
     },
     "description": {
-      "en": "Step-by-step guide to the Inbils back office for ISP admins, managers and staff: dashboard, dispatch, customers, network, inventory, billing, reports and administration.",
-      "id": "Panduan langkah demi langkah untuk kantor belakang Inbils bagi admin, manajer, dan staf ISP: dasbor, penugasan, pelanggan, jaringan, inventaris, tagihan, laporan, dan administrasi."
+      "en": "Step-by-step guide to the Inbils back office for ISP admins, managers and staff: customers, network, inventory, billing, reports and administration.",
+      "id": "Panduan langkah demi langkah kantor belakang Inbils untuk admin, manajer, dan staf ISP: pelanggan, jaringan, inventaris, tagihan, laporan, dan administrasi."
     },
     "chapters": [
       {

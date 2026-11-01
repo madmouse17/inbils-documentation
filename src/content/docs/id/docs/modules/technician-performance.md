@@ -1,5 +1,5 @@
 ---
-title: "Technician performance"
+title: "Kinerja teknisi"
 description: "Cara Inbils menilai staf lapangan: evaluasi SPK dan tiket, metrik laporan teknisi, cara menghitungnya, dan siapa boleh melihat teknisi mana."
 ---
 

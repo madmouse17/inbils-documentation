@@ -1,9 +1,9 @@
 ---
 title: "Panduan Web"
-description: "Panduan langkah demi langkah untuk kantor belakang Inbils bagi admin, manajer, dan staf ISP: dasbor, penugasan, pelanggan, jaringan, inventaris, tagihan, laporan, dan administrasi."
+description: "Panduan langkah demi langkah kantor belakang Inbils untuk admin, manajer, dan staf ISP: pelanggan, jaringan, inventaris, tagihan, laporan, dan administrasi."
 ---
 
-Panduan langkah demi langkah untuk kantor belakang Inbils bagi admin, manajer, dan staf ISP: dasbor, penugasan, pelanggan, jaringan, inventaris, tagihan, laporan, dan administrasi.
+Panduan langkah demi langkah kantor belakang Inbils untuk admin, manajer, dan staf ISP: pelanggan, jaringan, inventaris, tagihan, laporan, dan administrasi.
 
 Ditulis untuk admin, manajer, dan staf ISP.
 

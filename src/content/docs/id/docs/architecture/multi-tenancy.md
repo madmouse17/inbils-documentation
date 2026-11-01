@@ -1,5 +1,5 @@
 ---
-title: "Multi-tenancy"
+title: "Arsitektur multi-tenant"
 description: "Cara satu instalasi Inbils memisahkan banyak ISP: scoping perusahaan, perusahaan aktif, panel operator platform, impersonation, ekspor, purge, dan peran per perusahaan."
 ---
 

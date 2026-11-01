@@ -1,6 +1,6 @@
 ---
 title: "Penagihan dan pembayaran"
-description: "Cara Inbils menerbitkan tagihan, mencatat dan menerima pembayaran, memantau tunggakan, mengisolir akun menunggak, dan mengirim pengingat WhatsApp, lengkap dengan status, job, dan izin."
+description: "Cara Inbils menerbitkan tagihan, mencatat pembayaran, memantau tunggakan, mengisolir akun menunggak, dan mengirim pengingat WhatsApp."
 ---
 
 Modul Billing menangani sisi uang sebuah ISP: tagihan bulanan untuk setiap langganan, tagihan pemasangan sekali bayar dari SPK yang disetujui, pembayaran manual dan online (Midtrans), tunggakan, dan isolir otomatis untuk akun yang tetap belum membayar. Langganan sekaligus menjadi langganan penagihan: tidak ada entitas penagihan terpisah, dan job berulang membaca kolom penagihan pada langganan secara langsung.

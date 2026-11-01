@@ -1,9 +1,9 @@
 ---
 title: "Web guide"
-description: "Step-by-step guide to the Inbils back office for ISP admins, managers and staff: dashboard, dispatch, customers, network, inventory, billing, reports and administration."
+description: "Step-by-step guide to the Inbils back office for ISP admins, managers and staff: customers, network, inventory, billing, reports and administration."
 ---
 
-Step-by-step guide to the Inbils back office for ISP admins, managers and staff: dashboard, dispatch, customers, network, inventory, billing, reports and administration.
+Step-by-step guide to the Inbils back office for ISP admins, managers and staff: customers, network, inventory, billing, reports and administration.
 
 Written for ISP admins, managers and staff.
 

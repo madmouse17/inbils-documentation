@@ -1,6 +1,6 @@
 ---
 title: "Ticketing and SLA"
-description: "How Inbils handles customer complaints and NOC issues as tickets, with SLA targets, breach alerts, comments, attachments, customer rating and work orders spawned from tickets."
+description: "How Inbils handles customer and NOC tickets: SLA targets, breach alerts, comments, attachments, customer rating and work orders spawned from tickets."
 ---
 
 The Ticketing module is the service desk of an ISP. A ticket records a complaint or a fault, ties it to the customer, subscription, network asset and location involved, tracks who handles it, measures it against an SLA, and can spawn a field work order (SPK) when someone has to go on site.

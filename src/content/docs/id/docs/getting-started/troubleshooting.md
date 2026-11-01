@@ -1,5 +1,5 @@
 ---
-title: "Troubleshooting"
+title: "Pemecahan masalah"
 description: "Solusi masalah umum saat menjalankan Inbils lokal: Docker context, port, storage link, manifest Vite, permission, test, queue, dan proxy HTTPS."
 ---
 

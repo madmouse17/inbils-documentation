@@ -1,5 +1,5 @@
 ---
-title: "Inventory"
+title: "Inventaris"
 description: "Cara Inbils melacak stok consumable: barang, lokasi, mutasi yang tidak bisa diubah, permintaan barang dengan reservasi, penyesuaian, dan retur material."
 ---
 

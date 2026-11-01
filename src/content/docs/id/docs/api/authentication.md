@@ -1,5 +1,5 @@
 ---
-title: "Authentication and tokens"
+title: "Autentikasi dan token"
 description: "Cara aplikasi mobile masuk dengan bearer token Sanctum: field app, langkah two-factor, masa berlaku dan refresh token, logout, perangkat, dan penanganan 401."
 ---
 

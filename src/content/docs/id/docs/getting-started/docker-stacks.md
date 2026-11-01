@@ -1,5 +1,5 @@
 ---
-title: "Docker stacks"
+title: "Stack Docker"
 description: "Dua stack Docker Inbils yang independen, Sail di port 80 dan stack bergaya produksi di port 8080: isi, kapan dipakai, perintah, dan port."
 ---
 

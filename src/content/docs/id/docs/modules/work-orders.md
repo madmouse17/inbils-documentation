@@ -1,5 +1,5 @@
 ---
-title: "Work orders (SPK)"
+title: "SPK (surat perintah kerja)"
 description: "Cara Inbils menjalankan pekerjaan lapangan sebagai SPK: jenis, state machine, bukti, material, efek persetujuan, izin, dan aplikasi teknisi."
 ---
 

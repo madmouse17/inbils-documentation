@@ -1,5 +1,5 @@
 ---
-title: "Conventions, errors and idempotency"
+title: "Konvensi, galat, dan idempotensi"
 description: "Envelope dan kode error, aturan Idempotency-Key, pagination, rate limit, unduhan media, dan cara klien pulih dari request yang terputus."
 ---
 
